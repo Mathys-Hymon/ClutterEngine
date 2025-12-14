@@ -1,0 +1,68 @@
+# --- Build & CMake ---
+# Dossiers de build classiques
+build/
+cmake-build-*/
+out/
+
+# Fichiers cache de CMake
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+install_manifest.txt
+compile_commands.json
+
+# --- IDE & Éditeurs ---
+# JetBrains (CLion)
+.idea/
+
+# Visual Studio (si tu l'ouvres un jour avec VS)
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.suo
+*.user
+*.db
+*.opendb
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# --- Binaires et Sorties ---
+# Ton dossier de sortie configuré dans CMake
+bin/
+
+# Fichiers binaires générés (au cas où ils traînent ailleurs)
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.obj
+*.o
+*.a
+
+# --- OS Files ---
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+
+.DS_Store
+
+# --- Dépendances ---
+# Si tu as téléchargé le ZIP de ImGui/GLFW manuellement et que tu veux
+# les ignorer pour laisser CMake les gérer (via FetchContent), décommente :
+# ClutterCore/Libraries/GLFW/
+# ClutterCore/Libraries/imgui/
+
+# PAR CONTRE, on garde GLAD car c'est un fichier généré manuellement.
+# Donc on ne met PAS "ClutterCore/Libraries/glad/" ici.
+
+# --- Logs & Crash Dumps ---
+*.log
+*.dmp
