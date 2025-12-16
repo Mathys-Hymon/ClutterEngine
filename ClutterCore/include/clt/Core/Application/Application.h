@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "Layers/LayerStack.h"
-#include "../Window/IWindow.h"
+#include "../Layers/LayerStack.h"
+#include "../IWindow.h"
 
 namespace clt
 {

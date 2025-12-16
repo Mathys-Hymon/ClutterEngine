@@ -9,7 +9,11 @@ if(NOT EXISTS "${GLAD_SOURCES}")
 endif()
 
 # --- SOURCES ---
-file(GLOB_RECURSE CORE_SOURCES "src/*.cpp" "src/*.h")
+file(GLOB_RECURSE CORE_SOURCES 
+    "src/*.cpp" 
+    "src/*.h"       # Headers privés (ex: WindowsWindow.h)
+    "include/*.h"   # Headers publics (ex: Application.h)
+)
 
 # --- CREATION LIB STATIQUE (.lib) ---
 # C'est ici que ça se joue : STATIC au lieu de SHARED
@@ -37,7 +41,10 @@ endif()
 target_include_directories(ClutterCore
         PUBLIC
         ${GLAD_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+
+	PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 # --- LINKS ---

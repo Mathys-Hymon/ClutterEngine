@@ -1,8 +1,9 @@
 #pragma once
-#include  "Window/IWindow.h"
 
 namespace clt
 {
+    class IWindow;
+
     struct EngineContext
     {
         IWindow* Window;

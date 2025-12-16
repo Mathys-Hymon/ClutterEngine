@@ -1,7 +1,7 @@
-#include <../../ClutterCore/src/Application/Application.h>
-#include <../../ClutterCore/src/Application/EntryPoint.h>
-#include <../../ClutterCore/src/Application/Layers/Layer.h>
-#include <../../ClutterCore/src/Core/EngineContext.h>
+#include <clt/Core/Application/Application.h>
+#include <clt/Core/EntryPoint.h>
+#include <clt/Core/Layers/Layer.h>
+#include <clt/Core/EngineContext.h>
 #include <iostream>
 
 class EditorLayer : public clt::Layer

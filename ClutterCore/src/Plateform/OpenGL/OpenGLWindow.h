@@ -1,0 +1,14 @@
+//
+// Created by marty on 16/12/2025.
+//
+
+#ifndef CLUTTERENGINE_OPENGLWINDOW_H
+#define CLUTTERENGINE_OPENGLWINDOW_H
+
+
+class OpenGLWindow
+{
+};
+
+
+#endif //CLUTTERENGINE_OPENGLWINDOW_H

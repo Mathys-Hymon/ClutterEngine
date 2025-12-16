@@ -1,10 +1,10 @@
-#include "Application.h"
+#include <clt/Core/Application/Application.h>
 
 #include <iostream>
-#include <Core/EngineContext.h>
+#include <clt/Core/EngineContext.h>
 
-#include "../Core/EngineContext.h"
-#include "../Window/IWindow.h"
+#include <clt/Core/EngineContext.h>
+#include <clt/Core/IWindow.h>
 
 namespace clt
 {
