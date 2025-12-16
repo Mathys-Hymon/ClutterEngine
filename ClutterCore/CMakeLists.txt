@@ -19,10 +19,14 @@ add_library(ClutterCore STATIC
 )
 
 # --- DEFINITIONS ---
-target_compile_definitions(ClutterCore PRIVATE
-        # CLUTTER_BUILD_DLL  <-- Supprimé car inutile en statique
-        GLFW_INCLUDE_NONE
-        GLFW_INCLUDE_VULKAN
+target_compile_definitions(ClutterCore 
+	PUBLIC
+        	CLUTTER_PLATFORM_WINDOWS
+        	CLUTTER_DEBUG
+
+	PRIVATE
+        	GLFW_INCLUDE_NONE
+        	GLFW_INCLUDE_VULKAN
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -32,9 +36,7 @@ endif()
 # --- INCLUDES ---
 target_include_directories(ClutterCore
         PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${GLAD_DIR}/include
-        PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 

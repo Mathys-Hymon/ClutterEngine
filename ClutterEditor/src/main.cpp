@@ -1,10 +1,43 @@
+#include <../../ClutterCore/src/Application/Application.h>
+#include <../../ClutterCore/src/Application/EntryPoint.h>
+#include <../../ClutterCore/src/Application/Layers/Layer.h>
+#include <../../ClutterCore/src/Core/EngineContext.h>
+#include <iostream>
 
-int main(int argc, char** argv)
+class EditorLayer : public clt::Layer
 {
-    //const auto app = new clt::Application();
+public:
+    EditorLayer() : Layer("EditorLayer") {}
 
-    //app->Run();
-    //delete app;
+    void OnAttach(const clt::EngineContext& context) override
+    {
+        if (context.Window)
+        {
+        }
+        else
+        {
+            std::cout << "Window not initialized yet (Normal pour le test)" << std::endl;
+        }
+    }
 
-    return 0;
+    void OnUpdate(const float& dt) override
+    {
+        // std::cout << "Update..." << std::endl;
+    }
+};
+
+class ClutterEditor : public clt::Application {
+public:
+    ClutterEditor(const clt::ApplicationCommandLineArgs& args)
+        : Application(args)
+    {
+        PushLayer(new EditorLayer());
+    }
+
+    ~ClutterEditor() {}
+};
+
+clt::Application* clt::CreateApplication(clt::ApplicationCommandLineArgs args)
+{
+    return new ClutterEditor(args);
 }
