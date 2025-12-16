@@ -17,7 +17,7 @@ namespace clt
         virtual void OnDetach() {};
 
         virtual void OnUpdate(const float& dt) {}
-        virtual void OnImGuiRender() {}
+        virtual void OnRender() {}
 
         const std::string& GetName() const { return mDebugName; }
     };
