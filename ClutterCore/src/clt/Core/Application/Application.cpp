@@ -8,12 +8,6 @@
 
 namespace clt
 {
-    IWindow* IWindow::Create(const WindowProps& props)
-    {
-        return nullptr;
-    }
-
-
     Application::Application(const ApplicationCommandLineArgs& args)
     {
         mWindow = std::unique_ptr<IWindow>(IWindow::Create());

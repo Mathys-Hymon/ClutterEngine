@@ -1,17 +1,21 @@
 #pragma once
-#include <clt/Renderer/GraphicsContext.h>
+#include <clt/Renderer/GraphicContext.h>
 
 struct GLFWwindow;
 
 namespace clt
 {
-    class OpenGLContext : public GraphicsContext
+    namespace graphic
     {
-        GLFWwindow* mWindowHandle;
-        public:
-        OpenGLContext(GLFWwindow* windowHandle);
+        class OpenGLContext : public context
+        {
+            GLFWwindow* mWindowHandle;
 
-        void Init() override;
-        void SwapBuffers() override;
-    };
+        public:
+            OpenGLContext(GLFWwindow* windowHandle);
+
+            void Init() override;
+            void SwapBuffers() override;
+        };
+    }
 }

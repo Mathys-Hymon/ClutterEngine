@@ -11,8 +11,8 @@ endif()
 # --- SOURCES ---
 file(GLOB_RECURSE CORE_SOURCES 
     "src/*.cpp" 
-    "src/*.h"       # Headers privés (ex: WindowsWindow.h)
-    "include/*.h"   # Headers publics (ex: Application.h)
+    "src/*.h"       # private headers (ex: WindowsWindow.h)
+    "include/*.h"   # public headers (ex: Application.h)
 )
 
 # --- CREATION LIB STATIQUE (.lib) ---
@@ -54,6 +54,7 @@ target_link_libraries(ClutterCore
         vk-bootstrap
         glfw
         glm::glm
+        spdlog::spdlog
         ${CMAKE_DL_LIBS}
 )
 

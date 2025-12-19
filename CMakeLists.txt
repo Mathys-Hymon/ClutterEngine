@@ -35,10 +35,15 @@ message(STATUS "Fetching glm...")
 FetchContent_Declare(glm GIT_REPOSITORY https://github.com/g-truc/glm.git GIT_TAG 1.0.2)
 FetchContent_MakeAvailable(glm)
 
-# ImGui
+# 4. ImGui
 message(STATUS "Fetching ImGui...")
 FetchContent_Declare(imgui GIT_REPOSITORY https://github.com/ocornut/imgui.git GIT_TAG docking)
 FetchContent_MakeAvailable(imgui)
+
+# 5. SpdLog
+message(STATUS "Fetching spdlog...")
+FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog.git GIT_TAG v1.12.0)
+FetchContent_MakeAvailable(spdlog)
 
 # --- DEFINITION DE LA LIBRAIRIE IMGUI (Accessible par Editor) ---
 set(IMGUI_DIR ${imgui_SOURCE_DIR})
