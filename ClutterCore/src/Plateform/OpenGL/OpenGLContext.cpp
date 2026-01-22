@@ -10,7 +10,7 @@ namespace clt::graphic
 {
     OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : mWindowHandle(windowHandle)
     {
-        if (!windowHandle) std::cerr << "Error in OpenGLContext::OpenGLContext()" << std::endl;
+        if (!windowHandle) CLT_CORE_FATAL("Error in OpenGLContext::OpenGLContext()");
     }
 
     void OpenGLContext::Init()
@@ -20,7 +20,7 @@ namespace clt::graphic
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
         if (!status)
         {
-            std::cout << "Failed to initialize OpenGL context" << std::endl;
+            CLT_CORE_FATAL("Failed to initialize OpenGL context");
         }
 
         // Debug Info
