@@ -28,6 +28,12 @@ namespace clt
         virtual void SetEventCallback(const std::function<void()>& callback) = 0;
         virtual void* GetNativeWindow() const = 0;
 
+        virtual void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) = 0;
+        virtual void ResizeViewportCentered(uint32_t width, uint32_t height) = 0;
+        virtual void RenameViewport(const char* name) = 0;
+        virtual void SetVSync(bool enabled) = 0;
+
         static IWindow* Create(const WindowProps& props = WindowProps());
+
     };
 }

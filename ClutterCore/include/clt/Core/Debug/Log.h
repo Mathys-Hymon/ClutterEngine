@@ -27,16 +27,16 @@ namespace clt
 
 // --- Engine Macro (CORE)
 
-#define CLT_CORE_TRACE(...)          ::clt::Core::Log::GetCoreLogger()->Trace(__VA_ARGS__)
-#define CLT_CORE_INFO(...)           ::clt::Core::Log::GetCoreLogger()->Info(__VA_ARGS__)
-#define CLT_CORE_WARN(...)           ::clt::Core::Log::GetCoreLogger()->Warn(__VA_ARGS__)
-#define CLT_CORE_ERROR(...)          ::clt::Core::Log::GetCoreLogger()->Error(__VA_ARGS__)
-#define CLT_CORE_FATAL(...)          ::clt::Core::Log::GetCoreLogger()->Fatal(__VA_ARGS__)
+#define CLT_CORE_TRACE(...)          ::clt::Core::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define CLT_CORE_INFO(...)           ::clt::Core::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define CLT_CORE_WARN(...)           ::clt::Core::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define CLT_CORE_ERROR(...)          ::clt::Core::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define CLT_CORE_FATAL(...)          ::clt::Core::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 // --- Client Macro (CLIENT)
 
-#define CLUTTER_TRACE(...)         ::clt::Core::Log::GetClientLogger()->Trace(__VA_ARGS__)
-#define CLUTTER_INFO(...)          ::clt::Core::Log::GetClientLogger()->Info(__VA_ARGS__)
-#define CLUTTER_WARN(...)          ::clt::Core::Log::GetClientLogger()->Warn(__VA_ARGS__)
-#define CLUTTER_ERROR(...)         ::clt::Core::Log::GetClientLogger()->Error(__VA_ARGS__)
-#define CLUTTER_FATAL(...)         ::clt::Core::Log::GetClientLogger()->Fatal(__VA_ARGS__)
+#define CLUTTER_TRACE(...)         ::clt::Core::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define CLUTTER_INFO(...)          ::clt::Core::Log::GetClientLogger()->info(__VA_ARGS__)
+#define CLUTTER_WARN(...)          ::clt::Core::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define CLUTTER_ERROR(...)         ::clt::Core::Log::GetClientLogger()->error(__VA_ARGS__)
+#define CLUTTER_FATAL(...)         ::clt::Core::Log::GetClientLogger()->critical(__VA_ARGS__)

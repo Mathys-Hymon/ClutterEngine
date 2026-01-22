@@ -4,13 +4,11 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 
-#include "clt/Renderer/GraphicContext.h"
-
 namespace clt
 {
     class WindowsWindow : public IWindow
     {
-        GLFWwindow* mWindowHandle;
+        GLFWwindow* mWindowHandle{};
         std::unique_ptr<graphic::context> mContext;
 
         struct WindowData
@@ -30,11 +28,16 @@ namespace clt
 
         void OnUpdate() override;
 
-        inline uint32_t GetWidth() const override { return mData.Width; }
-        inline uint32_t GetHeight() const override { return mData.Height; }
+        uint32_t GetWidth() const override { return mData.Width; }
+        uint32_t GetHeight() const override { return mData.Height; }
 
         inline void SetEventCallback(const std::function<void()>& callback) override { mData.EventCallback = callback; }
-        virtual void* GetNativeWindow() const override { return mWindowHandle; }
+        void* GetNativeWindow() const override { return mWindowHandle; }
+
+        void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) override;
+        void ResizeViewportCentered(uint32_t width, uint32_t height) override;
+        void RenameViewport(const char* name) override;
+        void SetVSync(bool enabled) override;
 
     private:
         virtual void Init(const WindowProps& props);

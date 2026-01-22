@@ -4,36 +4,35 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace clt
+#include "clt/Core/Debug/Log.h"
+
+namespace clt::graphic
 {
-    namespace graphic
+    OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : mWindowHandle(windowHandle)
     {
-        OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : mWindowHandle(windowHandle)
+        if (!windowHandle) std::cerr << "Error in OpenGLContext::OpenGLContext()" << std::endl;
+    }
+
+    void OpenGLContext::Init()
+    {
+        glfwMakeContextCurrent(mWindowHandle);
+
+        int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+        if (!status)
         {
-            if (!windowHandle) std::cerr << "Error in OpenGLContext::OpenGLContext()" << std::endl;
+            std::cout << "Failed to initialize OpenGL context" << std::endl;
         }
 
-        void OpenGLContext::Init()
-        {
-            glfwMakeContextCurrent(mWindowHandle);
+        // Debug Info
+        CLT_CORE_INFO("--- OpenGL Info ---");
+        CLT_CORE_INFO("Vendor:   {0}", reinterpret_cast<const char *>(glGetString(GL_VENDOR)));
+        CLT_CORE_INFO("Renderer: {0}", reinterpret_cast<const char *>(glGetString(GL_RENDERER)));
+        CLT_CORE_INFO("Version:  {0}", reinterpret_cast<const char *>(glGetString(GL_VERSION)));
+        CLT_CORE_INFO("-------------------");
+    }
 
-            int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-            if (!status)
-            {
-                std::cout << "Failed to initialize OpenGL context" << std::endl;
-            }
-
-            // Debug Info
-            std::cout << "--- OpenGL Info ---" << std::endl;
-            std::cout << " Vendor:   " << glGetString(GL_VENDOR) << std::endl;
-            std::cout << " Renderer: " << glGetString(GL_RENDERER) << std::endl;
-            std::cout << " Version:  " << glGetString(GL_VERSION) << std::endl;
-            std::cout << "-------------------" << std::endl;
-        }
-
-        void OpenGLContext::SwapBuffers()
-        {
-            glfwSwapBuffers(mWindowHandle);
-        }
+    void OpenGLContext::SwapBuffers()
+    {
+        glfwSwapBuffers(mWindowHandle);
     }
 }

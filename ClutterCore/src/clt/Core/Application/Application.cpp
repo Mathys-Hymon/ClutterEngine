@@ -4,12 +4,14 @@
 #include <clt/Core/EngineContext.h>
 
 #include <clt/Core/EngineContext.h>
+#include <clt/Core/Debug/Log.h>
 #include <clt/Core/IWindow.h>
 
 namespace clt
 {
     Application::Application(const ApplicationCommandLineArgs& args)
     {
+        Core::Log::Init();
         mWindow = std::unique_ptr<IWindow>(IWindow::Create());
     }
 
@@ -19,7 +21,7 @@ namespace clt
 
     void Application::Run()
     {
-        std::cout << "Clutter Engine Started" << std::endl;
+        CLT_CORE_INFO("Clutter Engine Started");
 
         while (mIsRunning)
         {

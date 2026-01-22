@@ -1,0 +1,193 @@
+#include <clt/Core/Math/Quaternion.h>
+#include <clt/Core/Math/Vector/Vector4.h>
+#include <clt/Core/Math/Matrix/Matrix4.h>
+#include <clt/Core/Math/Matrix/Matrix4Row.h>
+#include <array>
+
+using std::array;
+
+const Quaternion Quaternion::Identity(0.0f, 0.0f, 0.0f, 1.0f);
+
+Quaternion::Quaternion(const float xP,const float yP,const float zP,const float wP)
+{
+	Set(xP, yP, zP, wP);
+}
+
+Quaternion::Quaternion(const glm::quat quat)
+{
+	Set(quat.x, quat.y, quat.z, quat.w);
+}
+
+Quaternion::Quaternion(const Vector3& axis, const float angle)
+{
+	float scalar = Maths::Sin(angle / 2.0f);
+	x = axis.x * scalar;
+	y = axis.y * scalar;
+	z = axis.z * scalar;
+	w = Maths::Cos(angle / 2.0f);
+}
+
+Quaternion::Quaternion(const Vector3& euler)
+{
+	const float cy = cos(euler.y * 0.5f); // yaw
+	const float sy = sin(euler.y * 0.5f);
+	const float cp = cos(euler.x * 0.5f); // pitch
+	const float sp = sin(euler.x * 0.5f);
+	const float cr = cos(euler.z * 0.5f); // roll
+	const float sr = sin(euler.z * 0.5f);
+
+	w = cr * cp * cy + sr * sp * sy;
+	x = sr * cp * cy - cr * sp * sy;
+	y = cr * sp * cy + sr * cp * sy;
+	z = cr * cp * sy - sr * sp * cy;
+}
+
+Quaternion::Quaternion(float inAll)
+{
+	const Quaternion temp = Quaternion::FromEuler({ 0, 0, inAll });
+	Set(temp.x, temp.y, temp.z, temp.w);
+}
+
+void Quaternion::Set(const float inX, const float inY, const float inZ, const float inW)
+{
+	x = inX;
+	y = inY;
+	z = inZ;
+	w = inW;
+}
+
+void Quaternion::Conjugate()
+{
+	x *= -1.0f;
+	y *= -1.0f;
+	z *= -1.0f;
+}
+
+void Quaternion::Normalize()
+{
+	float len = Length();
+	x /= len;
+	y /= len;
+	z /= len;
+	w /= len;
+}
+
+Quaternion Quaternion::FromMatrix(const Matrix4Row& m)
+{
+
+	Quaternion q;
+	if (const float trace = m.mat[0][0] + m.mat[1][1] + m.mat[2][2]; trace > 0.0f)
+	{
+		float s = sqrtf(trace + 1.0f) * 2.0f;
+		q.w = 0.25f * s;
+		q.x = (m.mat[2][1] - m.mat[1][2]) / s;
+		q.y = (m.mat[0][2] - m.mat[2][0]) / s;
+		q.z = (m.mat[1][0] - m.mat[0][1]) / s;
+	}
+	else if ((m.mat[0][0] > m.mat[1][1]) && (m.mat[0][0] > m.mat[2][2]))
+	{
+		float s = sqrtf(1.0f + m.mat[0][0] - m.mat[1][1] - m.mat[2][2]) * 2.0f;
+		q.w = (m.mat[2][1] - m.mat[1][2]) / s;
+		q.x = 0.25f * s;
+		q.y = (m.mat[0][1] + m.mat[1][0]) / s;
+		q.z = (m.mat[0][2] + m.mat[2][0]) / s;
+	}
+	else if (m.mat[1][1] > m.mat[2][2])
+	{
+		float s = sqrtf(1.0f + m.mat[1][1] - m.mat[0][0] - m.mat[2][2]) * 2.0f;
+		q.w = (m.mat[0][2] - m.mat[2][0]) / s;
+		q.x = (m.mat[0][1] + m.mat[1][0]) / s;
+		q.y = 0.25f * s;
+		q.z = (m.mat[1][2] + m.mat[2][1]) / s;
+	}
+	else
+	{
+		float s = sqrtf(1.0f + m.mat[2][2] - m.mat[0][0] - m.mat[1][1]) * 2.0f;
+		q.w = (m.mat[1][0] - m.mat[0][1]) / s;
+		q.x = (m.mat[0][2] + m.mat[2][0]) / s;
+		q.y = (m.mat[1][2] + m.mat[2][1]) / s;
+		q.z = 0.25f * s;
+	}
+	q.Normalize();
+	return q;
+}
+
+Matrix4 Quaternion::AsMatrix() const
+{
+	// Transposed?
+
+	const float xx = x * x;
+	const float yy = y * y;
+	const float zz = z * z;
+	const float ww = w * w;
+	const float xy = x * y;
+	const float xz = x * z;
+	const float xw = x * w;
+	const float yz = y * z;
+	const float yw = y * w;
+	const float zw = z * w;
+
+
+	array<float, 16> temp;
+
+	temp[0] = 1.0f - 2.0f * (yy + zz);
+	temp[1] = 2.0f * (xy - zw);
+	temp[2] = 2.0f * (xz + yw);
+	temp[3] = 0.0f;
+
+	temp[4] = 2.0f * (xy + zw);
+	temp[5] = 1.0f - 2.0f * (xx + zz);
+	temp[6] = 2.0f * (yz - xw);
+	temp[7] = 0.0f;
+
+	temp[8] = 2.0f * (xz - yw);
+	temp[9] = 2.0f * (yz + xw);
+	temp[10] = 1.0f - 2.0f * (xx + yy);
+	temp[11] = 0.0f;
+
+	temp[12] = 0.0f;
+	temp[13] = 0.0f;
+	temp[14] = 0.0f;
+	temp[15] = 1.0f;
+
+	Matrix4 m = Matrix4(temp);
+	return m;
+}
+
+Matrix4Row Quaternion::AsMatrixRow() const
+{
+	Matrix4Row m;
+
+	const float xx = x * x;
+	const float yy = y * y;
+	const float zz = z * z;
+	const float ww = w * w;
+	const float xy = x * y;
+	const float xz = x * z;
+	const float xw = x * w;
+	const float yz = y * z;
+	const float yw = y * w;
+	const float zw = z * w;
+
+	m.mat[0][0] = 1.0f - 2.0f * (yy + zz);
+	m.mat[0][1] = 2.0f * (xy - zw);
+	m.mat[0][2] = 2.0f * (xz + yw);
+	m.mat[0][3] = 0.0f;
+
+	m.mat[1][0] = 2.0f * (xy + zw);
+	m.mat[1][1] = 1.0f - 2.0f * (xx + zz);
+	m.mat[1][2] = 2.0f * (yz - xw);
+	m.mat[1][3] = 0.0f;
+
+	m.mat[2][0] = 2.0f * (xz - yw);
+	m.mat[2][1] = 2.0f * (yz + xw);
+	m.mat[2][2] = 1.0f - 2.0f * (xx + yy);
+	m.mat[2][3] = 0.0f;
+
+	m.mat[3][0] = 0.0f;
+	m.mat[3][1] = 0.0f;
+	m.mat[3][2] = 0.0f;
+	m.mat[3][3] = 1.0f;
+
+	return m;
+}
