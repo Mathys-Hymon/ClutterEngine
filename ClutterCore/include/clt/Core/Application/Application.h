@@ -21,8 +21,8 @@ namespace clt
         float mLastTime = 0.0f;
 
         public:
-        Application(const ApplicationCommandLineArgs& args = ApplicationCommandLineArgs());
-        virtual ~Application();
+        explicit Application(const ApplicationCommandLineArgs& args = ApplicationCommandLineArgs());
+        virtual ~Application() = default;
 
         void Run();
         void PushLayer(Layer* layer);

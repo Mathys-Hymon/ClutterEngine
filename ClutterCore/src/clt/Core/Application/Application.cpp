@@ -6,17 +6,18 @@
 #include <clt/Core/EngineContext.h>
 #include <clt/Core/Debug/Log.h>
 #include <clt/Core/IWindow.h>
+#include <clt/Renderer/Renderer.h>
 
 namespace clt
 {
     Application::Application(const ApplicationCommandLineArgs& args)
     {
         Core::Log::Init();
-        mWindow = std::unique_ptr<IWindow>(IWindow::Create());
-    }
+        Timer::Initialize();
 
-    Application::~Application()
-    {
+        graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
+
+        mWindow = std::unique_ptr<IWindow>(IWindow::Create());
     }
 
     void Application::Run()
@@ -25,11 +26,11 @@ namespace clt
 
         while (mIsRunning)
         {
-            float timestep = 0.016f;
+            float dt = Timer::ComputeDeltaTime();
 
             if (mWindow) mWindow->OnUpdate();
 
-            for (Layer* layer : mLayerStack) layer->OnUpdate(timestep);
+            for (Layer* layer : mLayerStack) layer->OnUpdate(dt);
         }
     }
 
@@ -37,15 +38,14 @@ namespace clt
     {
         mLayerStack.PushLayer(layer);
 
-        EngineContext context(mWindow.get());
+        const EngineContext context(mWindow.get());
         layer->OnAttach(context);
     }
 
     void Application::PushOverlay(Layer* overlay)
     {
         mLayerStack.PushOverlay(overlay);
-        EngineContext context(mWindow.get());
+        const EngineContext context(mWindow.get());
         overlay->OnAttach(context);
     }
-
 }

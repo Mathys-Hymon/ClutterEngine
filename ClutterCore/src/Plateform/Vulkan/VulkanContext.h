@@ -7,12 +7,12 @@ namespace clt
 {
     namespace graphic
     {
-        class OpenGLContext final : public context
+        class VulkanContext final : public context
         {
             GLFWwindow* mWindowHandle;
 
         public:
-            explicit OpenGLContext(GLFWwindow* windowHandle);
+            explicit VulkanContext(GLFWwindow* windowHandle);
 
             void Init() override;
             void SwapBuffers() override;

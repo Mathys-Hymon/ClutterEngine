@@ -11,7 +11,7 @@ namespace clt
 
         void Log::Init()
         {
-            spdlog::set_pattern("%^[%T] %n: %v%$");
+            spdlog::set_pattern("%^[%T] [%l] %s:%# > %v%$");
 
             sCoreLogger = spdlog::stdout_color_mt("CLUTTER");
             sCoreLogger->set_level(spdlog::level::trace);

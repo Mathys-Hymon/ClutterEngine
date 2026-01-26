@@ -36,9 +36,7 @@ void clt::LayerStack::PopLayer(Layer* layer)
 
 void clt::LayerStack::PopOverlay(Layer* overlay)
 {
-    auto it = std::find(mLayers.begin() + mLayerInsertIndex, mLayers.end(), overlay);
-
-    if (it != mLayers.end())
+    if (const auto it = std::find(mLayers.begin() + mLayerInsertIndex, mLayers.end(), overlay); it != mLayers.end())
     {
         overlay->OnDetach();
         mLayers.erase(it);

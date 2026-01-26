@@ -10,7 +10,7 @@ namespace clt
         std::string mDebugName;
 
     public:
-        Layer(const std::string& name = "Layer") : mDebugName(name) {};
+        explicit Layer(const std::string& name = "Layer") : mDebugName(name) {};
         virtual ~Layer() = default;
 
         virtual void OnAttach(const EngineContext& context) {}
