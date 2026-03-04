@@ -63,7 +63,7 @@ namespace clt
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
         bool OnMouseMoved(MouseMovedEvent& e);
-        bool OnMouseScrolled(MouseScrolledEvent& e);
+        bool OnMouseScrolled(MouseScrollEvent& e);
 
         std::unordered_map<EKey, bool> mKeyStates;
         std::unordered_map<EMouseButton, bool> mMouseStates;
@@ -82,6 +82,6 @@ namespace clt
         bool mShowMouse = false;
         bool mLockMouse = true;
 
-        float mControllerDeadzone = 0.2f;
+        float mControllerDeadZone = 0.2f;
     };
 }

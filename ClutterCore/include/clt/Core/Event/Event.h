@@ -14,7 +14,7 @@ namespace clt
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-    enum class EventCategory : uint8_t
+    enum EventCategory : uint8_t
     {
         None = 0,
         EventCategoryApplication    = (1 << 0),
@@ -28,7 +28,7 @@ namespace clt
 virtual EventType GetEventType() const override { return GetStaticType(); }\
 virtual const char* GetName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
+#define EVENT_CLASS_CATEGORY(category) virtual uint8_t GetCategoryFlags() const override { return category; }
 
     class Event
     {
@@ -67,11 +67,6 @@ virtual const char* GetName() const override { return #type; }
                 return true;
             }
             return false;
-        }
-
-        inline std::ostream& operator<<(std::ostream& os, const Event& e)
-        {
-            return os << e.ToString();
         }
     };
 }

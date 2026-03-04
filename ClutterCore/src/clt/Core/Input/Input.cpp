@@ -20,3 +20,27 @@ bool clt::Input::IsKeyPressed(EKey key)
 bool clt::Input::IsMouseButtonPressed(EMouseButton button)
 {
 }
+
+bool clt::Input::OnKeyPressed(KeyPressedEvent& e)
+{
+}
+
+bool clt::Input::OnKeyReleased(KeyReleasedEvent& e)
+{
+}
+
+bool clt::Input::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+{
+}
+
+bool clt::Input::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
+{
+}
+
+bool clt::Input::OnMouseMoved(MouseMovedEvent& e)
+{
+}
+
+bool clt::Input::OnMouseScrolled(MouseScrollEvent& e)
+{
+}
