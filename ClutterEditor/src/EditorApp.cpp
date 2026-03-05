@@ -9,7 +9,7 @@ class EditorLayer : public clt::Layer
 public:
     EditorLayer() : Layer("EditorLayer") {}
 
-    void OnAttach(const clt::EngineContext& context) override
+    void OnAttach(const clt::engine::Context& context) override
     {
         if (context.Window)
         {
@@ -24,6 +24,11 @@ public:
     {
         // std::cout << "Update..." << std::endl;
     }
+
+    void OnEvent(clt::Event& e) override
+    {
+
+    }
 };
 
 class ClutterEditor : public clt::Application {
@@ -34,7 +39,7 @@ public:
         PushLayer(new EditorLayer());
     }
 
-    ~ClutterEditor() {}
+    ~ClutterEditor() override {}
 };
 
 clt::Application* clt::CreateApplication(clt::ApplicationCommandLineArgs args)

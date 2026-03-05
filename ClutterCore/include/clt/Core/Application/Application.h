@@ -4,6 +4,7 @@
 
 #include "../Layers/LayerStack.h"
 #include "../IWindow.h"
+#include "clt/Core/Event/ApplicationEvent.h"
 
 namespace clt
 {
@@ -20,7 +21,10 @@ namespace clt
         bool mIsRunning = true;
         float mLastTime = 0.0f;
 
+        bool OnWindowClose(WindowCloseEvent& e);
+
         public:
+
         explicit Application(const ApplicationCommandLineArgs& args = ApplicationCommandLineArgs());
         virtual ~Application() = default;
 
@@ -28,7 +32,9 @@ namespace clt
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
 
-        IWindow& GetWindow() { return *mWindow; }
+        void OnEvent(Event& e);
+
+        IWindow& GetWindow() const { return *mWindow; }
     };
 
     Application* CreateApplication(ApplicationCommandLineArgs args);

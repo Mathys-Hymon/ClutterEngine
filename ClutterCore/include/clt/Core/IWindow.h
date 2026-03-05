@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CLUTTERENGINE_IWINDOW_H
+#define CLUTTERENGINE_IWINDOW_H
+
 #include <cstdint>
 #include <functional>
 #include  <string>
@@ -25,7 +27,7 @@ namespace clt
         virtual uint32_t GetWidth() const = 0;
         virtual uint32_t GetHeight() const = 0;
 
-        virtual void SetEventCallback(const std::function<void()>& callback) = 0;
+        virtual void SetEventCallback(const std::function<void(class Event&)>& callback) = 0;
         virtual void* GetNativeWindow() const = 0;
 
         virtual void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) = 0;
@@ -37,3 +39,5 @@ namespace clt
 
     };
 }
+
+#endif

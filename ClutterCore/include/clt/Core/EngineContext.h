@@ -4,10 +4,13 @@ namespace clt
 {
     class IWindow;
 
-    struct EngineContext
+    namespace engine
     {
-        IWindow* Window;
+        struct Context
+        {
+            IWindow* Window;
 
-        EngineContext(IWindow* window) : Window(window) {}
-    };
+            Context(IWindow* window) : Window(window) {}
+        };
+    }
 }

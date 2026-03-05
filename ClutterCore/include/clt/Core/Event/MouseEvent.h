@@ -13,8 +13,8 @@ namespace clt
         MouseMovedEvent(const float x, const float y)
             : mMouseX(x), mMouseY(y) {}
 
-        inline float GetX() const { return mMouseX; }
-        inline float GetY() const { return mMouseY; }
+        float GetX() const { return mMouseX; }
+        float GetY() const { return mMouseY; }
 
         std::string ToString() const override
         {
@@ -35,8 +35,8 @@ namespace clt
         MouseScrollEvent(const float x, const float y)
             : mXOffset(x), mYOffset(y) {}
 
-        inline float GetXOffset() const { return mXOffset; }
-        inline float GetYOffset() const { return mYOffset; }
+        float GetXOffset() const { return mXOffset; }
+        float GetYOffset() const { return mYOffset; }
 
 
         std::string ToString() const override
@@ -53,11 +53,11 @@ namespace clt
     class MouseButtonEvent : public Event
     {
     protected:
-        explicit MouseButtonEvent(int button) : mButton(button) {}
+        explicit MouseButtonEvent(const int button) : mButton(button) {}
         int mButton;
 
     public:
-        inline int GetButton() const { return mButton; }
+        int GetButton() const { return mButton; }
         EVENT_CLASS_CATEGORY(EventCategory::EventCategoryMouse | EventCategory::EventCategoryInput | EventCategory::EventCategoryMouseButton)
     };
 

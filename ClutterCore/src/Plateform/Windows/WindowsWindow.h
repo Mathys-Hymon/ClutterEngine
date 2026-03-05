@@ -16,7 +16,7 @@ namespace clt
             std::string Title;
             uint32_t Width, Height;
             bool VSync;
-            std::function<void()> EventCallback;
+            std::function<void(class Event&)> EventCallback;
         };
 
         WindowData mData;
@@ -24,14 +24,14 @@ namespace clt
         public:
 
         WindowsWindow(const WindowProps& props);
-        virtual ~WindowsWindow();
+        ~WindowsWindow() override;
 
         void OnUpdate() override;
 
         uint32_t GetWidth() const override { return mData.Width; }
         uint32_t GetHeight() const override { return mData.Height; }
 
-        inline void SetEventCallback(const std::function<void()>& callback) override { mData.EventCallback = callback; }
+        inline void SetEventCallback(const std::function<void(Event&)>& callback) override { mData.EventCallback = callback; }
         void* GetNativeWindow() const override { return mWindowHandle; }
 
         void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) override;

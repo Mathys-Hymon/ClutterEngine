@@ -11,13 +11,13 @@ int main(int argc, char** argv)
     args.Count = argc;
     args.Args = argv;
 
-    // Création
+    // Creation
     auto app = clt::CreateApplication(args);
 
-    // Boucle infinie
+    // Loop
     app->Run();
 
-    // Nettoyage
+    // Destructor
     delete app;
 
     return 0;

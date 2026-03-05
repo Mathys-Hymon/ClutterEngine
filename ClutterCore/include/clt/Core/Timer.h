@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CLUTTERENGINE_TIMER_H
+#define CLUTTERENGINE_TIMER_H
+
 #include <chrono>
 
 namespace clt
@@ -22,3 +24,5 @@ namespace clt
         static float clampedDeltaTime;
     };
 }
+
+#endif

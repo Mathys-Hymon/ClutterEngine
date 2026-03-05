@@ -30,10 +30,10 @@ namespace clt
 
         struct VectMapping
         {
-            EKey XpositiveKey;
+            EKey XPositiveKey;
             EKey XNegativeKey;
 
-            EKey YpositiveKey;
+            EKey YPositiveKey;
             EKey YNegativeKey;
         };
 
@@ -53,17 +53,17 @@ namespace clt
         void BindAction(const std::string& name, EInputState state, std::function<void()> callback);
         void BindAxis(const std::string& name, std::function<void(float)> callback);
 
-        bool IsKeyPressed(EKey key);
-        bool IsMouseButtonPressed(EMouseButton button);
+        static bool IsKeyPressed(EKey key);
+        static bool IsMouseButtonPressed(EMouseButton button);
         Vector2 GetMousePosition() const { return mLastMousePosition; }
 
     private:
-        bool OnKeyPressed(KeyPressedEvent& e);
-        bool OnKeyReleased(KeyReleasedEvent& e);
-        bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-        bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
-        bool OnMouseMoved(MouseMovedEvent& e);
-        bool OnMouseScrolled(MouseScrollEvent& e);
+        static bool OnKeyPressed(KeyPressedEvent& e);
+        static bool OnKeyReleased(KeyReleasedEvent& e);
+        static bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+        static bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
+        static bool OnMouseMoved(MouseMovedEvent& e);
+        static bool OnMouseScrolled(MouseScrollEvent& e);
 
         std::unordered_map<EKey, bool> mKeyStates;
         std::unordered_map<EMouseButton, bool> mMouseStates;

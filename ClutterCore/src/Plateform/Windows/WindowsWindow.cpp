@@ -4,6 +4,7 @@
 #include "../../ClutterCore/src/Plateform/OpenGL/OpenGLContext.h"
 #include "../../ClutterCore/src/Plateform/Vulkan/VulkanContext.h"
 #include "clt/Core/Debug/Log.h"
+#include "clt/Core/Event/ApplicationEvent.h"
 #include "clt/Renderer/Renderer.h"
 #include "glad/glad.h"
 
@@ -28,10 +29,10 @@ void clt::WindowsWindow::ResizeViewportCentered(const uint32_t width,const uint3
     GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
-    const int xpos = (mode->width - width) / 2;
-    const int ypos = (mode->height - height) / 2;
+    const int xpos = (mode->width - width) * 0.5f;
+    const int ypos = (mode->height - height) * 0.5f;
 
-    glfwSetWindowSize(mWindowHandle, width, height);
+    glfwSetWindowSize(mWindowHandle, mData.Width, height);
     glfwSetWindowPos(mWindowHandle, xpos, ypos);
 
     glfwMakeContextCurrent(mWindowHandle);
@@ -94,6 +95,14 @@ void clt::WindowsWindow::Init(const WindowProps& props)
     glfwSetWindowUserPointer(mWindowHandle, &mData);
 
     glfwSwapInterval(mData.VSync); // VSync ON
+
+    glfwSetWindowCloseCallback(mWindowHandle, [](GLFWwindow* window)
+    {
+        const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+        WindowCloseEvent event;
+        data.EventCallback(event);
+    });
+
 }
 
 void clt::WindowsWindow::Shutdown()
