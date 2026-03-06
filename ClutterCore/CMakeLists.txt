@@ -55,6 +55,7 @@ target_link_libraries(ClutterCore
         glfw
         glm::glm
         spdlog::spdlog
+		EnTT::EnTT
         ${CMAKE_DL_LIBS}
 )
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <memory>
 
 #include "../Layers/LayerStack.h"
@@ -32,10 +33,11 @@ namespace clt
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
 
-        void OnEvent(Event& e);
+        virtual void OnEvent(Event& e);
 
         IWindow& GetWindow() const { return *mWindow; }
     };
 
     Application* CreateApplication(ApplicationCommandLineArgs args);
+
 }

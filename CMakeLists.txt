@@ -45,6 +45,11 @@ message(STATUS "Fetching spdlog...")
 FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog.git GIT_TAG v1.12.0)
 FetchContent_MakeAvailable(spdlog)
 
+# 2. EnTT
+message(STATUS "Fetching EnTT...")
+FetchContent_Declare(entt GIT_REPOSITORY https://github.com/skypjack/entt.git GIT_TAG v3.16.0)
+FetchContent_MakeAvailable(entt)
+
 # --- DEFINITION DE LA LIBRAIRIE IMGUI (Accessible par Editor) ---
 set(IMGUI_DIR ${imgui_SOURCE_DIR})
 file(GLOB IMGUI_SOURCES
