@@ -5,15 +5,18 @@
 
 namespace clt
 {
+    class Actor;
     class Level
     {
-        entt::registry& mRegistry;
+        entt::registry mRegistry;
 
-        public:
+    public:
+        Level() = default;
+        ~Level() = default;
 
         virtual void OnUpdate(float dt);
 
-
+        Actor CreateActor();
 
     };
 }
