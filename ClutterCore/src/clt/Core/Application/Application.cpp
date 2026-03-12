@@ -9,6 +9,7 @@
 #include <clt/Renderer/Renderer.h>
 
 #include "clt/Core/Timer.h"
+#include "clt/Core/Meta/Reflection.h"
 
 namespace clt
 {
@@ -23,6 +24,10 @@ namespace clt
         mWindow = std::unique_ptr<IWindow>(IWindow::Create());
 
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
+
+        meta::Initialize();
+
+        CLT_CORE_INFO("Clutter Engine Started");
     }
 
     bool Application::OnWindowClose(WindowCloseEvent&)
@@ -33,11 +38,10 @@ namespace clt
 
     void Application::Run()
     {
-        CLT_CORE_INFO("Clutter Engine Started");
 
         while (mIsRunning)
         {
-            float dt = Timer::ComputeDeltaTime();
+            const float dt = Timer::ComputeDeltaTime();
 
             if (mWindow) mWindow->OnUpdate();
 

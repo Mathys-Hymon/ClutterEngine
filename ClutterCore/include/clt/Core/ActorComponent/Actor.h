@@ -4,10 +4,10 @@
 #include <entt/entt.hpp>
 
 #include "clt/Core/Debug/Log.h"
+#include "clt/Core/Level/Level.h"
 
 namespace clt
 {
-    class Level;
     class Actor
     {
         entt::entity mID{0};

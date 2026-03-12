@@ -17,11 +17,9 @@ namespace clt
         virtual void OnUpdate(const float dt);
 
         Actor CreateActor();
-        const entt::registry& Registry() { return mRegistry; }
+        entt::registry& Registry() { return mRegistry; }
 
     };
 }
-
-
 
 #endif //CLUTTERENGINE_LEVEL_H

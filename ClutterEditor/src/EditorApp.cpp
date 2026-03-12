@@ -4,7 +4,11 @@
 #include <clt/Core/EngineContext.h>
 #include <iostream>
 
+#include "clt/Core/ActorComponent/Actor.h"
+#include "clt/Core/ActorComponent/Components.h"
 #include "clt/Core/Debug/Log.h"
+#include "clt/Core/Level/Level.h"
+#include "clt/Core/Meta/Serializer.h"
 
 class EditorLayer : public clt::Layer
 {
@@ -15,6 +19,33 @@ public:
     {
         if (context.Window)
         {
+            clt::Level level;
+
+            auto actor = level.CreateActor();
+
+            auto& transform = actor.AddComponent<clt::Transform>();
+
+            transform.position = {2, 25, 3};
+
+            const auto temp = actor.GetComponent<clt::Transform>();
+
+            CLUTTER_INFO("actor location :  -> X: {}, Y: {}, Z: {}",
+              temp->position.x,
+              temp->position.y,
+              temp->position.z);
+
+
+            clt::meta::Serializer s(&level);
+
+            if (s.Serialize("test.cltLevel"))
+            {
+                CLUTTER_INFO("Level saved successfully");
+            }
+            else
+            {
+                CLUTTER_INFO("Level could not be saved");
+            }
+
         }
         else
         {
@@ -33,7 +64,14 @@ public:
     }
 };
 
-class ClutterEditor : public clt::Application {
+
+
+
+
+
+
+class ClutterEditor : public clt::Application
+{
 public:
     ClutterEditor(const clt::ApplicationCommandLineArgs& args)
         : Application(args)
@@ -43,6 +81,7 @@ public:
 
     ~ClutterEditor() override {}
 };
+
 
 clt::Application* clt::CreateApplication(clt::ApplicationCommandLineArgs args)
 {

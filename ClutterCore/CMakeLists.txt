@@ -1,4 +1,6 @@
 project(ClutterCore)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # --- GLAD ---
 set(GLAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad)
@@ -7,6 +9,9 @@ set(GLAD_SOURCES "${GLAD_DIR}/src/glad.c")
 if(NOT EXISTS "${GLAD_SOURCES}")
     message(FATAL_ERROR "ERROR : Cant find glad.c : ${GLAD_SOURCES}")
 endif()
+
+# --- JSON ---
+set(JSON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/json)
 
 # --- SOURCES ---
 file(GLOB_RECURSE CORE_SOURCES 
@@ -49,6 +54,7 @@ endif()
 # --- INCLUDES ---
 target_include_directories(ClutterCore SYSTEM PUBLIC
 		${GLAD_DIR}/include
+		${JSON_DIR}/
 )
 
 target_include_directories(ClutterCore
