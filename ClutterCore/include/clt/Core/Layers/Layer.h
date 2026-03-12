@@ -14,12 +14,12 @@ namespace clt
         explicit Layer(const std::string& name = "Layer") : mDebugName(name) {};
         virtual ~Layer() = default;
 
-        virtual void OnAttach(const engine::Context& context) {}
+        virtual void OnAttach([[maybe_unused]] const engine::Context& context) {}
         virtual void OnDetach() {};
 
-        virtual void OnUpdate(const float& dt) {}
+        virtual void OnUpdate([[maybe_unused]]const float dt) {}
         virtual void OnRender() {}
-        virtual void OnEvent(Event& e) {}
+        virtual void OnEvent([[maybe_unused]] Event& e) {}
 
         const std::string& GetName() const { return mDebugName; }
     };

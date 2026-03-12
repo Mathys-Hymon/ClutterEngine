@@ -14,9 +14,10 @@ namespace clt
         Level() = default;
         ~Level() = default;
 
-        virtual void OnUpdate(float dt);
+        virtual void OnUpdate(const float dt);
 
         Actor CreateActor();
+        const entt::registry& Registry() { return mRegistry; }
 
     };
 }

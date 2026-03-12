@@ -1,5 +1,5 @@
 #pragma once
-#include "clt/Core/Math/Color.h"
+#include "clt/Core/Math/Math.h"
 
 namespace clt::graphic
 {

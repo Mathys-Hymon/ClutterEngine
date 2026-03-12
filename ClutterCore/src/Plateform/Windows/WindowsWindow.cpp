@@ -13,12 +13,12 @@ clt::IWindow* clt::IWindow::Create(const clt::WindowProps& props)
     return new WindowsWindow(props);
 }
 
-void clt::WindowsWindow::ResizeViewport(const uint32_t startWidth,const uint32_t startHeight,const uint32_t width,const uint32_t height)
+void clt::WindowsWindow::ResizeViewport(const uint32_t /*startWidth*/,const uint32_t /*startHeight*/,const uint32_t width,const uint32_t height)
 {
     mData.Width = width;
     mData.Height = height;
 
-    glfwSetWindowSize(mWindowHandle, width, height);
+    glfwSetWindowSize(mWindowHandle, static_cast<int>(width), static_cast<int>(height));
 }
 
 void clt::WindowsWindow::ResizeViewportCentered(const uint32_t width,const uint32_t height)
@@ -29,10 +29,10 @@ void clt::WindowsWindow::ResizeViewportCentered(const uint32_t width,const uint3
     GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
-    const int xpos = (mode->width - width) * 0.5f;
-    const int ypos = (mode->height - height) * 0.5f;
+    const int xpos = static_cast<int>(static_cast<float>(static_cast<uint32_t>(mode->width) - width) * 0.5f);
+    const int ypos = static_cast<int>(static_cast<float>(static_cast<uint32_t>(mode->height) - height) * 0.5f);
 
-    glfwSetWindowSize(mWindowHandle, mData.Width, height);
+    glfwSetWindowSize(mWindowHandle, static_cast<int>(width), static_cast<int>(height));
     glfwSetWindowPos(mWindowHandle, xpos, ypos);
 
     glfwMakeContextCurrent(mWindowHandle);

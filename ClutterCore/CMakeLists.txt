@@ -5,7 +5,7 @@ set(GLAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad)
 set(GLAD_SOURCES "${GLAD_DIR}/src/glad.c")
 
 if(NOT EXISTS "${GLAD_SOURCES}")
-    message(FATAL_ERROR "Erreur: glad.c introuvable ici: ${GLAD_SOURCES}")
+    message(FATAL_ERROR "ERROR : Cant find glad.c : ${GLAD_SOURCES}")
 endif()
 
 # --- SOURCES ---
@@ -15,8 +15,8 @@ file(GLOB_RECURSE CORE_SOURCES
     "include/*.h"   # public headers (ex: Application.h)
 )
 
-# --- CREATION LIB STATIQUE (.lib) ---
-# C'est ici que ça se joue : STATIC au lieu de SHARED
+# --- CREATING STATIC LIB (.lib) ---
+
 add_library(ClutterCore STATIC
         ${CORE_SOURCES}
         ${GLAD_SOURCES}
@@ -33,18 +33,30 @@ target_compile_definitions(ClutterCore
         	GLFW_INCLUDE_VULKAN
 )
 
+if(MSVC)
+	target_compile_options(ClutterCore PUBLIC /W4)
+	set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "/w")
+else ()
+	target_compile_options(ClutterCore PUBLIC
+			-Wall -Wextra -Wpedantic -Wconversion)
+	set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "-w")
+endif ()
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(ClutterCore PUBLIC CLUTTER_DEBUG)
 endif()
 
 # --- INCLUDES ---
+target_include_directories(ClutterCore SYSTEM PUBLIC
+		${GLAD_DIR}/include
+)
+
 target_include_directories(ClutterCore
-        PUBLIC
-        ${GLAD_DIR}/include
+		PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 
-	PRIVATE
-	${CMAKE_CURRENT_SOURCE_DIR}/src
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 # --- LINKS ---
@@ -58,6 +70,14 @@ target_link_libraries(ClutterCore
 		EnTT::EnTT
         ${CMAKE_DL_LIBS}
 )
+
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+	target_compile_definitions(ClutterCore PUBLIC CLT_DEBUG)
+	message(STATUS "ClutterCore: DEBUG Mode")
+else()
+	target_compile_definitions(ClutterCore PUBLIC NDEBUG)
+	message(STATUS "ClutterCore: RELEASE Mode")
+endif()
 
 if(MINGW)
     target_link_options(ClutterCore PRIVATE -static -static-libgcc -static-libstdc++)

@@ -14,7 +14,7 @@ public:
 
     void OnAttach(const clt::engine::Context& context) override;
 
-    void OnUpdate(const float& dt) override
+    void OnUpdate(float dt) override
     {
         // std::cout << "Update..." << std::endl;
     }

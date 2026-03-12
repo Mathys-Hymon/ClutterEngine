@@ -8,10 +8,12 @@
 #include <clt/Core/IWindow.h>
 #include <clt/Renderer/Renderer.h>
 
+#include "clt/Core/Timer.h"
+
 namespace clt
 {
 
-    Application::Application(const ApplicationCommandLineArgs& args)
+    Application::Application(const ApplicationCommandLineArgs&)
     {
         Core::Log::Init();
         Timer::Initialize();
@@ -23,7 +25,7 @@ namespace clt
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent& e)
+    bool Application::OnWindowClose(WindowCloseEvent&)
     {
         mIsRunning = false;
         return true;

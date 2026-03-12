@@ -4,6 +4,8 @@
 #include <clt/Core/EngineContext.h>
 #include <iostream>
 
+#include "clt/Core/Debug/Log.h"
+
 class EditorLayer : public clt::Layer
 {
 public:
@@ -16,16 +18,16 @@ public:
         }
         else
         {
-            std::cout << "Window not initialized yet (Normal pour le test)" << std::endl;
+            CLT_CORE_WARN("Window not initialized yet (Normal pour le test)");
         }
     }
 
-    void OnUpdate(const float& dt) override
+    void OnUpdate(const float /*dt*/) override
     {
         // std::cout << "Update..." << std::endl;
     }
 
-    void OnEvent(clt::Event& e) override
+    void OnEvent(clt::Event& /*e*/) override
     {
 
     }

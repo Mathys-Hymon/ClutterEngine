@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include <clt/Core/Math/Vector/Vector2.h>
+#include <clt/Core/Math/Math.h>
 #include "InputData.h"
 
 #include "clt/Core/Event/Event.h"
@@ -47,8 +47,8 @@ namespace clt
         Input();
         ~Input() = default;
 
-        void OnEvent(Event& e);
-        void Update(float dt);
+        void OnEvent(Event&);
+        void Update(const float /*dt*/);
 
         void BindAction(const std::string& name, EInputState state, std::function<void()> callback);
         void BindAxis(const std::string& name, std::function<void(float)> callback);
