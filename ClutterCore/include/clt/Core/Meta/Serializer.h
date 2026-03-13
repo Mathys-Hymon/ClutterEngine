@@ -1,5 +1,6 @@
 #ifndef CLUTTERENGINE_SERIALIZER_H
 #define CLUTTERENGINE_SERIALIZER_H
+#include "json.hpp"
 #include "clt/Core/Level/Level.h"
 
 namespace clt::meta
@@ -7,6 +8,8 @@ namespace clt::meta
     class Serializer
     {
         Level* mLevel;
+
+        nlohmann::json SerializeAny(const entt::meta_any& meta) const;
 
         public:
 

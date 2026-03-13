@@ -6,54 +6,58 @@
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Meta/Reflection.h"
 
+
 clt::meta::Serializer::Serializer(Level* level) : mLevel(level)
 {
+}
+
+nlohmann::json clt::meta::Serializer::SerializeAny(const entt::meta_any& meta) const
+{
+    nlohmann::json returnValue;
+
+    const auto metaType = meta.type();
+
+    if (metaType == entt::resolve<float>()) returnValue = meta.cast<float>();  // FLOAT
+    else if (metaType == entt::resolve<int>()) returnValue = meta.cast<int>(); // INT
+    else if (metaType == entt::resolve<uint32_t>()) returnValue = meta.cast<uint32_t>(); // UINT32_T
+    else if (metaType == entt::resolve<bool>()) returnValue = meta.cast<bool>(); // BOOL
+
+    else
+    {
+        for (auto [ID, data] : metaType.data())
+        {
+            returnValue[GetName(ID)] = SerializeAny(data.get(meta));
+        }
+    }
+
+    return returnValue;
 }
 
 bool clt::meta::Serializer::Serialize(const std::string& filePath) const
 {
     CLT_CORE_ASSERT(mLevel, "Serializer has no Level attached");
 
-    nlohmann::json data;
+    nlohmann::json rootData;
 
-    data["LevelName"] = "test";
-    data["EngineVersion"] = "0.0.1";
+    rootData["LevelName"] = "test";
+    rootData["EngineVersion"] = "0.0.1";
 
     auto& registry = mLevel->Registry();
 
-    for (auto entity : registry.storage<entt::entity>())
+    for (const auto entity : registry.storage<entt::entity>())
     {
-        CLUTTER_INFO("ENTITY ID : {}", static_cast<uint32_t>(entity));
+        const std::string entityStr = std::to_string(static_cast<uint32_t>(entity));
 
         for (auto [id, storage] : registry.storage())
         {
             if (storage.contains(entity))
             {
-                auto metaType = entt::resolve(storage.info());
-
-                if (metaType)
+                if (auto metaType = entt::resolve(storage.info()))
                 {
-                    CLUTTER_INFO("Component Found");
+                    const void* componentPtr = storage.value(entity);
+                    entt::meta_any instance = metaType.from_void(componentPtr);
 
-                    for (auto [mId, mData] : metaType.data())
-                    {
-                        CLUTTER_INFO("id ! {}", GetName(mId));
-
-                        const void* componentPtr = storage.value(entity);
-
-                        entt::meta_any instance = metaType.from_void(componentPtr);
-
-                        entt::meta_any value = mData.get(instance);
-
-                        if (value && value.type() == entt::resolve<float>())
-                        {
-                            CLUTTER_INFO("Valeur : {}", value.cast<float>());
-                        }
-                    }
-                }
-                else
-                {
-                    CLUTTER_INFO("Component Not Found");
+                    rootData["Actors"]["actor - " + entityStr]["components"][GetName(metaType.id())] = SerializeAny(instance);
                 }
             }
         }
@@ -63,7 +67,7 @@ bool clt::meta::Serializer::Serialize(const std::string& filePath) const
 
     if (!file.is_open()) return false;
 
-    file << data.dump(4);
+    file << rootData.dump(4);
     file.close();
 
     return true;
@@ -72,5 +76,6 @@ bool clt::meta::Serializer::Serialize(const std::string& filePath) const
 bool clt::meta::Serializer::Deserialize(const std::string& /*filePath*/) const
 {
     CLT_CORE_ASSERT(mLevel, "Serializer has no Level attached");
+
     return true;
 }
