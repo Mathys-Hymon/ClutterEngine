@@ -32,7 +32,7 @@ namespace clt
         uint32_t GetHeight() const override { return mData.Height; }
 
         inline void SetEventCallback(const std::function<void(Event&)>& callback) override { mData.EventCallback = callback; }
-        void* GetNativeWindow() const override { return mWindowHandle; }
+        GLFWwindow GetNativeWindow() const override { return mWindowHandle; }
 
         void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) override;
         void ResizeViewportCentered(uint32_t width, uint32_t height) override;

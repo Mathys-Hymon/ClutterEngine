@@ -1,0 +1,62 @@
+#include <Services/ImGuiContextService.h>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "clt/Core/IWindow.h"
+#include "GLFW/glfw3.h"
+
+editor::ImGuiContextService::ImGuiContextService(const clt::engine::Context& context, const char* glsl_version) : mGLSL(glsl_version), mContext(context)
+{
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    ImGui::StyleColorsDark();
+
+    if (const auto window = static_cast<GLFWwindow*>(context.Window->GetNativeWindow()))
+    {
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplOpenGL3_Init(glsl_version);
+    }
+}
+
+editor::ImGuiContextService::~ImGuiContextService()
+{
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
+void editor::ImGuiContextService::NewFrame()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
+void editor::ImGuiContextService::Render()
+{
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+
+        if (const auto window = static_cast<GLFWwindow*>(mContext.Window->GetNativeWindow()))
+        {
+        glfwMakeContextCurrent(window);
+        }
+    }
+}
+
+void editor::ImGuiContextService::ApplyStyle(const std::function<void()>& applyTheme)
+{
+    if (applyTheme) applyTheme();
+}

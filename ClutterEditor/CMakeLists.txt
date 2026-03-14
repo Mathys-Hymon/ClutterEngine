@@ -1,17 +1,21 @@
 project(ClutterEditor)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Sources de l'éditeur
-file(GLOB_RECURSE EDITOR_SOURCES "src/*.cpp" "src/*.h")
+# Editor sources
+file(GLOB_RECURSE EDITOR_SOURCES
+        "src/*.cpp"
+        "src/*.h"     # private headers (ex: WindowsWindow.h)
+        "include/*.h" # public headers (ex: Application.h)
+)
 
 add_executable(ClutterEditor ${EDITOR_SOURCES})
 
 # Includes
 target_include_directories(ClutterEditor PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# Links : Editor a besoin du Core pour le moteur, et d'ImGui pour l'UI
-# Note : ImGuiLib est défini dans le CMakeLists.txt racine
 target_link_libraries(ClutterEditor
         PRIVATE
         ClutterCore
