@@ -6,7 +6,6 @@
 
 namespace clt::meta
 {
-
     void SetName(std::string_view name);
     const std::string& GetName(uint32_t hash);
 
@@ -20,7 +19,7 @@ namespace clt::meta
         {
             SetName(name);
             auto hashedString = entt::hashed_string{name.data(), name.size()};
-            entt::meta_factory<T>{}.type(hashedString);
+            entt::meta_factory<T>{}.type(hashedString).template func<&AttachComponent>(entt::hashed_string{"AttachComponent"});
         }
 
         template<auto MemberPtr>
@@ -30,6 +29,11 @@ namespace clt::meta
             auto hashedString = entt::hashed_string{name.data(), name.size()};
             entt::meta_factory<T>{}.template data<MemberPtr>(hashedString);
             return *this;
+        }
+
+        static void AttachComponent(entt::registry* registry, entt::entity actor, T& component)
+        {
+            registry->emplace_or_replace<T>(actor, component);
         }
     };
 

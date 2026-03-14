@@ -21,41 +21,58 @@ public:
         {
             clt::Level level;
 
-            auto actor = level.CreateActor();
-
-            auto& transform = actor.AddComponent<clt::Transform>();
-
-            transform.position = {2, 25, 3};
-
-            const auto temp = actor.GetComponent<clt::Transform>();
-
-            CLUTTER_INFO("actor location :  -> X: {}, Y: {}, Z: {}",
-              temp->position.x,
-              temp->position.y,
-              temp->position.z);
+            // auto actor = level.CreateActor();
+            //
+            // auto& transform = actor.AddComponent<clt::Transform>();
+            //
+            // transform.position = {2, 25, 3};
+            //
+            // const auto temp = actor.GetComponent<clt::Transform>();
 
 
             clt::meta::Serializer s(&level);
 
-            if (s.Serialize("test.cltLevel"))
+            // if (s.Serialize("test.cltLevel"))
+            // {
+            //     CLUTTER_INFO("Level saved successfully");
+            // }
+            // else
+            // {
+            //     CLUTTER_INFO("Level could not be saved");
+            // }
+
+            if (s.Deserialize("test.cltLevel"))
             {
-                CLUTTER_INFO("Level saved successfully");
+                CLUTTER_INFO("Level loaded successfully");
+
+                for (auto e : level.Registry().storage<entt::entity>())
+                {
+                    CLUTTER_INFO("ACTOR ID : {}", static_cast<int>(e));
+                    if (auto comp = level.Registry().try_get<clt::Transform>(e))
+                    {
+                        CLUTTER_INFO("Transform loaded successfully");
+
+                        CLUTTER_INFO("actor location :  -> X: {}, Y: {}, Z: {}",
+                            comp->position.x,
+                            comp->position.y,
+                            comp->position.z);
+                    }
+                }
             }
             else
             {
-                CLUTTER_INFO("Level could not be saved");
+                CLUTTER_INFO("Level could not be loaded");
             }
 
         }
         else
         {
-            CLT_CORE_WARN("Window not initialized yet (Normal pour le test)");
+            CLT_CORE_WARN("Window not initialized yet");
         }
     }
 
     void OnUpdate(const float /*dt*/) override
     {
-        // std::cout << "Update..." << std::endl;
     }
 
     void OnEvent(clt::Event& /*e*/) override

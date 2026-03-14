@@ -5,6 +5,7 @@
 
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Meta/Reflection.h"
+#include "clt/Core/ActorComponent/Actor.h"
 
 
 clt::meta::Serializer::Serializer(Level* level) : mLevel(level)
@@ -57,7 +58,7 @@ bool clt::meta::Serializer::Serialize(const std::string& filePath) const
                     const void* componentPtr = storage.value(entity);
                     entt::meta_any instance = metaType.from_void(componentPtr);
 
-                    rootData["Actors"]["actor - " + entityStr]["components"][GetName(metaType.id())] = SerializeAny(instance);
+                    rootData["Actors"]["actor - " + entityStr]["Components"][GetName(metaType.id())] = SerializeAny(instance);
                 }
             }
         }
@@ -73,9 +74,69 @@ bool clt::meta::Serializer::Serialize(const std::string& filePath) const
     return true;
 }
 
-bool clt::meta::Serializer::Deserialize(const std::string& /*filePath*/) const
+void clt::meta::Serializer::DeserializeAny(const nlohmann::json& json, entt::meta_any& instance) const
+{
+    for (const auto& [key, value] : json.items())
+    {
+        entt::meta_data data = instance.type().data(entt::hashed_string(key.data()));
+
+        if (!data) continue;
+
+        if (data.type() == entt::resolve<float>()) data.set(instance, value.get<float>()); // FLOAT
+        else if (data.type() == entt::resolve<int>())  data.set(instance, value.get<int>()); // INT
+        else if (data.type() == entt::resolve<uint32_t>()) data.set(instance, value.get<uint32_t>()); // UINT32_T
+        else if (data.type() == entt::resolve<bool>()) data.set(instance, value.get<bool>()); // BOOL
+
+        else
+        {
+            entt::meta_any subInstance = data.get(instance);
+
+            DeserializeAny(value, subInstance);
+
+            data.set(instance, subInstance);
+        }
+    }
+}
+
+bool clt::meta::Serializer::Deserialize(const std::string& filePath) const
 {
     CLT_CORE_ASSERT(mLevel, "Serializer has no Level attached");
+
+    std::ifstream file(filePath);
+
+    if (!file.is_open()) return false;
+
+    nlohmann::json rootData;
+
+    file >> rootData;
+
+    for (const auto& [actorID, actorValue] : rootData["Actors"].items())
+    {
+        nlohmann::json components = actorValue;
+
+        Actor actor = mLevel->CreateActor();
+
+        for ( const auto& [componentID, componentValue] : components["Components"].items())
+        {
+
+            if(const entt::meta_type& compType = entt::resolve(entt::hashed_string(componentID.data())))
+            {
+                auto instance = compType.construct();
+
+                if (!instance) continue;
+
+                DeserializeAny(componentValue, instance);
+
+                auto func = compType.func(entt::hashed_string{"AttachComponent"});
+
+                if (!func) continue;
+
+                entt::entity id = actor.GetID();
+
+                func.invoke({}, &mLevel->Registry(), id, instance);
+            }
+        }
+    }
 
     return true;
 }

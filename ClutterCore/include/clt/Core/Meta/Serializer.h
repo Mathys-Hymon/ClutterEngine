@@ -10,6 +10,7 @@ namespace clt::meta
         Level* mLevel;
 
         nlohmann::json SerializeAny(const entt::meta_any& meta) const;
+        void DeserializeAny(const nlohmann::json& json, entt::meta_any& instance) const;
 
         public:
 

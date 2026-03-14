@@ -20,7 +20,7 @@ namespace clt
 
         virtual ~Actor() = default;
 
-        entt::entity GetID();
+        entt::entity GetID() const { return mID; }
 
         template<typename T, typename... Args>
         T& AddComponent(Args&&... args);
