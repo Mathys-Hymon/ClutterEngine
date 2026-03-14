@@ -6,7 +6,7 @@
 ![CMake](https://img.shields.io/badge/CMake-3.20+-success.svg?style=flat&logo=cmake)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-**Clutter Engine** is an educational, tooling-first, ECS-based game engine tailored for Nintendo 3DS homebrew development. Inspired by modern workflows, it features a clear separation between the runtime core and a dedicated PC-based editor.
+**Clutter Engine** is an educational, tooling-first, ECS-based game engine shaped for Nintendo 3DS homebrew development. Inspired by modern workflows, it features a clear separation between the runtime core and a dedicated PC-based editor.
 
 ## ✨ Features
 
