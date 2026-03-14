@@ -8,7 +8,7 @@ public:
     ClutterEditor(const clt::ApplicationCommandLineArgs& args)
         : Application(args)
     {
-        PushLayer(new EditorLayer());
+        PushLayer(new editor::EditorLayer());
     }
 
     ~ClutterEditor() override {}

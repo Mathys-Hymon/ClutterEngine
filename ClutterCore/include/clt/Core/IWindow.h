@@ -5,9 +5,6 @@
 #include <functional>
 #include  <string>
 
-#include
-#include
-
 namespace clt
 {
     struct WindowProps
@@ -16,8 +13,8 @@ namespace clt
         uint32_t Width, Height;
 
         WindowProps(const std::string& title = "Clutter Engine",
-            uint32_t width = 1280,
-            uint32_t height = 720)
+            const uint32_t width = 1280,
+            const uint32_t height = 720)
         : Title(title), Width(width), Height(height) {}
     };
 

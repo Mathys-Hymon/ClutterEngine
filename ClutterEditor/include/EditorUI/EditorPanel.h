@@ -39,7 +39,7 @@ namespace editor
         virtual const std::string& GetID() const { return std::string(GetName()); }
 
         // ImGui Window flags for this panel
-        virtual uint32_t GetFlags() const { return 0; }
+        virtual int GetFlags() const { return 0; }
 
         void Open() { mIsOpen = true; }
         void Close()
