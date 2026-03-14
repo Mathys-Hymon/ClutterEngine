@@ -19,6 +19,9 @@ namespace clt::meta
     void Initialize()
     {
 
+            // ------ COMPONENTS ------
+
+
         // --- TRANSFORM ---
 
         Reflector<Transform>("Transform")
@@ -26,12 +29,33 @@ namespace clt::meta
             .Data<&Transform::rotation>("rotation")
             .Data<&Transform::scale>("scale");
 
+
+        Reflector<Sprite>("Sprite")
+            .Data<&Sprite::textureName>("textureName")
+            .Data<&Sprite::flipX>("flipX")
+            .Data<&Sprite::flipY>("flipY")
+            .Data<&Sprite::tint>("tint")
+            .Data<&Sprite::zIndex>("zIndex");
+
+        // ------ STD -------
+
+        Reflector<std::string>("string");
+
+        // ------ MATHS ------
+
+
         // --- VECTOR 3 ---
 
         Reflector<Vector3>("Vector3")
             .Data<&Vector3::x>("x")
             .Data<&Vector3::y>("y")
             .Data<&Vector3::z>("z");
+
+        // --- VECTOR 2 ---
+
+        Reflector<Vector2>("Vector2")
+            .Data<&Vector2::x>("x")
+            .Data<&Vector2::y>("y");
 
         // --- COLOR ---
 

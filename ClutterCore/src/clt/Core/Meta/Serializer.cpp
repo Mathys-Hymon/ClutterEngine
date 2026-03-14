@@ -6,6 +6,7 @@
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Meta/Reflection.h"
 #include "clt/Core/ActorComponent/Actor.h"
+#include <entt/meta/container.hpp>
 
 
 clt::meta::Serializer::Serializer(Level* level) : mLevel(level)
@@ -22,8 +23,46 @@ nlohmann::json clt::meta::Serializer::SerializeAny(const entt::meta_any& meta) c
     else if (metaType == entt::resolve<int>()) returnValue = meta.cast<int>(); // INT
     else if (metaType == entt::resolve<uint32_t>()) returnValue = meta.cast<uint32_t>(); // UINT32_T
     else if (metaType == entt::resolve<bool>()) returnValue = meta.cast<bool>(); // BOOL
+    else if (metaType == entt::resolve<std::string>()) returnValue = meta.cast<std::string>(); // STRING
 
-    else
+    else if (metaType.is_sequence_container()) // VECTOR, LIST, ARRAY, ETC.
+    {
+        nlohmann::json array = nlohmann::json::array();
+
+        for (auto content : meta.as_sequence_container())
+        {
+            array += SerializeAny(content);
+        }
+
+        returnValue = array;
+    }
+    else if (metaType.is_associative_container()) // UNORDERED_MAP, MAP, ETC.
+    {
+        nlohmann::json array = nlohmann::json::object();
+
+        for (auto [key, value] : meta.as_associative_container())
+        {
+
+            std::string finalKey = "";
+            const auto keyType = key.type();
+
+            if (keyType == entt::resolve<int>())                    finalKey = std::to_string(key.cast<int>());
+            else if (keyType == entt::resolve<uint32_t>())          finalKey = std::to_string(key.cast<uint32_t>());
+            else if (keyType == entt::resolve<float>())             finalKey = std::to_string(key.cast<float>());
+            else if (keyType == entt::resolve<bool>())              finalKey = key.cast<bool>() ? "true" : "false";
+            else if (keyType == entt::resolve<std::string>())       finalKey = key.cast<std::string>();
+            else
+            {
+                CLUTTER_WARN("Unsupported dictionary key type. Skipping entry.");
+                continue;
+            }
+
+            array[finalKey] = SerializeAny(value);
+        }
+
+        returnValue = array;
+    }
+    else // IF SUB CLASS OR STRUCT
     {
         for (auto [ID, data] : metaType.data())
         {
