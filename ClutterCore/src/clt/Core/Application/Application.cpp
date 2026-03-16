@@ -1,6 +1,7 @@
 #include <clt/Core/Application/Application.h>
 
 #include <iostream>
+#include <ranges>
 #include <clt/Core/EngineContext.h>
 
 #include <clt/Core/EngineContext.h>
@@ -13,10 +14,9 @@
 
 namespace clt
 {
-
     Application::Application(const ApplicationCommandLineArgs&)
     {
-        Core::Log::Init();
+        core::Log::Init();
         Timer::Initialize();
 
         graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
@@ -38,7 +38,6 @@ namespace clt
 
     void Application::Run()
     {
-
         while (mIsRunning)
         {
             const float dt = Timer::ComputeDeltaTime();
@@ -70,10 +69,8 @@ namespace clt
 
         dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) { return this->OnWindowClose(e); });
 
-        for (auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it)
+        for (const auto layer : std::ranges::reverse_view(mLayerStack))
         {
-            Layer* layer = *it;
-
             if (!layer)
             {
                 CLT_CORE_ERROR("Layer is null");

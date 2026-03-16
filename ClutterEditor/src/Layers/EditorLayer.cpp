@@ -9,12 +9,17 @@
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Level/Level.h"
 #include "clt/Core/Meta/Serializer.h"
-
+#include "Debug/ImGuiConsoleSink.h"
 
 
 void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
+
+    const auto newSink = std::make_shared<log::ImGuiConsoleSink>();
+    clt::core::Log::AddSink(newSink);
+
+    CLUTTER_INFO("Sink connected succesfully");
 
     if (context.Window)
     {
@@ -71,7 +76,7 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
     }
     else
     {
-        CLT_CORE_WARN("Window not initialized yet");
+        CLUTTER_ERROR("Window not initialized yet");
     }
 }
 

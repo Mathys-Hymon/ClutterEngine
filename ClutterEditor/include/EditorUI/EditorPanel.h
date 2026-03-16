@@ -19,12 +19,14 @@ namespace editor
         protected:
         EditorContext* ctx{nullptr};
 
+        EditorContext* GetContext() const { return ctx; }
+
         bool Begin();
         void End();
 
     public:
         EditorPanel(EditorContext* context) : ctx{context} {}
-        ~EditorPanel() = default;
+        virtual ~EditorPanel() = default;
 
         // Visible Label in editor
         virtual const char* GetName() const = 0;
@@ -56,7 +58,7 @@ namespace editor
 
         bool IsOpen() const { return mIsOpen; }
 
-        friend class EditorUIManager;
+        friend class EditorUiManager;
     };
 }
 

@@ -13,7 +13,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/common.h>
 
-namespace clt::Core
+namespace clt::core
 {
     class Log
     {
@@ -22,20 +22,23 @@ namespace clt::Core
 
     public:
         static void Init();
+        static void AddSink(spdlog::sink_ptr sink);
 
         inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return sCoreLogger; }
         inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return sClientLogger; }
     };
 }
 
-// --- Engine Macros (CORE) ---
+namespace clt::log
+{
+    // --- Engine Macros (CORE) ---
 
 #ifdef CLT_DEBUG // DEBUG MODE
-#define CLT_CORE_TRACE(...)    ::clt::Core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::trace, __VA_ARGS__)
-#define CLT_CORE_INFO(...)     ::clt::Core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)
-#define CLT_CORE_WARN(...)     ::clt::Core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::warn, __VA_ARGS__)
-#define CLT_CORE_ERROR(...)    ::clt::Core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::err, __VA_ARGS__)
-#define CLT_CORE_FATAL(...)    ::clt::Core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::critical, __VA_ARGS__)
+#define CLT_CORE_TRACE(...)    ::clt::core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::trace, __VA_ARGS__)
+#define CLT_CORE_INFO(...)     ::clt::core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)
+#define CLT_CORE_WARN(...)     ::clt::core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::warn, __VA_ARGS__)
+#define CLT_CORE_ERROR(...)    ::clt::core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::err, __VA_ARGS__)
+#define CLT_CORE_FATAL(...)    ::clt::core::Log::GetCoreLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::critical, __VA_ARGS__)
 #define CLT_CORE_ASSERT(x, ...) { if(!(x)) { CLT_CORE_ERROR("Assertion Failed: {}", __VA_ARGS__); CLT_DEBUGBREAK(); } }
 
 #else // RELEASE MODE#define CLT_CORE_TRACE(...)
@@ -49,11 +52,11 @@ namespace clt::Core
 // --- Client Macros (CLIENT) ---
 
 #ifdef CLT_DEBUG // DEBUG MODE
-#define CLUTTER_TRACE(...)     ::clt::Core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::trace, __VA_ARGS__)
-#define CLUTTER_INFO(...)      ::clt::Core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)
-#define CLUTTER_WARN(...)      ::clt::Core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::warn, __VA_ARGS__)
-#define CLUTTER_ERROR(...)     ::clt::Core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::err, __VA_ARGS__)
-#define CLUTTER_FATAL(...)     ::clt::Core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::critical, __VA_ARGS__)
+#define CLUTTER_TRACE(...)     ::clt::core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::trace, __VA_ARGS__)
+#define CLUTTER_INFO(...)      ::clt::core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)
+#define CLUTTER_WARN(...)      ::clt::core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::warn, __VA_ARGS__)
+#define CLUTTER_ERROR(...)     ::clt::core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::err, __VA_ARGS__)
+#define CLUTTER_FATAL(...)     ::clt::core::Log::GetClientLogger()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::critical, __VA_ARGS__)
 #define CLUTTER_ASSERT(x, ...) { if(!(x)) { CLUTTER_ERROR("[client] Assertion Failed: {}", __VA_ARGS__); CLT_DEBUGBREAK(); } }
 #else
 #define CLUTTER_TRACE(...)
@@ -63,3 +66,4 @@ namespace clt::Core
 #define CLUTTER_FATAL(...)
 #define CLUTTER_ASSERT(x, ...)
 #endif
+}

@@ -15,7 +15,7 @@ public:
 };
 
 
-clt::Application* clt::CreateApplication(clt::ApplicationCommandLineArgs args)
+clt::Application* clt::CreateApplication(const clt::ApplicationCommandLineArgs args)
 {
     return new ClutterEditor(args);
 }
