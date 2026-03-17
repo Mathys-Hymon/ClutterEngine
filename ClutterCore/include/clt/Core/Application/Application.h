@@ -22,6 +22,8 @@ namespace clt
         bool mIsRunning = true;
         float mLastTime = 0.0f;
 
+        engine::Context mContext;
+
         bool OnWindowClose(WindowCloseEvent& e);
 
         public:

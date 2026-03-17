@@ -56,9 +56,9 @@ void editor::EditorUiManager::Draw()
         dockingPos[DockPosition::right] = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.25f, nullptr, &dock_main_id);
         dockingPos[DockPosition::center] = dock_main_id;
 
-        for (auto panel : mEditorContext->panels->GetPanels())
+        for (const auto& panel : mEditorContext->panels->GetPanels())
         {
-            auto dock = panel->GetDockingPos();
+            auto dock = panel->GetDockingPosition();
             if (dock == DockPosition::none) continue;
 
             ImGui::DockBuilderDockWindow(panel->GetName(), dockingPos[dock]);

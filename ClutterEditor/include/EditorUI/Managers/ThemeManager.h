@@ -1,7 +1,6 @@
 #ifndef CLUTTERENGINE_THEMEMANAGER_H
 #define CLUTTERENGINE_THEMEMANAGER_H
 
-#pragma warning(disable: 4996)
 #include <unordered_map>
 
 #include <string>

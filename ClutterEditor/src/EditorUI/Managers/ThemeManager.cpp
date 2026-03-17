@@ -67,7 +67,7 @@ void editor::ThemeManager::ApplyDefaultTheme()
 void editor::ThemeManager::SaveTheme()
 {
     nlohmann::json root;
-    ImGuiStyle& style = ImGui::GetStyle();
+    const ImGuiStyle& style = ImGui::GetStyle();
 
     if (const std::filesystem::path path(mFilePath); path.has_parent_path())
     {
@@ -117,7 +117,7 @@ bool editor::ThemeManager::LoadTheme()
 
     std::ifstream file(mFilePath);
 
-    CLT_CORE_ASSERT(!file.is_open(), "[ThemeManager::LoadTheme] Failed to open file '{}'", mFilePath);
+    if (!file.is_open()) return false;
 
     try
     {

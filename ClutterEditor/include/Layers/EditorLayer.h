@@ -7,6 +7,7 @@ namespace editor
 {
     class EditorLayer : public clt::Layer
     {
+
     public:
         EditorLayer() : Layer("Editor Layer") {};
 

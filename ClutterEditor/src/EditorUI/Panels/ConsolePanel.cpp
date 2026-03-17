@@ -53,43 +53,44 @@ void editor::ConsolePanel::Draw()
     drawFilterButton("LOG", mShowTrace, traceColor);     ImGui::SameLine();
     drawFilterButton("WARNING", mShowWarning, warningColor); ImGui::SameLine();
     drawFilterButton("ERROR", mShowError, errorColor); ImGui::SameLine();
-    drawFilterButton("CRITICAL", mShowError, errorColor);
+    drawFilterButton("CRITICAL", mShowCritical, errorColor);
 
     ImGui::BeginChild("LogRegion", ImVec2(0, -30), true);
 
-    const bool noFilterActive = !mShowInfo && !mShowTrace && !mShowWarning && !mShowError;
+    const bool noFilterActive = !mShowInfo && !mShowTrace && !mShowWarning && !mShowError && !mShowCritical;
 
-    for (const auto& entry : log::LogHistory::GetEntry())
+    for (const auto& [message, level] : log::LogHistory::GetEntry())
     {
         bool show = noFilterActive;
+
         if (!show)
         {
-            switch (entry.level)
+            switch (level)
             {
-            case spdlog::level::level_enum::info:     show = mShowInfo;     break;
-            case spdlog::level::level_enum::trace:    show = mShowTrace;    break;
-            case spdlog::level::level_enum::warn:     show = mShowWarning;  break;
-            case spdlog::level::level_enum::err:      show = mShowError;    break;
-            case spdlog::level::level_enum::critical: show = mShowCritical; break;
-            default:                                  show = true;          break;
+                case spdlog::level::level_enum::info:     show = mShowInfo;     break;
+                case spdlog::level::level_enum::trace:    show = mShowTrace;    break;
+                case spdlog::level::level_enum::warn:     show = mShowWarning;  break;
+                case spdlog::level::level_enum::err:      show = mShowError;    break;
+                case spdlog::level::level_enum::critical: show = mShowCritical; break;
+                default:                                  show = true;          break;
             }
         }
 
         if (show)
         {
             ImVec4 color;
-            switch (entry.level)
+            switch (level)
             {
-            case spdlog::level::level_enum::info:     color = infoColor;      break;
-            case spdlog::level::level_enum::trace:    color = traceColor;     break;
-            case spdlog::level::level_enum::warn:     color = warningColor;   break;
-            case spdlog::level::level_enum::err:      color = errorColor;     break;
-            case spdlog::level::level_enum::critical: color =  criticalColor; break;
-            default:                                  color = traceColor;     break;
+                case spdlog::level::level_enum::info:     color = infoColor;      break;
+                case spdlog::level::level_enum::trace:    color = traceColor;     break;
+                case spdlog::level::level_enum::warn:     color = warningColor;   break;
+                case spdlog::level::level_enum::err:      color = errorColor;     break;
+                case spdlog::level::level_enum::critical: color =  criticalColor; break;
+                default:                                  color = traceColor;     break;
             }
 
             ImGui::PushStyleColor(ImGuiCol_Text, color);
-            ImGui::TextWrapped("%s", entry.message.c_str());
+            ImGui::TextWrapped("%s", message.c_str());
             ImGui::PopStyleColor();
         }
     }

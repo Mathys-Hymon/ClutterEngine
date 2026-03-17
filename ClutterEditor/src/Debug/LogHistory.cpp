@@ -1,6 +1,6 @@
 #include <Debug/LogHistory.h>
 
-std::deque<editor::log::ConsoleMessage> mLogs;
+std::deque<editor::log::ConsoleMessage> editor::log::LogHistory::mLogs;
 
 void editor::log::LogHistory::AddLog(ConsoleMessage& message)
 {

@@ -1,0 +1,40 @@
+#ifndef CLUTTERENGINE_CONTENTBROWSERPANEL_H
+#define CLUTTERENGINE_CONTENTBROWSERPANEL_H
+
+#include "EditorUI/EditorPanel.h"
+#include "EditorUI/Managers/ThemeManager.h"
+
+namespace editor
+{
+    struct ContentItem
+    {
+        std::string Name;
+        std::string Path;
+        AssetType Type;
+    };
+
+    struct ContentFolder
+    {
+        std::string Name;
+        std::string Path;
+        ContentFolder* Parent;
+        std::vector<ContentFolder> Children;
+        std::vector<ContentItem> Items;
+    };
+
+    class ContentBrowserPanel : public EditorPanel
+    {
+        ContentFolder mRootFolder;
+        ContentFolder* mCurrentFolder;
+
+        ImTextureID mOpenFolderIcon;
+        ImTextureID mCloseFolderIcon;
+        ImTextureID mFolderIcon;
+
+        bool FolderHasChild(ContentFolder* folder, ContentFolder* targetChild);
+
+        void ScanFolderRecursive(ContentFolder& folder);
+    };
+}
+
+#endif //CLUTTERENGINE_CONTENTBROWSERPANEL_H

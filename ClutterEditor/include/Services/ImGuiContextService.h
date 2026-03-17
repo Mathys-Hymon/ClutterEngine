@@ -15,7 +15,7 @@ namespace editor
         ~ImGuiContextService();
 
         void NewFrame();
-        void Render();
+        void Render() const;
 
         void ApplyStyle(const std::function<void()>& applyTheme);
     };

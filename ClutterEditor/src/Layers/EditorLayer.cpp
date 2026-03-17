@@ -1,4 +1,4 @@
-#include "../../include/Layers/EditorLayer.h"
+#include <Layers/EditorLayer.h>
 
 #include <clt/Core/Layers/Layer.h>
 #include <clt/Core/EngineContext.h>
@@ -15,11 +15,6 @@
 void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
-
-    const auto newSink = std::make_shared<log::ImGuiConsoleSink>();
-    clt::core::Log::AddSink(newSink);
-
-    CLUTTER_INFO("Sink connected succesfully");
 
     if (context.Window)
     {

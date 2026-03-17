@@ -21,8 +21,9 @@ namespace clt
 
         graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
 
-        mWindow = std::unique_ptr<IWindow>(IWindow::Create());
+        if (!mWindow) mWindow = std::unique_ptr<IWindow>(IWindow::Create());
 
+        mContext.Window = mWindow.get();
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
 
         meta::Initialize();
@@ -51,16 +52,13 @@ namespace clt
     void Application::PushLayer(Layer* layer)
     {
         mLayerStack.PushLayer(layer);
-
-        const engine::Context context(mWindow.get());
-        layer->OnAttach(context);
+        layer->OnAttach(mContext);
     }
 
     void Application::PushOverlay(Layer* overlay)
     {
         mLayerStack.PushOverlay(overlay);
-        const engine::Context context(mWindow.get());
-        overlay->OnAttach(context);
+        overlay->OnAttach(mContext);
     }
 
     void Application::OnEvent(Event& e)

@@ -5,6 +5,7 @@
 
 #include "Services/EditorContext.h"
 #include "Services/ImGuiContextService.h"
+#include <EditorUI/Managers/ThemeManager.h>
 
 namespace editor
 {

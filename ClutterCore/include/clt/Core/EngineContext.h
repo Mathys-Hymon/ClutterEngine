@@ -9,8 +9,6 @@ namespace clt
         struct Context
         {
             IWindow* Window;
-
-            Context(IWindow* window) : Window(window) {}
         };
     }
 }
