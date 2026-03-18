@@ -17,7 +17,7 @@ namespace clt
         virtual void OnAttach([[maybe_unused]] const engine::Context& context) {}
         virtual void OnDetach() {};
 
-        virtual void OnUpdate([[maybe_unused]]const float dt) {}
+        virtual void OnUpdate([[maybe_unused]]const double dt) {}
         virtual void OnRender() {}
         virtual void OnEvent([[maybe_unused]] Event& e) {}
 

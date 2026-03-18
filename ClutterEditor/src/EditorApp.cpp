@@ -10,7 +10,7 @@ public:
     ClutterEditor(const clt::ApplicationCommandLineArgs& args)
         : Application(args)
     {
-        //PushLayer(new editor::EditorLayer());
+        PushLayer(new editor::EditorLayer());
         PushLayer(new editor::ImGuiLayer());
     }
 

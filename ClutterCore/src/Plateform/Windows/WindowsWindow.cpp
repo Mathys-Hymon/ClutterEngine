@@ -54,6 +54,7 @@ void clt::WindowsWindow::Init(const WindowProps& props)
     mData.Title = props.Title;
     mData.Width = props.Width;
     mData.Height = props.Height;
+    mData.VSync = false;
 
     CLT_CORE_INFO("Create window : {0} ( {1}, {2} )", props.Title, props.Width, props.Height);
 
@@ -63,7 +64,7 @@ void clt::WindowsWindow::Init(const WindowProps& props)
         return;
     }
 
-    graphic::RendererAPIType api = graphic::Renderer::GetRendererAPI();
+    const graphic::RendererAPIType api = graphic::Renderer::GetRendererAPI();
 
     if (api == graphic::RendererAPIType::OpenGL)
     {

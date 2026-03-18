@@ -1,4 +1,6 @@
 #include <Layers/ImGuiLayer.h>
+
+#include "clt/Core/Debug/Log.h"
 #include "EditorUI/Panels/ConsolePanel.h"
 
 void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
@@ -16,7 +18,7 @@ void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
     mUIManager = std::make_unique<EditorUiManager>(mImGuiService.get(), mEditorCtx.get());
 }
 
-void editor::ImGuiLayer::OnUpdate(const float dt)
+void editor::ImGuiLayer::OnUpdate(const double dt)
 {
     Layer::OnUpdate(dt);
 

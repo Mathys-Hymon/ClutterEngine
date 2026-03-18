@@ -41,11 +41,17 @@ namespace clt
     {
         while (mIsRunning)
         {
-            const float dt = Timer::ComputeDeltaTime();
+             const double dt = Timer::ComputeDeltaTime();
+
+            Timer::StartChrono("ApplicationUpdate");
 
             if (mWindow) mWindow->OnUpdate();
 
             for (Layer* layer : mLayerStack) layer->OnUpdate(dt);
+
+            static double delay = Timer::StopChrono("ApplicationUpdate");
+
+            Timer::DelayTime(1.f/144.f - delay);
         }
     }
 

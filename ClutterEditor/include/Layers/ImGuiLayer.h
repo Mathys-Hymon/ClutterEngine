@@ -27,7 +27,7 @@ namespace editor
 
         void OnAttach(const clt::engine::Context& context) override;
 
-        void OnUpdate(float dt) override;
+        void OnUpdate(const double dt) override;
     };
 }
 

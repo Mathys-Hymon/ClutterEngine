@@ -12,7 +12,7 @@ namespace editor
         EditorLayer() : Layer("Editor Layer") {};
 
         void OnAttach(const clt::engine::Context& context) override;
-        void OnUpdate(float /*dt*/) override;
+        void OnUpdate(double /*dt*/) override;
         void OnEvent(clt::Event& ) override;
     };
 }

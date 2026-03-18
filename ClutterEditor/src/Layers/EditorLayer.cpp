@@ -75,7 +75,7 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
     }
 }
 
-void editor::EditorLayer::OnUpdate(const float dt)
+void editor::EditorLayer::OnUpdate(const double dt)
 {
     Layer::OnUpdate(dt);
 }
