@@ -21,8 +21,8 @@ namespace editor
 
         EditorContext* GetContext() const { return ctx; }
 
-        bool Begin();
-        void End();
+        virtual bool Begin();
+        virtual void End();
 
     public:
         EditorPanel(EditorContext* context) : ctx{context} {}

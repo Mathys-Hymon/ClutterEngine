@@ -1,5 +1,5 @@
-#ifndef CLUTTERENGINE_IMGUILAYER_H
-#define CLUTTERENGINE_IMGUILAYER_H
+#ifndef CLUTTERENGINE_PROJECTBROWSERLAYER_H
+#define CLUTTERENGINE_PROJECTBROWSERLAYER_H
 
 #include <clt/Core/Layers/Layer.h>
 #include <clt/Core/EngineContext.h>
@@ -12,18 +12,13 @@
 
 namespace editor
 {
-    class ImGuiLayer : public clt::Layer
+    class ProjectBrowserLayer : public clt::Layer
     {
         std::unique_ptr<PanelManager> mPanelManager;
         std::unique_ptr<ImGuiContextService> mImGuiService;
-        std::unique_ptr<EditorUiManager> mUIManager;
-        std::unique_ptr<EditorContext> mEditorCtx;
-
-        void RegisterDefaultPanels() const;
-        void SetUpDefaultAssets() const;
 
     public:
-        ImGuiLayer() : Layer("ImGui Layer") {}
+        ProjectBrowserLayer() : Layer("Project Browser Layer") {}
 
         void OnAttach(const clt::engine::Context& context) override;
 
@@ -31,4 +26,4 @@ namespace editor
     };
 }
 
-#endif //CLUTTERENGINE_IMGUILAYER_H
+#endif //CLUTTERENGINE_PROJECTBROWSERLAYER_H

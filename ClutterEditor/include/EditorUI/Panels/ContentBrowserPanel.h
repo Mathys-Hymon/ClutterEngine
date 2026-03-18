@@ -34,6 +34,17 @@ namespace editor
         bool FolderHasChild(ContentFolder* folder, ContentFolder* targetChild);
 
         void ScanFolderRecursive(ContentFolder& folder);
+
+        void DrawFolderTree(ContentFolder* folder);
+        void DrawContentItems();
+        void ScanFolder();
+
+    public:
+        ContentBrowserPanel(EditorContext* context);
+        const char* GetName() const override;
+        DockPosition GetDockingPosition() const override;
+
+        void Draw() override;
     };
 }
 

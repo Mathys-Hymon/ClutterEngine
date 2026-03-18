@@ -2,6 +2,11 @@
 
 #include "clt/Core/Debug/Log.h"
 #include "EditorUI/Panels/ConsolePanel.h"
+#include "EditorUI/Panels/ContentBrowserPanel.h"
+#include "EditorUI/Panels/InspectorPanel.h"
+#include "EditorUI/Panels/MenuBarPanel.h"
+#include "EditorUI/Panels/OutlinerPanel.h"
+#include "EditorUI/Panels/ThemePanel.h"
 
 void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
 {
@@ -31,9 +36,15 @@ void editor::ImGuiLayer::OnUpdate(const double dt)
 
 void editor::ImGuiLayer::RegisterDefaultPanels() const
 {
-    mPanelManager->RegisterPanel(
-        std::make_shared<ConsolePanel>(mEditorCtx.get())
-    );
+    mPanelManager->RegisterPanels({
+        std::make_shared<MenuBarPanel>(mEditorCtx.get()),
+        std::make_shared<InspectorPanel>(mEditorCtx.get()),
+        std::make_shared<OutlinerPanel>(mEditorCtx.get()),
+        std::make_shared<ThemePanel>(mEditorCtx.get()),
+        std::make_shared<ContentBrowserPanel>(mEditorCtx.get()),
+        std::make_shared<ConsolePanel>(mEditorCtx.get()),
+    });
+
 }
 
 void editor::ImGuiLayer::SetUpDefaultAssets() const

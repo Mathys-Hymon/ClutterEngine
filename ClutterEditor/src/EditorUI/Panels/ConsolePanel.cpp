@@ -1,7 +1,13 @@
 #include <EditorUI/Panels/ConsolePanel.h>
+#include "Debug/LogHistory.h"
 
 #include "imgui.h"
-#include "Debug/LogHistory.h"
+
+constexpr ImVec4 infoColor(0.4f, 1.0f, 0.4f, 1.0f);
+constexpr ImVec4 traceColor(1.0f, 1.0f, 1.0f, 1.0f);
+constexpr ImVec4 warningColor(1.0f, 1.0f, 0.2f, 1.0f);
+constexpr ImVec4 errorColor(1.0f, 0.2f, 0.2f, 1.0f);
+constexpr ImVec4 criticalColor(1.0f, 0.2f, 0.2f, 1.0f);
 
 editor::ConsolePanel::ConsolePanel(EditorContext* context) : EditorPanel(context)
 {}
@@ -18,13 +24,7 @@ editor::DockPosition editor::ConsolePanel::GetDockingPosition() const
 
 void editor::ConsolePanel::Draw()
 {
-    constexpr ImVec4 infoColor(0.4f, 1.0f, 0.4f, 1.0f);
-    constexpr ImVec4 traceColor(1.0f, 1.0f, 1.0f, 1.0f);
-    constexpr ImVec4 warningColor(1.0f, 1.0f, 0.2f, 1.0f);
-    constexpr ImVec4 errorColor(1.0f, 0.2f, 0.2f, 1.0f);
-    constexpr ImVec4 criticalColor(1.0f, 0.2f, 0.2f, 1.0f);
-
-    auto drawFilterButton = [](const char* label, bool& active, ImVec4 color)
+    auto drawFilterButton = [](const char* label, bool& active, const ImVec4 color)
     {
         auto baseColor = ImVec4(0.133f, 0.127f, 0.150f, 1.0f);
         if (active) baseColor = ImVec4(0.110f, 0.104f, 0.123f, 1.0f);
@@ -57,43 +57,43 @@ void editor::ConsolePanel::Draw()
 
     ImGui::BeginChild("LogRegion", ImVec2(0, -30), true);
 
-    const bool noFilterActive = !mShowInfo && !mShowTrace && !mShowWarning && !mShowError && !mShowCritical;
-
-    for (const auto& [message, level] : log::LogHistory::GetEntry())
+    log::LogHistory::DrawLogs(
+    [&](const editor::log::ConsoleMessage& message)
     {
-        bool show = noFilterActive;
+        bool show = !mShowInfo && !mShowTrace && !mShowWarning && !mShowError && !mShowCritical;
 
         if (!show)
         {
-            switch (level)
+            switch (message.level)
             {
-                case spdlog::level::level_enum::info:     show = mShowInfo;     break;
-                case spdlog::level::level_enum::trace:    show = mShowTrace;    break;
-                case spdlog::level::level_enum::warn:     show = mShowWarning;  break;
-                case spdlog::level::level_enum::err:      show = mShowError;    break;
-                case spdlog::level::level_enum::critical: show = mShowCritical; break;
-                default:                                  show = true;          break;
+            case spdlog::level::level_enum::info:     show = mShowInfo;     break;
+            case spdlog::level::level_enum::trace:    show = mShowTrace;    break;
+            case spdlog::level::level_enum::warn:     show = mShowWarning;  break;
+            case spdlog::level::level_enum::err:      show = mShowError;    break;
+            case spdlog::level::level_enum::critical: show = mShowCritical; break;
+            default:                                  show = true;          break;
             }
         }
 
         if (show)
         {
             ImVec4 color;
-            switch (level)
+            switch (message.level)
             {
-                case spdlog::level::level_enum::info:     color = infoColor;      break;
-                case spdlog::level::level_enum::trace:    color = traceColor;     break;
-                case spdlog::level::level_enum::warn:     color = warningColor;   break;
-                case spdlog::level::level_enum::err:      color = errorColor;     break;
-                case spdlog::level::level_enum::critical: color =  criticalColor; break;
-                default:                                  color = traceColor;     break;
+            case spdlog::level::level_enum::info:     color = infoColor;      break;
+            case spdlog::level::level_enum::trace:    color = traceColor;     break;
+            case spdlog::level::level_enum::warn:     color = warningColor;   break;
+            case spdlog::level::level_enum::err:      color = errorColor;     break;
+            case spdlog::level::level_enum::critical: color =  criticalColor; break;
+            default:                                  color = traceColor;     break;
             }
 
             ImGui::PushStyleColor(ImGuiCol_Text, color);
-            ImGui::TextWrapped("%s", message.c_str());
+            ImGui::TextWrapped("%s", message.message.c_str());
             ImGui::PopStyleColor();
         }
     }
+    );
 
     ImGui::EndChild();
 

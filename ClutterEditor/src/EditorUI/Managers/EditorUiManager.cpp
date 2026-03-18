@@ -69,44 +69,6 @@ void editor::EditorUiManager::Draw()
         ImGui::DockBuilderFinish(dockSpaceID);
     }
 
-    /* Example Menu Bar
-     * TODO : Open, Edit & Save Projects
-     */
-
-    mEditorContext->themes->BindFont(TextType::classic);
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-            { ImGui::EndMenu(); }
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Project Settings")) {}
-            if (ImGui::MenuItem("Appearances"))
-            {
-                auto panel = mEditorContext->panels->FindByID("Editor Appearance");
-                panel->Open();
-            }
-                if (ImGui::BeginMenu("Windows"))
-                {
-                    for (auto& panel : mEditorContext->panels->GetPanels())
-                    {
-                        if (ImGui::MenuItem(panel->GetName(), nullptr, panel->IsOpen()))
-                        {
-                            panel->Toggle();
-                        }
-                    }
-                    ImGui::EndMenu();
-                }
-
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
-
-    ImGui::End();
-
-
-
     for (const auto& ptr : mEditorContext->panels->GetPanels())
     {
         EditorPanel* panel = ptr.get();
@@ -118,6 +80,8 @@ void editor::EditorUiManager::Draw()
         }
         panel->End();
     }
+
+    ImGui::End();
 }
 
 void editor::EditorUiManager::EndFrame()

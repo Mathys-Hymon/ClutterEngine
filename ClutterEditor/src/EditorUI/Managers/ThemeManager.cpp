@@ -17,7 +17,7 @@ editor::ThemeManager::ThemeManager()
         rootPath = drive ? drive : "C:\\Program Files";
     }
 
-    std::filesystem::path fullpath = rootPath / std::filesystem::path("ClutterEngine/Editor/EditorAppearance.CltSettings");
+    const std::filesystem::path fullpath = rootPath / std::filesystem::path("ClutterEngine/Editor/EditorAppearance.CltSettings");
 
     mFilePath = fullpath.string();
     CLT_CORE_INFO("[ThemeManager] Config path set to : {}", mFilePath);
@@ -89,7 +89,7 @@ void editor::ThemeManager::SaveTheme()
 
     std::ofstream file(mFilePath);
 
-    CLT_CORE_ASSERT(!file.is_open(), "[ThemeManager::SaveTheme] Failed to open file '{}'", mFilePath);
+    //CLT_CORE_ASSERT(!file.is_open(), "[ThemeManager::SaveTheme] Failed to open file {}", mFilePath);
 
     try
     {

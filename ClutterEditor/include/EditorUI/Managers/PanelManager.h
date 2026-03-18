@@ -21,6 +21,7 @@ namespace editor
 
     public:
         void RegisterPanel(PanelPtr panel);
+        void RegisterPanels(const std::vector<PanelPtr>& panels);
 
         const std::vector<PanelPtr>& GetPanels() const { return mPanels; }
 

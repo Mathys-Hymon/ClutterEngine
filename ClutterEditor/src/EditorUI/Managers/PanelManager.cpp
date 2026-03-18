@@ -26,6 +26,11 @@ void editor::PanelManager::RegisterPanel(PanelPtr panel)
     }
 }
 
+void editor::PanelManager::RegisterPanels(const std::vector<PanelPtr>& panels)
+{
+    for (auto& panel : panels) RegisterPanel(panel);
+}
+
 editor::EditorPanel* editor::PanelManager::FindByID(const std::string& id) const
 {
     if (const auto it = mPanelsById.find(id); it != mPanelsById.end()) return it->second;
@@ -37,5 +42,5 @@ const std::string& editor::PanelManager::GetRegisteredID(EditorPanel* panel) con
 {
     if (const auto it = mIdOverrides.find(panel); it != mIdOverrides.end()) return it->second;
 
-    return panel ? panel->GetID() : std::string();
+    return panel ? panel->GetID() : std::string("");
  }
