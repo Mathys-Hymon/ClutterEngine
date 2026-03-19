@@ -5,6 +5,7 @@ namespace clt::manager
 {
     class Asset
     {
+    public:
 
     };
     

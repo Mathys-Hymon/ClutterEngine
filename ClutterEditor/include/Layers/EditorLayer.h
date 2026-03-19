@@ -1,6 +1,7 @@
 #ifndef CLUTTERENGINE_EDITORLAYER_H
 #define CLUTTERENGINE_EDITORLAYER_H
 
+#include "clt/Core/Application/Application.h"
 #include "clt/Core/Layers/Layer.h"
 
 namespace editor
@@ -9,7 +10,7 @@ namespace editor
     {
 
     public:
-        EditorLayer() : Layer("Editor Layer") {};
+        EditorLayer(const clt::ApplicationCommandLineArgs& args) : Layer("Editor Layer") {};
 
         void OnAttach(const clt::engine::Context& context) override;
         void OnUpdate(double /*dt*/) override;

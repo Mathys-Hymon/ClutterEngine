@@ -6,6 +6,7 @@
 #include <EditorUI/Managers/PanelManager.h>
 #include "Services/ImGuiContextService.h"
 #include <EditorUI/Managers/EditorUiManager.h>
+#include <clt/Core/EngineContext.h>
 
 #include <iostream>
 #include <memory>
@@ -16,9 +17,16 @@ namespace editor
     {
         std::unique_ptr<PanelManager> mPanelManager;
         std::unique_ptr<ImGuiContextService> mImGuiService;
+        std::unique_ptr<EditorUiManager> mUIManager;
+        std::unique_ptr<EditorContext> mEditorCtx;
+
+        const clt::engine::Context& mEngineContext;
+
+        void LoadDefaultAssets() const;
+        void LoadDefaultPanels() const;
 
     public:
-        ProjectBrowserLayer() : Layer("Project Browser Layer") {}
+        ProjectBrowserLayer(const clt::engine::Context& engineContext);
 
         void OnAttach(const clt::engine::Context& context) override;
 

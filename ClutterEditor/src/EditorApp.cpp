@@ -4,29 +4,35 @@
 
 #include "Layers/ImGuiLayer.h"
 #include "Layers/ProjectBrowserLayer.h"
+#include "Utils/FileUtils.h"
 
-class ClutterEditor : public clt::Application
+namespace editor
 {
-public:
-    explicit ClutterEditor(const clt::ApplicationCommandLineArgs& args)
-        : Application(args)
+
+    class ClutterEditor : public clt::Application
     {
-        if (args.Count > 0)
+    public:
+        explicit ClutterEditor(const clt::ApplicationCommandLineArgs& args)
+            : Application(args)
         {
-            PushLayer(new editor::EditorLayer());
-            PushLayer(new editor::ImGuiLayer());
-        }
-        else
-        {
-            PushLayer(new editor::ProjectBrowserLayer());
-        }
-    }
+            utils::FileUtils::Initialize();
 
-    ~ClutterEditor() override {}
-};
+            if (args.Count > 1)
+            {
+                PushLayer(new EditorLayer(args));
+                PushLayer(new ImGuiLayer());
+            }
+            else
+            {
+                PushLayer(new ProjectBrowserLayer(GetContext()));
+            }
+        }
 
+        ~ClutterEditor() override {}
+    };
+}
 
 clt::Application* clt::CreateApplication(const clt::ApplicationCommandLineArgs args)
 {
-    return new ClutterEditor(args);
+    return new editor::ClutterEditor(args);
 }

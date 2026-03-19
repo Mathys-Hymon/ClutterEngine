@@ -11,6 +11,12 @@ file(GLOB_RECURSE EDITOR_SOURCES
 
 add_executable(ClutterEditor ${EDITOR_SOURCES})
 
+add_custom_command(TARGET ClutterEditor POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/EditorContent" # Source
+        "$<TARGET_FILE_DIR:ClutterEditor>/EditorContent"  # Destination
+)
+
 # Includes
 target_include_directories(ClutterEditor PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -20,6 +26,7 @@ target_link_libraries(ClutterEditor
         PRIVATE
         ClutterCore
         ImGuiLib
+        nfd
 )
 
 # Working directory

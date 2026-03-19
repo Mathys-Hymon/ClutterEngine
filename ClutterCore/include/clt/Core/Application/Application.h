@@ -38,6 +38,7 @@ namespace clt
         virtual void OnEvent(Event& e);
 
         IWindow& GetWindow() const { return *mWindow; }
+        engine::Context& GetContext() {return mContext; }
     };
 
     Application* CreateApplication(ApplicationCommandLineArgs args);

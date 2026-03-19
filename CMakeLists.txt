@@ -52,7 +52,12 @@ FetchContent_MakeAvailable(entt)
 if(BUILD_CLUTTER_EDITOR)
     message(STATUS "Clutter Engine is in editor mode")
 
-# 6. ImGui
+    # 6. Nfd
+    message(STATUS "Fetching Nfd...")
+    FetchContent_Declare(nfd GIT_REPOSITORY https://github.com/btzy/nativefiledialog-extended.git GIT_TAG v1.2.1)
+    FetchContent_MakeAvailable(nfd)
+
+    # 7. ImGui
     message(STATUS "Fetching ImGui...")
     FetchContent_Declare(imgui GIT_REPOSITORY https://github.com/ocornut/imgui.git GIT_TAG docking)
     FetchContent_MakeAvailable(imgui)
