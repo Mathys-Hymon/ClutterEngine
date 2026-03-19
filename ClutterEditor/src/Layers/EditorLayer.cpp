@@ -34,9 +34,7 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
         sprite.zIndex = 12;
         sprite.tint = {2.1f, 3.0f, 1.0f, 1.0f};
 
-        clt::meta::Serializer s(&level);
-
-        if (s.Serialize("test.cltLevel"))
+        if (const clt::meta::Serializer s(&level); s.Serialize("test.cltLevel"))
         {
             CLUTTER_INFO("Level saved successfully");
         }

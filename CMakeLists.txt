@@ -14,7 +14,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 option(BUILD_CLUTTER_EDITOR "Build the ImGui Editor Toolchain" ON)
 
 # --- Dependencies ---
-find_package(Vulkan REQUIRED)
+#find_package(Vulkan REQUIRED)
 include(FetchContent)
 
 # --- Options GLFW ---
@@ -29,9 +29,9 @@ FetchContent_Declare(glfw GIT_REPOSITORY https://github.com/glfw/glfw.git GIT_TA
 FetchContent_MakeAvailable(glfw)
 
 # 2. Vulkan Bootstrap
-message(STATUS "Fetching Vulkan Bootstrap...")
-FetchContent_Declare(vk-bootstrap GIT_REPOSITORY https://github.com/charles-lunarg/vk-bootstrap.git GIT_TAG v1.4.334)
-FetchContent_MakeAvailable(vk-bootstrap)
+#message(STATUS "Fetching Vulkan Bootstrap...")
+#FetchContent_Declare(vk-bootstrap GIT_REPOSITORY https://github.com/charles-lunarg/vk-bootstrap.git GIT_TAG v1.4.334)
+#FetchContent_MakeAvailable(vk-bootstrap)
 
 # 3. GLM
 message(STATUS "Fetching glm...")
@@ -68,7 +68,7 @@ if(BUILD_CLUTTER_EDITOR)
             "${IMGUI_DIR}/*.cpp"
             "${IMGUI_DIR}/*.h"
             "${IMGUI_DIR}/backends/imgui_impl_glfw.cpp"
-            "${IMGUI_DIR}/backends/imgui_impl_vulkan.cpp"
+            #"${IMGUI_DIR}/backends/imgui_impl_vulkan.cpp"
             "${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp"
     )
 
@@ -79,7 +79,7 @@ if(BUILD_CLUTTER_EDITOR)
             ${IMGUI_DIR}/backends
     )
 
-    target_link_libraries(ImGuiLib PRIVATE Vulkan::Vulkan glfw)
+    target_link_libraries(ImGuiLib PRIVATE glfw)
     add_subdirectory(ClutterEditor)
 
     endif()

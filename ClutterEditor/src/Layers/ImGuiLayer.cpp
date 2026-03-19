@@ -18,9 +18,10 @@ void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
     mEditorCtx = std::make_unique<EditorContext>();
     mEditorCtx->panels = mPanelManager.get();
 
-    RegisterDefaultPanels();
-
     mUIManager = std::make_unique<EditorUiManager>(mImGuiService.get(), mEditorCtx.get());
+
+    LoadDefaultPanels();
+    LoadDefaultAssets();
 }
 
 void editor::ImGuiLayer::OnUpdate(const double dt)
@@ -34,7 +35,7 @@ void editor::ImGuiLayer::OnUpdate(const double dt)
     mUIManager->EndFrame();
 }
 
-void editor::ImGuiLayer::RegisterDefaultPanels() const
+void editor::ImGuiLayer::LoadDefaultPanels() const
 {
     mPanelManager->RegisterPanels({
         std::make_shared<MenuBarPanel>(mEditorCtx.get()),
@@ -47,9 +48,9 @@ void editor::ImGuiLayer::RegisterDefaultPanels() const
 
 }
 
-void editor::ImGuiLayer::SetUpDefaultAssets() const
+void editor::ImGuiLayer::LoadDefaultAssets() const
 {
-    mEditorCtx->themes->SetFont(editor::TextType::classic, "../ClutterEngine/EngineContent/Resources/Font/Rubik.ttf", 15.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::title, "../ClutterEngine/EngineContent/Resources/Font/Rubik.ttf", 18.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::console, "../ClutterEngine/EngineContent/Resources/Font/JetBrains.ttf", 15.0f);
+    mEditorCtx->themes->SetFont(editor::TextType::classic, "EditorContent/Resources/Font/Rubik.ttf", 15.0f);
+    mEditorCtx->themes->SetFont(editor::TextType::title, "EditorContent/Resources/Font/Rubik.ttf", 18.0f);
+    mEditorCtx->themes->SetFont(editor::TextType::console, "EditorContent/Resources/Font/JetBrains.ttf", 15.0f);
 }

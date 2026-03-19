@@ -19,8 +19,8 @@ namespace editor
         std::unique_ptr<EditorUiManager> mUIManager;
         std::unique_ptr<EditorContext> mEditorCtx;
 
-        void RegisterDefaultPanels() const;
-        void SetUpDefaultAssets() const;
+        void LoadDefaultPanels() const;
+        void LoadDefaultAssets() const;
 
     public:
         ImGuiLayer() : Layer("ImGui Layer") {}

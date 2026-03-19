@@ -35,7 +35,7 @@ target_compile_definitions(ClutterCore
 
 	PRIVATE
         	GLFW_INCLUDE_NONE
-        	GLFW_INCLUDE_VULKAN
+        	#GLFW_INCLUDE_VULKAN
 )
 
 if(MSVC)
@@ -68,8 +68,8 @@ target_include_directories(ClutterCore
 # --- LINKS ---
 target_link_libraries(ClutterCore
         PUBLIC
-        Vulkan::Vulkan
-        vk-bootstrap
+        #Vulkan::Vulkan
+        #vk-bootstrap
         glfw
         glm::glm
         spdlog::spdlog

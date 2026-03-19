@@ -17,7 +17,7 @@ namespace editor
         {
             utils::FileUtils::Initialize();
 
-            if (args.Count > 1)
+            if (args.Count > 0)
             {
                 PushLayer(new EditorLayer(args));
                 PushLayer(new ImGuiLayer());
