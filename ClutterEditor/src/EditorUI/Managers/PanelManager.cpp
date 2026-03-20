@@ -38,7 +38,7 @@ editor::EditorPanel* editor::PanelManager::FindByID(const std::string& id) const
     return nullptr;
 }
 
-const std::string& editor::PanelManager::GetRegisteredID(EditorPanel* panel) const
+std::string editor::PanelManager::GetRegisteredID(EditorPanel* panel) const
 {
     if (const auto it = mIdOverrides.find(panel); it != mIdOverrides.end()) return it->second;
 

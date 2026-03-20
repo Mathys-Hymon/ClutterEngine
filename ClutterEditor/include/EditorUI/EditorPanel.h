@@ -38,7 +38,7 @@ namespace editor
         virtual void Draw() = 0;
 
         // Stable internal id ("editor.panel.console") - used for layout / collision / serialization
-        virtual std::string GetID() const { return std::string(GetName()); }
+        virtual std::string GetID() const { return GetName(); }
 
         // ImGui Window flags for this panel
         virtual int GetFlags() const { return 0; }

@@ -13,15 +13,18 @@ namespace editor
         enum class BrowserState { RecentProjects, Templates };
 
         BrowserState mCurrentState = BrowserState::RecentProjects;
-        int mSelectedIndex = -1;
-        char mProjectPathBuffer[256] = "";
+        int mSelectedIndex{-1};
+        char mProjectPathBuffer[256]{""};
+        char mProjectName[256]{""};
 
-        void LeftPanel(const float bottomBarHeight);
-        void RigthPanel(const float bottomBarHeight);
-        void BottomPanel(const float bottomBarHeight);
+        void LeftPanel();
+        void RightPanel();
+        void BottomPanel();
 
         void RenderRecentProjects();
         void RenderTemplateDetails();
+
+        void CreateNewProject();
 
     public:
 

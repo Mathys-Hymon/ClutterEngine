@@ -26,7 +26,7 @@ namespace editor
         const std::vector<PanelPtr>& GetPanels() const { return mPanels; }
 
         EditorPanel* FindByID(const std::string& id) const;
-        const std::string& GetRegisteredID(EditorPanel* panel) const;
+        std::string GetRegisteredID(EditorPanel* panel) const;
     };
 }
 
