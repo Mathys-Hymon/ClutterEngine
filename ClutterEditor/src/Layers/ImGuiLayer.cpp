@@ -12,16 +12,17 @@ void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
 
-    mImGuiService = std::make_unique<ImGuiContextService>(context, "#version 460");
     mPanelManager = std::make_unique<PanelManager>();
 
     mEditorCtx = std::make_unique<EditorContext>();
     mEditorCtx->panels = mPanelManager.get();
+    mEditorCtx->engineContext = &context;
 
+    mImGuiService = std::make_unique<ImGuiContextService>(mEditorCtx.get(), "#version 460");
     mUIManager = std::make_unique<EditorUiManager>(mImGuiService.get(), mEditorCtx.get());
 
-    LoadDefaultPanels();
     LoadDefaultAssets();
+    LoadDefaultPanels();
 }
 
 void editor::ImGuiLayer::OnUpdate(const double dt)
@@ -50,7 +51,9 @@ void editor::ImGuiLayer::LoadDefaultPanels() const
 
 void editor::ImGuiLayer::LoadDefaultAssets() const
 {
-    mEditorCtx->themes->SetFont(editor::TextType::classic, "EditorContent/Resources/Font/Rubik.ttf", 15.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::title, "EditorContent/Resources/Font/Rubik.ttf", 18.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::console, "EditorContent/Resources/Font/JetBrains.ttf", 15.0f);
+    const std::string absoluteFontPath = mContext->EngineRootPath.string() + "/EditorContent/Resources/Font/";
+
+    mEditorCtx->themes->SetFont(editor::TextType::classic, (absoluteFontPath + "Rubik.ttf").c_str(), 15.0f);
+    mEditorCtx->themes->SetFont(editor::TextType::title, (absoluteFontPath + "Rubik.ttf").c_str(), 18.0f);
+    mEditorCtx->themes->SetFont(editor::TextType::console, (absoluteFontPath + "JetBrains.ttf").c_str(), 15.0f);
 }

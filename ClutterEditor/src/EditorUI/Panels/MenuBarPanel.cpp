@@ -24,7 +24,7 @@ void editor::MenuBarPanel::Draw()
      * TODO : Open, Edit & Save Projects
      */
 
-    ctx->themes->BindFont(TextType::classic);
+    mContext->themes->BindFont(TextType::classic);
 
         if (ImGui::BeginMenu("File"))
         { ImGui::EndMenu(); }
@@ -33,12 +33,12 @@ void editor::MenuBarPanel::Draw()
             if (ImGui::MenuItem("Project Settings")) {}
             if (ImGui::MenuItem("Appearances"))
             {
-                if (const auto panel = ctx->panels->FindByID("Editor Appearance")) panel->Open();
+                if (const auto panel = mContext->panels->FindByID("Editor Appearance")) panel->Open();
             }
 
             if (ImGui::BeginMenu("Windows"))
             {
-                for (auto& panel : ctx->panels->GetPanels())
+                for (auto& panel : mContext->panels->GetPanels())
                 {
                     if (ImGui::MenuItem(panel->GetName(), nullptr, panel->IsOpen()))
                     {

@@ -26,6 +26,9 @@ namespace clt
 
         bool OnWindowClose(WindowCloseEvent& e);
 
+    protected:
+        virtual void CreateAssetsLoaders();
+
         public:
 
         explicit Application(const ApplicationCommandLineArgs& args = ApplicationCommandLineArgs());

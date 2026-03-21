@@ -14,10 +14,12 @@
 
 namespace clt
 {
-    Application::Application(const ApplicationCommandLineArgs&)
+    Application::Application(const ApplicationCommandLineArgs& args)
     {
         core::Log::Init();
         Timer::Initialize();
+
+        const std::filesystem::path root = args.Args[0];
 
         graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
 
@@ -25,6 +27,7 @@ namespace clt
 
         mContext.Window = mWindow.get();
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
+        mContext.EngineRootPath = root.parent_path();
 
         meta::Initialize();
 
@@ -37,8 +40,14 @@ namespace clt
         return true;
     }
 
+    void Application::CreateAssetsLoaders()
+    {
+    }
+
     void Application::Run()
     {
+        CreateAssetsLoaders();
+
         while (mIsRunning)
         {
              const double dt = Timer::ComputeDeltaTime();

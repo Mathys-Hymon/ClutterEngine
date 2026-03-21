@@ -17,15 +17,15 @@ namespace editor
         bool mIsDocked{false};
 
         protected:
-        EditorContext* ctx{nullptr};
+        EditorContext* mContext{nullptr};
 
-        EditorContext* GetContext() const { return ctx; }
+        EditorContext* GetContext() const { return mContext; }
 
         virtual bool Begin();
         virtual void End();
 
     public:
-        EditorPanel(EditorContext* context) : ctx{context} {}
+        EditorPanel(EditorContext* context) : mContext{context} {}
         virtual ~EditorPanel() = default;
 
         // Visible Label in editor

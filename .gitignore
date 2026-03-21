@@ -66,3 +66,4 @@ $RECYCLE.BIN/
 # --- Logs & Crash Dumps ---
 *.log
 *.dmp
+/BuildScript

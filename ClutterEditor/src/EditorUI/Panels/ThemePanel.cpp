@@ -16,7 +16,7 @@ const char* editor::ThemePanel::GetName() const
 
 void editor::ThemePanel::Draw()
 {
-    if (!ctx || !ctx->themes)
+    if (!mContext || !mContext->themes)
     {
         ImGui::Text("ERROR : Theme Manager not initialized in current Context.");
         CLT_CORE_ERROR("ERROR : Theme Manager not initialized in current Context.");
@@ -28,13 +28,13 @@ void editor::ThemePanel::Draw()
 
     if (ImGui::Button("Save"))
     {
-        ctx->themes->SaveTheme();
+        mContext->themes->SaveTheme();
     }
     ImGui::SameLine();
 
     if (ImGui::Button("Reset to Default"))
     {
-        ctx->themes->ApplyDefaultTheme();
+        mContext->themes->ApplyDefaultTheme();
     }
     ImGui::Separator();
     ImGui::Spacing();

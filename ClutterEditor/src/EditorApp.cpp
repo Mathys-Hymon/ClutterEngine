@@ -28,8 +28,14 @@ namespace editor
             }
         }
 
+        void CreateAssetsLoaders() override;
+
         ~ClutterEditor() override {}
     };
+
+    void ClutterEditor::CreateAssetsLoaders()
+    {
+    }
 }
 
 clt::Application* clt::CreateApplication(const clt::ApplicationCommandLineArgs args)

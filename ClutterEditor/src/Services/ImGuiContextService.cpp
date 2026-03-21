@@ -8,7 +8,7 @@
 #include "Debug/ImGuiConsoleSink.h"
 #include "GLFW/glfw3.h"
 
-editor::ImGuiContextService::ImGuiContextService(const clt::engine::Context& context, const char* glsl_version) : mGLSL(glsl_version), mContext(context)
+editor::ImGuiContextService::ImGuiContextService(const EditorContext* context, const char* glsl_version) : mGLSL(glsl_version), mContext(context)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -19,7 +19,7 @@ editor::ImGuiContextService::ImGuiContextService(const clt::engine::Context& con
 
     ImGui::StyleColorsDark();
 
-    if (const auto window = static_cast<GLFWwindow*>(context.Window->GetNativeWindow()))
+    if (const auto window = static_cast<GLFWwindow*>(context->engineContext->Window->GetNativeWindow()))
     {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
@@ -55,7 +55,7 @@ void editor::ImGuiContextService::Render() const
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
 
-        if (const auto window = static_cast<GLFWwindow*>(mContext.Window->GetNativeWindow()))
+        if (const auto window = static_cast<GLFWwindow*>(mContext->engineContext->Window->GetNativeWindow()))
         {
             glfwMakeContextCurrent(window);
         }

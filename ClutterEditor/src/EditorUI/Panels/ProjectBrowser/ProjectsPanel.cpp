@@ -10,6 +10,8 @@
 #include "Utils/FileUtils.h"
 #include <clt/Core/Project/ProjectConfig.h>
 
+#include <windows.h>
+
 static float BOTTOM_BAR_HEIGHT = 40.0f;
 
 editor::ProjectPanel::ProjectPanel(EditorContext* context) : EditorPanel(context)
@@ -50,7 +52,7 @@ void editor::ProjectPanel::LeftPanel()
 {
     ImGui::BeginChild("LeftPanel", ImVec2(250, -BOTTOM_BAR_HEIGHT), true);
 
-    ctx->themes->BindFont(TextType::title);
+    mContext->themes->BindFont(TextType::title);
 
     if (ImGui::Selectable("Recently Opened", mCurrentState == BrowserState::RecentProjects))
     {
@@ -62,7 +64,7 @@ void editor::ProjectPanel::LeftPanel()
 
     ImGui::TextDisabled("TEMPLATES");
 
-    ctx->themes->BindFont(TextType::classic);
+    mContext->themes->BindFont(TextType::classic);
 
     for (int i = 0; i < 3; i++)
     {
@@ -103,7 +105,7 @@ void editor::ProjectPanel::BottomPanel()
 
     const bool isRecentMenu = (mCurrentState == BrowserState::RecentProjects);
 
-    ctx->themes->BindFont(TextType::title);
+    mContext->themes->BindFont(TextType::title);
 
     ImGui::BeginDisabled(true);
 
@@ -164,7 +166,7 @@ void editor::ProjectPanel::RenderTemplateDetails()
 
 void editor::ProjectPanel::CreateNewProject()
 {
-    const std::filesystem::path templatePath = "EditorContent/Templates/BlankProject";
+    const std::filesystem::path templatePath = mContext->engineContext->EngineRootPath / "EditorContent/Templates/BlankProject";
 
     const std::filesystem::path projectPath = mProjectPathBuffer;
     const std::filesystem::path fullProjectPath = projectPath / mProjectName;
@@ -175,14 +177,24 @@ void editor::ProjectPanel::CreateNewProject()
         return;
     }
 
-    std::filesystem::create_directory(fullProjectPath);
-    std::filesystem::copy(templatePath, fullProjectPath, std::filesystem::copy_options::recursive);
-
     const std::string newName = std::string(mProjectName) + ".cltProject";
     const std::filesystem::path templateOldName = fullProjectPath / "Template.cltProject";
     const std::filesystem::path templateNewName = fullProjectPath / newName;
 
-    std::filesystem::rename(templateOldName, templateNewName);
+    try
+    {
+        std::filesystem::copy(templatePath, fullProjectPath, std::filesystem::copy_options::recursive);
+        std::filesystem::rename(templateOldName, templateNewName);
+    }
+    catch (const std::filesystem::filesystem_error& e)
+    {
+        std::string errorMsg = "CLUTTER EDITOR CRASH : " + std::string(e.what()) +
+                           "\nSource : " + templatePath.string() +
+                           "\nDest : " + fullProjectPath.string();
+
+        MessageBoxA(nullptr, errorMsg.c_str(), "[FATAL ERROR] Clutter Editor", MB_OK | MB_ICONERROR);
+        return;
+    }
 
     // Set up config
 

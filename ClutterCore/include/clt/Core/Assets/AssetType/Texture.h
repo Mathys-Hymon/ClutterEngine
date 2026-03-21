@@ -15,7 +15,7 @@ namespace clt
         uint32_t mHeight{0};
         uint32_t mChannels{0};
 
-        Texture(const uint32_t id, const uint32_t width, const uint32_t height, const uint32_t channels, std::vector<unsigned char> mPixels)
+        Texture(const uint32_t id, const uint32_t width, const uint32_t height, const uint32_t channels, [[maybe_unused]] const std::vector<unsigned char>& mPixels)
         : mID(id), mWidth(width), mHeight(height), mChannels(channels)
         {};
 
@@ -31,7 +31,7 @@ namespace clt
         uint32_t GetWidth() const { return mWidth; }
         uint32_t GetHeight() const { return mHeight; }
         uint32_t GetChannels() const { return mChannels; }
-        Vector2 GetSize() const { return Vector2(GetWidth(), GetHeight()); }
+        Vector2 GetSize() const { return {GetWidth(), GetHeight()}; }
     };
 }
 

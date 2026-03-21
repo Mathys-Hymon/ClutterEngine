@@ -1,4 +1,5 @@
 #pragma once
+#include <filesystem>
 
 namespace clt
 {
@@ -9,6 +10,7 @@ namespace clt
         struct Context
         {
             IWindow* Window;
+            std::filesystem::path EngineRootPath;
         };
     }
 }
