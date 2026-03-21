@@ -9,7 +9,7 @@ file(GLOB_RECURSE EDITOR_SOURCES
         "include/*.h" # public headers (ex: Application.h)
 )
 
-add_executable(ClutterEditor ${EDITOR_SOURCES})
+add_executable(ClutterEditor WIN32 ${EDITOR_SOURCES})
 
 add_custom_command(TARGET ClutterEditor POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -30,7 +30,7 @@ target_link_libraries(ClutterEditor
 )
 
 # Working directory
-set_target_properties(ClutterEditor PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+set_target_properties(ClutterEditor PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" )
 
 if(MINGW)
     target_link_options(ClutterEditor PRIVATE -static -static-libgcc -static-libstdc++)

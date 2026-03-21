@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <functional>
 #include  <string>
+#include <utility>
 
 namespace clt
 {
@@ -12,10 +13,10 @@ namespace clt
         std::string Title;
         uint32_t Width, Height;
 
-        WindowProps(const std::string& title = "Clutter Engine",
+        WindowProps(std::string  title = "Clutter Engine",
             const uint32_t width = 1280,
             const uint32_t height = 720)
-        : Title(title), Width(width), Height(height) {}
+        : Title(std::move(title)), Width(width), Height(height) {}
     };
 
     class IWindow

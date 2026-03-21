@@ -5,14 +5,14 @@
 
 extern clt::Application* clt::CreateApplication(clt::ApplicationCommandLineArgs args);
 
-int main(int argc, char** argv)
+int main(const int argc, char** argv)
 {
     clt::ApplicationCommandLineArgs args;
     args.Count = argc;
     args.Args = argv;
 
     // Creation
-    auto app = clt::CreateApplication(args);
+    const auto app = clt::CreateApplication(args);
 
     // Loop
     app->Run();
