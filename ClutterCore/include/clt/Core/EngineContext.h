@@ -3,14 +3,17 @@
 
 namespace clt
 {
+    class IAssetManager;
     class IWindow;
 
     namespace engine
     {
         struct Context
         {
-            IWindow* Window;
-            std::filesystem::path EngineRootPath;
+            IWindow* window;
+            IAssetManager* assets;
+
+            std::filesystem::path engineRootPath;
         };
     }
 }

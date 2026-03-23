@@ -7,6 +7,9 @@ void editor::ProjectBrowserLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
 
+    context.window->ResizeViewportCentered(1000.0f, 650.0f);
+    context.window->RenameViewport("Clutter Project Browser");
+
     mPanelManager = std::make_unique<PanelManager>();
 
     mEditorCtx = std::make_unique<EditorContext>();
@@ -22,7 +25,7 @@ void editor::ProjectBrowserLayer::OnAttach(const clt::engine::Context& context)
 
 void editor::ProjectBrowserLayer::LoadDefaultAssets() const
 {
-    const std::string absoluteFontPath = mContext->EngineRootPath.string() + "/EditorContent/Resources/Font/";
+    const std::string absoluteFontPath = mContext->engineRootPath.string() + "/EditorContent/Resources/Font/";
 
     mEditorCtx->themes->SetFont(editor::TextType::classic, (absoluteFontPath + "Rubik.ttf").c_str(), 15.0f);
     mEditorCtx->themes->SetFont(editor::TextType::title, (absoluteFontPath + "Rubik.ttf").c_str(), 18.0f);
@@ -37,10 +40,9 @@ void editor::ProjectBrowserLayer::LoadDefaultPanels() const
     });
 }
 
-editor::ProjectBrowserLayer::ProjectBrowserLayer(const clt::engine::Context& engineContext)  : Layer("Project Browser Layer"), mEngineContext(engineContext)
+editor::ProjectBrowserLayer::ProjectBrowserLayer()  : Layer("Project Browser Layer")
 {
-    engineContext.Window->ResizeViewportCentered(1000.0f, 650.0f);
-    engineContext.Window->RenameViewport("Clutter Project Browser");
+
 }
 
 void editor::ProjectBrowserLayer::OnUpdate(const double dt)

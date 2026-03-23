@@ -13,6 +13,9 @@ endif()
 # --- JSON ---
 set(JSON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/json)
 
+# --- STB ---
+set(STB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/stb)
+
 # --- SOURCES ---
 file(GLOB_RECURSE CORE_SOURCES 
     "src/*.cpp" 
@@ -55,6 +58,7 @@ endif()
 target_include_directories(ClutterCore SYSTEM PUBLIC
 		${GLAD_DIR}/include
 		${JSON_DIR}/
+		${STB_DIR}/
 )
 
 target_include_directories(ClutterCore

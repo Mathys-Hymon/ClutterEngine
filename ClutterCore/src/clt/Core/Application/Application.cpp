@@ -10,6 +10,8 @@
 #include <clt/Renderer/Renderer.h>
 
 #include "clt/Core/Timer.h"
+#include "clt/Core/Assets/AssetManager.h"
+#include "clt/Core/Assets/IAssetManager.h"
 #include "clt/Core/Meta/Reflection.h"
 
 namespace clt
@@ -24,11 +26,13 @@ namespace clt
         graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
 
         if (!mWindow) mWindow = std::unique_ptr<IWindow>(IWindow::Create());
+        if (!mAsset) mAsset = std::unique_ptr<IAssetManager>(CreateAssetManager());
 
-        mContext.Window = mWindow.get();
+        mContext.window = mWindow.get();
+        mContext.assets = mAsset.get();
+        mContext.engineRootPath = root.parent_path();
+
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
-        mContext.EngineRootPath = root.parent_path();
-
         meta::Initialize();
 
         CLT_CORE_INFO("Clutter Engine Started");
@@ -40,14 +44,13 @@ namespace clt
         return true;
     }
 
-    void Application::CreateAssetsLoaders()
+    IAssetManager* Application::CreateAssetManager()
     {
+        return new AssetManager();
     }
 
     void Application::Run()
     {
-        CreateAssetsLoaders();
-
         while (mIsRunning)
         {
              const double dt = Timer::ComputeDeltaTime();

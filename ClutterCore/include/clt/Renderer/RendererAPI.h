@@ -8,6 +8,7 @@ namespace clt::graphic
                 None = 0,
                 OpenGL = 1,
                 Vulkan = 2,
+                Pica200 = 3,
         };
 
         class RendererAPI

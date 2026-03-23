@@ -96,7 +96,6 @@ void editor::ProjectPanel::RightPanel()
     }
 
     ImGui::EndChild();
-
 }
 
 void editor::ProjectPanel::BottomPanel()
@@ -166,7 +165,7 @@ void editor::ProjectPanel::RenderTemplateDetails()
 
 void editor::ProjectPanel::CreateNewProject()
 {
-    const std::filesystem::path templatePath = mContext->engineContext->EngineRootPath / "EditorContent/Templates/BlankProject";
+    const std::filesystem::path templatePath = mContext->engineContext->engineRootPath / "EditorContent/Templates/BlankProject";
 
     const std::filesystem::path projectPath = mProjectPathBuffer;
     const std::filesystem::path fullProjectPath = projectPath / mProjectName;

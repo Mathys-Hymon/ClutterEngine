@@ -12,65 +12,17 @@
 #include "Debug/ImGuiConsoleSink.h"
 
 
+editor::EditorLayer::EditorLayer(const clt::ApplicationCommandLineArgs& args) : Layer("Editor Layer")
+{
+    auto project = args.Args[1];
+}
+
 void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
 
-    if (context.Window)
-    {
-        clt::Level level;
-
-        auto actor = level.CreateActor();
-
-        auto& transform = actor.AddComponent<clt::Transform>();
-
-        transform.position = {2, 25, 3};
-
-
-        auto& sprite = actor.AddComponent<clt::Sprite>();
-
-        sprite.flipY = true;
-        sprite.textureName = "sprite.png";
-        sprite.zIndex = 12;
-        sprite.tint = {2.1f, 3.0f, 1.0f, 1.0f};
-
-        if (const clt::meta::Serializer s(&level); s.Serialize("test.cltLevel"))
-        {
-            CLUTTER_INFO("Level saved successfully");
-        }
-        else
-        {
-            CLUTTER_INFO("Level could not be saved");
-        }
-
-        // if (s.Deserialize("test.cltLevel"))
-        // {
-        //     CLUTTER_INFO("Level loaded successfully");
-        //
-        //     for (auto e : level.Registry().storage<entt::entity>())
-        //     {
-        //         CLUTTER_INFO("ACTOR ID : {}", static_cast<int>(e));
-        //         if (const auto comp = level.Registry().try_get<clt::Transform>(e))
-        //         {
-        //             CLUTTER_INFO("Transform loaded successfully");
-        //
-        //             CLUTTER_INFO("actor location :  -> X: {}, Y: {}, Z: {}",
-        //                 comp->position.x,
-        //                 comp->position.y,
-        //                 comp->position.z);
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     CLUTTER_INFO("Level could not be loaded");
-        // }
-
-    }
-    else
-    {
-        CLUTTER_ERROR("Window not initialized yet");
-    }
+    context.window->ResizeViewportCentered(1280.0f, 720.0f);
+    context.window->RenameViewport("Clutter Editor");
 }
 
 void editor::EditorLayer::OnUpdate(const double dt)

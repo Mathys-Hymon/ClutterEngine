@@ -19,7 +19,7 @@ editor::ImGuiContextService::ImGuiContextService(const EditorContext* context, c
 
     ImGui::StyleColorsDark();
 
-    if (const auto window = static_cast<GLFWwindow*>(context->engineContext->Window->GetNativeWindow()))
+    if (const auto window = static_cast<GLFWwindow*>(context->engineContext->window->GetNativeWindow()))
     {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
@@ -55,7 +55,7 @@ void editor::ImGuiContextService::Render() const
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
 
-        if (const auto window = static_cast<GLFWwindow*>(mContext->engineContext->Window->GetNativeWindow()))
+        if (const auto window = static_cast<GLFWwindow*>(mContext->engineContext->window->GetNativeWindow()))
         {
             glfwMakeContextCurrent(window);
         }

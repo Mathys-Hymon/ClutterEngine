@@ -20,13 +20,11 @@ namespace editor
         std::unique_ptr<EditorUiManager> mUIManager;
         std::unique_ptr<EditorContext> mEditorCtx;
 
-        const clt::engine::Context& mEngineContext;
-
         void LoadDefaultAssets() const;
         void LoadDefaultPanels() const;
 
     public:
-        ProjectBrowserLayer(const clt::engine::Context& engineContext);
+        ProjectBrowserLayer();
 
         void OnAttach(const clt::engine::Context& context) override;
 

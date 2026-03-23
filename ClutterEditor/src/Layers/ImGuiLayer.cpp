@@ -51,7 +51,7 @@ void editor::ImGuiLayer::LoadDefaultPanels() const
 
 void editor::ImGuiLayer::LoadDefaultAssets() const
 {
-    const std::string absoluteFontPath = mContext->EngineRootPath.string() + "/EditorContent/Resources/Font/";
+    const std::string absoluteFontPath = mContext->engineRootPath.string() + "/EditorContent/Resources/Font/";
 
     mEditorCtx->themes->SetFont(editor::TextType::classic, (absoluteFontPath + "Rubik.ttf").c_str(), 15.0f);
     mEditorCtx->themes->SetFont(editor::TextType::title, (absoluteFontPath + "Rubik.ttf").c_str(), 18.0f);

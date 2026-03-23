@@ -9,6 +9,8 @@
 
 namespace clt
 {
+    class IAssetManager;
+
     struct ApplicationCommandLineArgs
     {
         int Count = 0;
@@ -18,6 +20,7 @@ namespace clt
     class Application
     {
         std::unique_ptr<IWindow> mWindow;
+        std::unique_ptr<IAssetManager> mAsset;
         LayerStack mLayerStack;
         bool mIsRunning = true;
         float mLastTime = 0.0f;
@@ -27,7 +30,7 @@ namespace clt
         bool OnWindowClose(WindowCloseEvent& e);
 
     protected:
-        virtual void CreateAssetsLoaders();
+        virtual IAssetManager* CreateAssetManager();
 
         public:
 

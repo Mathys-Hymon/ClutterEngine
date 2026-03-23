@@ -2,6 +2,7 @@
 #include <clt/Core/EntryPoint.h>
 #include <Layers/EditorLayer.h>
 
+#include "Assets/EditorAssetManager.h"
 #include "Layers/ImGuiLayer.h"
 #include "Layers/ProjectBrowserLayer.h"
 #include "Utils/FileUtils.h"
@@ -24,18 +25,18 @@ namespace editor
             }
             else
             {
-                PushLayer(new ProjectBrowserLayer(GetContext()));
+                PushLayer(new ProjectBrowserLayer());
             }
         }
 
-        void CreateAssetsLoaders() override;
+        clt::IAssetManager* CreateAssetManager() override
+        {
+            return new EditorAssetManager;
+        }
 
         ~ClutterEditor() override {}
     };
 
-    void ClutterEditor::CreateAssetsLoaders()
-    {
-    }
 }
 
 clt::Application* clt::CreateApplication(const clt::ApplicationCommandLineArgs args)
