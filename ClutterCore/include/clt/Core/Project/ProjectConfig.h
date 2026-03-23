@@ -19,13 +19,13 @@ namespace clt::project
     };
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PhysicsSettings, is2D, PhysicAPI);
 
-    struct EditorSettings
+    struct GameSettings
     {
-        std::string ContentPath = "";
-        std::string EditorStartingLevel = "Scenes/Default.cltMap";
-        std::string GameStartingLevel = "Scenes/Default.cltMap";
+        std::string ContentPath = "Content/";
+        std::string EditorStartingLevel = ContentPath + "Scenes/Default.cltMap";
+        std::string GameStartingLevel = ContentPath + "Scenes/Default.cltMap";
     };
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EditorSettings, ContentPath, EditorStartingLevel, GameStartingLevel);
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GameSettings, ContentPath, EditorStartingLevel, GameStartingLevel);
 
     struct ProjectConfig
     {
@@ -35,9 +35,9 @@ namespace clt::project
 
         GraphicsSettings Graphics;
         PhysicsSettings Physics;
-        EditorSettings Editor;
+        GameSettings Game;
     };
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ProjectConfig, GameName, EngineVersion, BuildTarget, Graphics, Physics, Editor);
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ProjectConfig, GameName, EngineVersion, BuildTarget, Graphics, Physics, Game);
 }
 
 #endif //CLUTTERENGINE_PROJECTCONFIG_H

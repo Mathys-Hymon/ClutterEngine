@@ -8,9 +8,11 @@
 #include "clt/Core/Debug/Log.h"
 #include "EditorUI/Managers/ThemeManager.h"
 #include "Utils/FileUtils.h"
-#include <clt/Core/Project/ProjectConfig.h>
+#include <../../../../../ClutterCore/include/clt/Core/Project/ProjectConfig.h>
 
-#include <windows.h>
+#include "clt/Core/Event/ApplicationEvent.h"
+#include "clt/Core/Meta/ProjectSerializer.h"
+#include "clt/Core/Project/Project.h"
 
 static float BOTTOM_BAR_HEIGHT = 40.0f;
 
@@ -112,6 +114,14 @@ void editor::ProjectPanel::BottomPanel()
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (!isRecentMenu ? 450.f : 210.f));
     ImGui::InputTextWithHint("##Path","Project Path" ,mProjectPathBuffer, sizeof(mProjectPathBuffer));
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled) && strlen(mProjectPathBuffer) != 0)
+    {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", mProjectPathBuffer);
+        ImGui::EndTooltip();
+    }
+
     ImGui::SameLine();
     ImGui::EndDisabled();
 
@@ -135,7 +145,6 @@ void editor::ProjectPanel::BottomPanel()
     }
 
     ImGui::EndDisabled();
-
     ImGui::SameLine();
 
     if (isRecentMenu)
@@ -196,26 +205,16 @@ void editor::ProjectPanel::CreateNewProject()
     }
     catch (const std::filesystem::filesystem_error& e)
     {
-        std::string errorMsg = "CLUTTER EDITOR CRASH : " + std::string(e.what()) +
-                           "\nSource : " + templatePath.string() +
-                           "\nDest : " + fullProjectPath.string();
-
-        MessageBoxA(nullptr, errorMsg.c_str(), "[FATAL ERROR] Clutter Editor", MB_OK | MB_ICONERROR);
+        CLT_CORE_FATAL("[PROJECT CREATION] Unable to create new project based on template: {}", e.what());
         return;
     }
 
-    // Set up config
+    const auto newProject = std::make_shared<clt::Project>();
+    newProject->config.GameName = mProjectName;
+    newProject->projectDirectory = projectPath;
 
-    clt::project::ProjectConfig config;
+    clt::ProjectSerializer::Save(templateNewName, newProject);
 
-    config.GameName = mProjectName;
-    config.Editor.ContentPath = fullProjectPath.string() + "/Content/";
-    config.EngineVersion = "0.0.25";
-    config.BuildTarget = "3ds";
-
-    nlohmann::json json = config;
-
-    std::ofstream out(templateNewName);
-    out << json.dump(4);
-    out.close();
+    clt::ProjectLoadEvent event(templateNewName);
+    mContext->engineContext->eventCallback(event);
 }

@@ -9,6 +9,7 @@ namespace clt
     {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus,
+        ProjectOpen, ProjectClose,
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased, KeyTyped,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
@@ -42,7 +43,7 @@ virtual const char* GetName() const override { return #type; }
         virtual uint8_t GetCategoryFlags() const = 0;
         virtual std::string ToString() const { return GetName(); }
 
-        bool IsInCategory(EventCategory category) const
+        bool IsInCategory(const EventCategory category) const
         {
             return GetCategoryFlags() & static_cast<uint8_t>(category);
         }

@@ -30,17 +30,17 @@ namespace clt
 
         uint32_t GetWidth() const override { return mData.Width; }
         uint32_t GetHeight() const override { return mData.Height; }
-        Vector2 GetSize() const override { return {mData.Width, mData.Height}; };
+        UVector2 GetSize() const override { return {mData.Width, mData.Height}; };
 
-        Vector2 GetMonitorSize() const override;
+        UVector2 GetMonitorSize() const override;
 
         inline void SetEventCallback(const std::function<void(Event&)>& callback) override { mData.EventCallback = callback; }
         void* GetNativeWindow() const override { return mWindowHandle; }
 
-        void ResizeViewport(Vector2 pos, Vector2 size) override;
+        void ResizeViewport(UVector2 pos, UVector2 size) override;
         void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) override;
 
-        void ResizeViewportCentered(Vector2 size) override;
+        void ResizeViewportCentered(UVector2 size) override;
         void ResizeViewportCentered(uint32_t width, uint32_t height) override;
         void RenameViewport(const char* name) override;
         void SetVSync(bool enabled) override;

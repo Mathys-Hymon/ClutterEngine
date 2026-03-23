@@ -22,7 +22,8 @@ namespace clt::core
 
     public:
         static void Init();
-        static void AddSink(spdlog::sink_ptr sink);
+        static void AddSink(const spdlog::sink_ptr& sink);
+        static void RemoveSink(const spdlog::sink_ptr& sink);
 
         inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return sCoreLogger; }
         inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return sClientLogger; }

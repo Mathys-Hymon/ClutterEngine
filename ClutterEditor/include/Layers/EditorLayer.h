@@ -10,7 +10,7 @@ namespace editor
     {
 
     public:
-        explicit EditorLayer([[maybe_unused]] const clt::ApplicationCommandLineArgs& args);
+        explicit EditorLayer();
 
         void OnAttach(const clt::engine::Context& context) override;
         void OnUpdate([[maybe_unused]] double dt) override;

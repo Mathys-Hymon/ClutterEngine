@@ -12,6 +12,10 @@ namespace clt
     using Vector3 = glm::vec3;
     using Vector4 = glm::vec4;
 
+    using UVector2 = glm::uvec2;
+    using UVector3 = glm::uvec3;
+    using UVector4 = glm::uvec4;
+
     using Color = glm::vec4;
 
     using Matrix3 = glm::mat3;

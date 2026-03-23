@@ -18,9 +18,15 @@ namespace clt::core
         sClientLogger->set_level(spdlog::level::trace);
     }
 
-    void Log::AddSink(spdlog::sink_ptr sink)
+    void Log::AddSink(const spdlog::sink_ptr& sink)
     {
         sCoreLogger->sinks().push_back(sink);
         sClientLogger->sinks().push_back(sink);
+    }
+
+    void Log::RemoveSink(const spdlog::sink_ptr& sink)
+    {
+        std::erase(sCoreLogger->sinks(), sink);
+        std::erase(sClientLogger->sinks(), sink);
     }
 }

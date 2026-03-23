@@ -25,14 +25,16 @@ editor::ImGuiContextService::ImGuiContextService(const EditorContext* context, c
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
 
-    const auto newSink = std::make_shared<log::ImGuiConsoleSink>();
-    clt::core::Log::AddSink(newSink);
+    mSink = std::make_shared<log::ImGuiConsoleSink>();
+    clt::core::Log::AddSink(mSink);
 
     CLUTTER_INFO("Sink connected successfully");
 }
 
 editor::ImGuiContextService::~ImGuiContextService()
 {
+    clt::core::Log::RemoveSink(mSink);
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

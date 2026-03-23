@@ -7,10 +7,16 @@
 
 namespace editor
 {
+    namespace log
+    {
+        class ImGuiConsoleSink;
+    }
+
     class ImGuiContextService
     {
         const char* mGLSL{nullptr};
         const EditorContext* mContext;
+        std::shared_ptr<log::ImGuiConsoleSink> mSink;
 
         public:
         ImGuiContextService(const EditorContext* context, const char* glsl_version = "#version 460");

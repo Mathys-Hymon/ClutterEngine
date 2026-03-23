@@ -12,9 +12,8 @@
 #include "Debug/ImGuiConsoleSink.h"
 
 
-editor::EditorLayer::EditorLayer(const clt::ApplicationCommandLineArgs& args) : Layer("Editor Layer")
+editor::EditorLayer::EditorLayer() : Layer("Editor Layer")
 {
-    auto project = args.Args[1];
 }
 
 void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
