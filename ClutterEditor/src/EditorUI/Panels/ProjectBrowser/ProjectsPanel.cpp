@@ -140,15 +140,29 @@ void editor::ProjectPanel::BottomPanel()
 
     if (isRecentMenu)
     {
-        if (ImGui::Button("Open Selected", ImVec2(120, 0))) { /* Logique d'ouverture */ }
+        if (ImGui::Button("Open Selected", ImVec2(120, 0))) { /* OpenProject */ }
     }
     else
     {
-        ImGui::BeginDisabled(strlen(mProjectName) == 0 || strlen(mProjectPathBuffer) == 0);
+
+        const bool fileExist = std::filesystem::exists(mProjectPathBuffer);
+
+        ImGui::BeginDisabled(strlen(mProjectName) == 0 || strlen(mProjectPathBuffer) == 0 || !fileExist);
 
         if (ImGui::Button("Create Project", ImVec2(120, 0))) { CreateNewProject(); }
 
         ImGui::EndDisabled();
+
+        if (!fileExist && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+        {
+            mContext->themes->BindFont(TextType::classic);
+
+            ImGui::BeginTooltip();
+            ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "Project file does not exist, please select an existing path");
+            ImGui::EndTooltip();
+
+            mContext->themes->BindFont(TextType::title);
+        }
     }
 
     ImGui::EndChild();
@@ -170,19 +184,14 @@ void editor::ProjectPanel::CreateNewProject()
     const std::filesystem::path projectPath = mProjectPathBuffer;
     const std::filesystem::path fullProjectPath = projectPath / mProjectName;
 
-    if (std::filesystem::exists(fullProjectPath))
-    {
-        CLUTTER_ERROR("Project already exist in this path!");
-        return;
-    }
-
     const std::string newName = std::string(mProjectName) + ".cltProject";
     const std::filesystem::path templateOldName = fullProjectPath / "Template.cltProject";
     const std::filesystem::path templateNewName = fullProjectPath / newName;
 
     try
     {
-        std::filesystem::copy(templatePath, fullProjectPath, std::filesystem::copy_options::recursive);
+        std::filesystem::create_directory(fullProjectPath);
+        std::filesystem::copy(templatePath, fullProjectPath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
         std::filesystem::rename(templateOldName, templateNewName);
     }
     catch (const std::filesystem::filesystem_error& e)

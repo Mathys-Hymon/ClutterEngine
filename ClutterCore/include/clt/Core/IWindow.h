@@ -6,6 +6,8 @@
 #include  <string>
 #include <utility>
 
+#include "Math/Math.h"
+
 namespace clt
 {
     struct WindowProps
@@ -27,12 +29,17 @@ namespace clt
         virtual void OnUpdate() = 0;
         virtual uint32_t GetWidth() const = 0;
         virtual uint32_t GetHeight() const = 0;
+        virtual Vector2 GetSize() const = 0;
+
+        virtual Vector2 GetMonitorSize() const = 0;
 
         virtual void SetEventCallback(const std::function<void(class Event&)>& callback) = 0;
         virtual void* GetNativeWindow() const = 0;
 
+        virtual void ResizeViewport(Vector2 pos, Vector2 size) = 0;
         virtual void ResizeViewport(uint32_t startWidth, uint32_t startHeight, uint32_t width, uint32_t height) = 0;
         virtual void ResizeViewportCentered(uint32_t width, uint32_t height) = 0;
+        virtual void ResizeViewportCentered(Vector2 size) = 0;
         virtual void RenameViewport(const char* name) = 0;
         virtual void SetVSync(bool enabled) = 0;
 

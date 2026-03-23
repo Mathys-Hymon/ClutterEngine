@@ -13,12 +13,22 @@ clt::IWindow* clt::IWindow::Create(const clt::WindowProps& props)
     return new WindowsWindow(props);
 }
 
+void clt::WindowsWindow::ResizeViewport(Vector2 pos, Vector2 size)
+{
+    ResizeViewport(pos.x, pos.y, size.x, size.y);
+}
+
 void clt::WindowsWindow::ResizeViewport(const uint32_t /*startWidth*/,const uint32_t /*startHeight*/,const uint32_t width,const uint32_t height)
 {
     mData.Width = width;
     mData.Height = height;
 
     glfwSetWindowSize(mWindowHandle, static_cast<int>(width), static_cast<int>(height));
+}
+
+void clt::WindowsWindow::ResizeViewportCentered(const Vector2 size)
+{
+    ResizeViewportCentered(size.x, size.y);
 }
 
 void clt::WindowsWindow::ResizeViewportCentered(const uint32_t width,const uint32_t height)
@@ -130,4 +140,17 @@ void clt::WindowsWindow::OnUpdate()
 {
     glfwPollEvents();
     mContext->SwapBuffers();
+}
+
+clt::Vector2 clt::WindowsWindow::GetMonitorSize() const
+{
+    GLFWmonitor* return_struct = nullptr;
+
+    glfwGetVideoMode( return_struct );
+
+    int width, height;
+
+    glfwGetMonitorPhysicalSize(return_struct, &width, &height);
+
+    return Vector2{width, height};
 }

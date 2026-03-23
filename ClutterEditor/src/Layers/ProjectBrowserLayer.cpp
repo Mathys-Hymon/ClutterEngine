@@ -7,7 +7,7 @@ void editor::ProjectBrowserLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
 
-    context.window->ResizeViewportCentered(1000.0f, 650.0f);
+    context.window->ResizeViewportCentered(900.0f, 650.0f);
     context.window->RenameViewport("Clutter Project Browser");
 
     mPanelManager = std::make_unique<PanelManager>();

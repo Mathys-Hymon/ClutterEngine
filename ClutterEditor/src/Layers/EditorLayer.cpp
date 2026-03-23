@@ -21,7 +21,13 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
 {
     Layer::OnAttach(context);
 
-    context.window->ResizeViewportCentered(1280.0f, 720.0f);
+    // const auto size = context.window->GetMonitorSize();
+    //
+    // const clt::Vector2 clampedSize = {std::clamp(size.x, 0.f, 1920.f), std::clamp(size.y, 0.f, 1080.f)};
+    //
+    // context.window->ResizeViewportCentered(clampedSize);
+
+    context.window->ResizeViewportCentered({1536, 864});
     context.window->RenameViewport("Clutter Editor");
 }
 
