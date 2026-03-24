@@ -32,8 +32,8 @@ void editor::ThemeManager::ApplyDefaultTheme()
     ImVec4* colors = style.Colors;
 
     // Base palette
-    ImVec4 bgColor(0.157f, 0.149f, 0.176f, 1.0f);
-    ImVec4 textColor(0.682f, 0.651f, 0.647f, 1.0f);
+    constexpr ImVec4 bgColor(0.157f, 0.149f, 0.176f, 1.0f);
+    constexpr ImVec4 textColor(0.682f, 0.651f, 0.647f, 1.0f);
 
     colors[ImGuiCol_WindowBg] = bgColor;
     colors[ImGuiCol_ChildBg] = ImVec4(bgColor.x * 0.9f, bgColor.y * 0.9f, bgColor.z * 0.9f, 1.0f);

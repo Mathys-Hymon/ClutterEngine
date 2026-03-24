@@ -14,7 +14,7 @@ namespace editor
         EditorAssetManager();
         virtual ~EditorAssetManager();
 
-        clt::Texture* LoadTexture(const std::string& path, const std::string& name, clt::TextureFilter texFilter, bool generateMipMaps, bool flipVertically) override;
+        clt::Texture* LoadTexture(const std::string& path, const std::string& name, clt::TextureFilter texFilter = clt::TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
         clt::Texture* GetTexture(const std::string& name) override;
 
         clt::Mesh* LoadMesh(const std::string& path, const std::string& name) override;
@@ -22,6 +22,8 @@ namespace editor
 
         clt::Font* LoadFont(const std::string& path, const std::string& name) override;
         clt::Font* GetFont(const std::string& name) override;
+
+        void UnloadAssets() override;
     };
 }
 #endif //CLUTTERENGINE_EDITORASSETMANAGER_H

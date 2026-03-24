@@ -18,6 +18,8 @@ namespace clt
 
         Font* LoadFont(const std::string& path, const std::string& name) override;
         Font* GetFont(const std::string& name) override;
+
+        void UnloadAssets() override;
     };
 }
 

@@ -26,6 +26,8 @@ editor::EditorAssetManager::~EditorAssetManager()
 clt::Texture* editor::EditorAssetManager::LoadTexture(const std::string& path, const std::string& name,
     const clt::TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
 {
+    if (mTextures.contains(path)) return GetTexture(path);
+
     int width, height, channels;
     stbi_set_flip_vertically_on_load(flipVertically);
 
@@ -42,9 +44,9 @@ clt::Texture* editor::EditorAssetManager::LoadTexture(const std::string& path, c
 
     stbi_image_free(data);
 
-    mTextures[name] = newTexture;
+    mTextures[path] = newTexture;
 
-    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded texture: {}", name);
+    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded texture: {}", path);
 
     return newTexture;
 }
@@ -56,9 +58,13 @@ clt::Texture* editor::EditorAssetManager::GetTexture(const std::string& name)
     {
         CLUTTER_WARN("[ASSET MANAGER] Unable to find Texture: " + name);
 
-        auto dflt = mTextures.find("default");
+        const auto dflt = mTextures.find("default");
+
+        if (dflt == mTextures.end()) return nullptr;
+
         return dflt->second;
     }
+
     return it->second;
 }
 
@@ -157,4 +163,14 @@ clt::Font* editor::EditorAssetManager::LoadFont(const std::string& path, const s
 clt::Font* editor::EditorAssetManager::GetFont(const std::string& name)
 {
     return nullptr;
+}
+
+void editor::EditorAssetManager::UnloadAssets()
+{
+    for (auto tex : mTextures)
+    {
+        delete tex.second;
+    }
+
+    mTextures.clear();
 }

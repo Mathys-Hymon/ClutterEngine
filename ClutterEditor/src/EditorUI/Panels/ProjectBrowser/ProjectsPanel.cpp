@@ -10,6 +10,7 @@
 #include "Utils/FileUtils.h"
 #include <../../../../../ClutterCore/include/clt/Core/Project/ProjectConfig.h>
 
+#include "clt/Core/Assets/IAssetManager.h"
 #include "clt/Core/Event/ApplicationEvent.h"
 #include "clt/Core/Meta/ProjectSerializer.h"
 #include "clt/Core/Project/Project.h"
@@ -20,7 +21,17 @@ static float BOTTOM_BAR_HEIGHT = 40.0f;
 
 editor::ProjectPanel::ProjectPanel(EditorContext* context) : EditorPanel(context)
 {
-     EditorSerializer::LoadPreferences(mPreferences, mContext->engineContext->engineRootPath);
+    if (EditorPreferences preferences; EditorSerializer::LoadPreferences(preferences, mContext->engineContext->engineRootPath))
+     {
+         for (auto& proj : preferences.recentProjects)
+         {
+             auto loaded = clt::ProjectSerializer::Load(proj);
+
+             if (!loaded) continue;
+
+             mProjects.push_back(loaded);
+         }
+     }
 }
 
 const char* editor::ProjectPanel::GetName() const
@@ -211,20 +222,79 @@ void editor::ProjectPanel::BottomPanel()
 
 void editor::ProjectPanel::RenderRecentProjects()
 {
-    mContext->themes->BindFont(TextType::title);
-
-    for (auto& proj : mPreferences.recentProjects)
+    for (const auto& proj : mProjects)
     {
-        std::filesystem::path p(proj);
+        constexpr auto projectBoxSize = ImVec2{144, 220};
 
-        const std::string projectName = p.stem().string();
-        const std::string buttonLabel = projectName + "##" + proj;
+        constexpr auto normalColor = ImVec4{0.059f,0.058f,0.061f,0.1f};
+        constexpr auto hoveredColor = ImVec4{0.059f,0.058f,0.061f,0.5f};
 
-        if (ImGui::Button(buttonLabel.c_str()))
+        mContext->themes->BindFont(TextType::title);
+
+        const std::string projectName = proj->config.GameName;
+        const std::string projectFile = projectName +   ".cltProject";
+        const std::filesystem::path p = proj->projectDirectory / projectFile;
+        const std::string buttonLabel = projectName + "##" + p.string();
+
+        ImVec2 startPos = ImGui::GetCursorPos();
+
+        if (ImGui::InvisibleButton(buttonLabel.c_str(), projectBoxSize))
         {
-            std::strncpy(mProjectPathBuffer, proj.c_str(), sizeof(mProjectPathBuffer) - 1);
+            std::strncpy(mProjectPathBuffer, p.string().c_str(), sizeof(mProjectPathBuffer) - 1);
             mProjectPathBuffer[sizeof(mProjectPathBuffer) - 1] = '\0';
         }
+
+        const bool isHovered = ImGui::IsItemHovered();
+        const bool isSelected = mProjectPathBuffer == p;
+
+        ImGui::SetCursorPos(startPos);
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, (isHovered || isSelected) ? hoveredColor : normalColor);
+        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 8.f);
+
+        ImGui::BeginChild((buttonLabel + "_container").c_str(), projectBoxSize, true, ImGuiWindowFlags_NoInputs);
+
+        const float windowWidth = ImGui::GetWindowWidth();
+        ImGui::SetCursorPosX((windowWidth - 128.0f) * 0.5f);
+
+        const auto image = mContext->engineContext->assets->LoadTexture(proj->projectDirectory.string() + "/" + proj->config.LogoPath, projectName, clt::TextureFilter::LINEAR, false, false);
+
+        ImGui::Image(reinterpret_cast<void*>(static_cast<intptr_t>(image ? image->GetID() : 0)), ImVec2(128, 128));
+
+        const float textWidth = ImGui::CalcTextSize(projectName.c_str()).x;
+        ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+
+        ImGui::TextWrapped(projectName.c_str());
+
+        mContext->themes->BindFont(TextType::console);
+
+        const float textVersion = ImGui::CalcTextSize(proj->config.EngineVersion.c_str()).x;
+        ImGui::SetCursorPosX((windowWidth - textVersion) * 0.5f);
+
+        ImGui::TextDisabled(proj->config.EngineVersion.c_str());
+
+        ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::GetTextLineHeightWithSpacing() - 5.0f);
+
+        std::string pathStr = p.string();
+
+        if (pathStr.length() > 15) pathStr = pathStr.substr(0, 3) + "..." + pathStr.substr(pathStr.length() - 10);
+
+        const float pathWidth = ImGui::CalcTextSize(pathStr.c_str()).x;
+
+        ImGui::SetCursorPosX((windowWidth - pathWidth) * 0.5f);
+        ImGui::TextDisabled(pathStr.c_str());
+
+        ImGui::EndChild();
+        ImGui::PopStyleColor();
+        ImGui::PopStyleVar();
+
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text(("Full path: " + p.string()).c_str());
+            ImGui::EndTooltip();
+        }
+
+        ImGui::SameLine();
     }
 }
 

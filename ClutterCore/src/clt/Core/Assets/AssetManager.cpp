@@ -38,3 +38,7 @@ clt::Font* clt::AssetManager::GetFont(const std::string& name)
 {
     return nullptr;
 }
+
+void clt::AssetManager::UnloadAssets()
+{
+}

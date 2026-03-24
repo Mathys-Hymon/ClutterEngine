@@ -19,6 +19,8 @@ namespace clt
 
         virtual Font* LoadFont(const std::string& path, const std::string& name) = 0;
         virtual Font* GetFont(const std::string& name) = 0;
+
+        virtual void UnloadAssets() = 0;
     };
     
 }

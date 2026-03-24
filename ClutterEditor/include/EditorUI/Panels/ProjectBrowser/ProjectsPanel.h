@@ -5,7 +5,6 @@
 #ifndef CLUTTERENGINE_PROJECTSPANEL_H
 #define CLUTTERENGINE_PROJECTSPANEL_H
 #include "EditorUI/EditorPanel.h"
-#include "Project/EditorPreferences.h"
 
 namespace editor
 {
@@ -17,7 +16,8 @@ namespace editor
         int mSelectedIndex{-1};
         char mProjectPathBuffer[256]{""};
         char mProjectName[256]{""};
-        EditorPreferences mPreferences;
+
+        std::vector<std::shared_ptr<clt::Project>> mProjects;
 
         void LeftPanel();
         void RightPanel();

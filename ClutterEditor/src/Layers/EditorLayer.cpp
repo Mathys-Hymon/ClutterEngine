@@ -9,6 +9,7 @@
 #include "clt/Core/ActorComponent/Components.h"
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Level/Level.h"
+#include "clt/Core/Meta/ProjectSerializer.h"
 #include "clt/Core/Meta/Serializer.h"
 #include "clt/Core/Project/Project.h"
 #include "Debug/ImGuiConsoleSink.h"
@@ -33,7 +34,7 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
 
     EditorSerializer::LoadPreferences(prefs, mContext->engineRootPath);
 
-    auto path = context.activeProject->projectDirectory / (context.activeProject->config.GameName + ".cltProject");
+    const auto path = context.activeProject->projectDirectory / (context.activeProject->config.GameName + ".cltProject");
 
     const auto it = std::ranges::find(prefs.recentProjects, path.string());
 
@@ -50,6 +51,20 @@ void editor::EditorLayer::OnAttach(const clt::engine::Context& context)
     else
     {
         prefs.recentProjects.push_front(path.string());
+    }
+
+    std::vector<std::string> emptyProjects;
+
+    for (auto& proj : prefs.recentProjects)
+    {
+        if (const auto loaded = clt::ProjectSerializer::Load(proj); !loaded) emptyProjects.push_back(proj);
+    }
+
+    for (auto& proj : emptyProjects)
+    {
+        const auto prjIt = std::ranges::find(prefs.recentProjects, proj);
+
+        prefs.recentProjects.erase(prjIt);
     }
 
     EditorSerializer::SavePreferences(prefs, mContext->engineRootPath);

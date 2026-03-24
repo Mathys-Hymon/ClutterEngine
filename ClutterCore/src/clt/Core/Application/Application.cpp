@@ -25,10 +25,8 @@ namespace clt
         graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
 
         if (!mWindow) mWindow = std::unique_ptr<IWindow>(IWindow::Create());
-        if (!mAsset) mAsset = std::unique_ptr<IAssetManager>(CreateAssetManager());
 
         mContext.window = mWindow.get();
-        mContext.assets = mAsset.get();
 
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
         mContext.eventCallback = [this](Event& e) { this->OnEvent(e); };
@@ -62,6 +60,9 @@ namespace clt
 
     void Application::Run()
     {
+        if (!mAsset) mAsset = std::unique_ptr<IAssetManager>(CreateAssetManager());
+        mContext.assets = mAsset.get();
+
         while (mIsRunning)
         {
              const double dt = Timer::ComputeDeltaTime();
@@ -84,6 +85,8 @@ namespace clt
 
             Timer::DelayTime(1.f/144.f - delay);
         }
+
+        mContext.assets->UnloadAssets();
     }
 
     void Application::PushLayer(Layer* layer)

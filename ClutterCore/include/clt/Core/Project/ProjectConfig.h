@@ -32,6 +32,7 @@ namespace clt::project
         std::string GameName = "Template Project";
         std::string EngineVersion = "0.0.1";
         std::string BuildTarget = "new3Ds";
+        std::string LogoPath = "gameIcon.png";
 
         GraphicsSettings Graphics;
         PhysicsSettings Physics;
