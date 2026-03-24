@@ -11,7 +11,7 @@ bool editor::EditorSerializer::LoadPreferences(EditorPreferences& outPrefs, cons
     std::ifstream ifs(fullpath);
     if (!ifs.is_open())
     {
-        CLUTTER_ERROR("Failed to open editor Preferences: {}", fullpath.string());
+        CLUTTER_WARN("Failed to open editor Preferences: {}", fullpath.string());
         return false;
     }
 
@@ -21,7 +21,7 @@ bool editor::EditorSerializer::LoadPreferences(EditorPreferences& outPrefs, cons
         ifs >> data;
     } catch (std::exception& e)
     {
-        CLUTTER_ERROR("Failed to load editor Preferences: {}", e.what());
+        CLUTTER_WARN("Failed to load editor Preferences: {}", e.what());
         return false;
     }
 

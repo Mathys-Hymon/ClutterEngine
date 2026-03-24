@@ -245,7 +245,6 @@ void editor::ProjectPanel::CreateNewProject()
 
     try
     {
-        std::filesystem::create_directory(fullProjectPath);
         std::filesystem::copy(templatePath, fullProjectPath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
         std::filesystem::rename(templateOldName, templateNewName);
     }
