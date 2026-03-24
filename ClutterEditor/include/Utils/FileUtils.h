@@ -11,7 +11,7 @@ namespace editor::utils
         static void Initialize();
 
         static std::string SelectFolder();
-        static std::string SelectFile();
+        static std::string SelectFile(const char* filterName = nullptr, const char* filterExt = nullptr);
     };
 }
 

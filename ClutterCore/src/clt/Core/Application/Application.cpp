@@ -75,7 +75,9 @@ namespace clt
             if (mNeedHotReload)
             {
                 mNeedHotReload = false;
+                CLUTTER_INFO("------ STARTING HOT RELOAD ------");
                 OnProjectLoaded();
+                CLUTTER_INFO("------ HOT RELOAD FINISHED ------");
             }
 
             static double delay = Timer::StopChrono("ApplicationUpdate");

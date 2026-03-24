@@ -13,11 +13,14 @@
 #include "clt/Core/Event/ApplicationEvent.h"
 #include "clt/Core/Meta/ProjectSerializer.h"
 #include "clt/Core/Project/Project.h"
+#include "Project/EditorPreferences.h"
+#include "Project/EditorSerializer.h"
 
 static float BOTTOM_BAR_HEIGHT = 40.0f;
 
 editor::ProjectPanel::ProjectPanel(EditorContext* context) : EditorPanel(context)
 {
+     EditorSerializer::LoadPreferences(mPreferences, mContext->engineContext->engineRootPath);
 }
 
 const char* editor::ProjectPanel::GetName() const
@@ -60,6 +63,7 @@ void editor::ProjectPanel::LeftPanel()
     {
         mCurrentState = BrowserState::RecentProjects;
         mSelectedIndex = -1;
+        mProjectPathBuffer[0] = '\0';
     }
 
     ImGui::Separator();
@@ -76,6 +80,7 @@ void editor::ProjectPanel::LeftPanel()
         {
             mCurrentState = BrowserState::Templates;
             mSelectedIndex = i;
+            mProjectPathBuffer[0] = '\0';
         }
     }
 
@@ -131,25 +136,51 @@ void editor::ProjectPanel::BottomPanel()
         ImGui::InputTextWithHint("##ProjectName", "Project Name", mProjectName, sizeof(mProjectName));
     }
 
-    ImGui::BeginDisabled(isRecentMenu);
-
     ImGui::SameLine();
     if (ImGui::Button("Browse"))
     {
-        if (auto path = utils::FileUtils::SelectFolder(); !path.empty())
+        if (isRecentMenu)
         {
-            std::strcpy(mProjectPathBuffer, path.c_str());
+            if (auto path = utils::FileUtils::SelectFile("Clutter Editor", "cltProject"); !path.empty())
+            {
+                std::strcpy(mProjectPathBuffer, path.c_str());
 
-            CLUTTER_TRACE("Current Folder Path : {}", path);
+                CLUTTER_TRACE("Current Folder Path : {}", path);
+            }
+        }
+        else
+        {
+            if (auto path = utils::FileUtils::SelectFolder(); !path.empty())
+            {
+                std::strcpy(mProjectPathBuffer, path.c_str());
+
+                CLUTTER_TRACE("Current Folder Path : {}", path);
+            }
         }
     }
 
-    ImGui::EndDisabled();
     ImGui::SameLine();
 
     if (isRecentMenu)
     {
-        if (ImGui::Button("Open Selected", ImVec2(120, 0))) { /* OpenProject */ }
+        const bool fileExist = std::filesystem::exists(mProjectPathBuffer);
+
+        ImGui::BeginDisabled(strlen(mProjectPathBuffer) == 0 || !fileExist);
+
+        if (ImGui::Button("Open Selected", ImVec2(120, 0))) { OpenRecentProject(); }
+
+        ImGui::EndDisabled();
+
+        if (!fileExist && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+        {
+            mContext->themes->BindFont(TextType::classic);
+
+            ImGui::BeginTooltip();
+            ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "Project file does not exist, please select an existing path");
+            ImGui::EndTooltip();
+
+            mContext->themes->BindFont(TextType::title);
+        }
     }
     else
     {
@@ -180,6 +211,21 @@ void editor::ProjectPanel::BottomPanel()
 
 void editor::ProjectPanel::RenderRecentProjects()
 {
+    mContext->themes->BindFont(TextType::title);
+
+    for (auto& proj : mPreferences.recentProjects)
+    {
+        std::filesystem::path p(proj);
+
+        const std::string projectName = p.stem().string();
+        const std::string buttonLabel = projectName + "##" + proj;
+
+        if (ImGui::Button(buttonLabel.c_str()))
+        {
+            std::strncpy(mProjectPathBuffer, proj.c_str(), sizeof(mProjectPathBuffer) - 1);
+            mProjectPathBuffer[sizeof(mProjectPathBuffer) - 1] = '\0';
+        }
+    }
 }
 
 void editor::ProjectPanel::RenderTemplateDetails()
@@ -216,5 +262,11 @@ void editor::ProjectPanel::CreateNewProject()
     clt::ProjectSerializer::Save(templateNewName, newProject);
 
     clt::ProjectLoadEvent event(templateNewName);
+    mContext->engineContext->eventCallback(event);
+}
+
+void editor::ProjectPanel::OpenRecentProject()
+{
+    clt::ProjectLoadEvent event(mProjectPathBuffer);
     mContext->engineContext->eventCallback(event);
 }

@@ -19,7 +19,6 @@ namespace clt
             std::function<void(clt::Event&)> eventCallback;
 
             std::filesystem::path engineRootPath;
-            std::filesystem::path projectPath;
         };
     }
 }

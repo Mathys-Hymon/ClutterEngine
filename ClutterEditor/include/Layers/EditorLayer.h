@@ -6,9 +6,10 @@
 
 namespace editor
 {
+    struct EditorPreferences;
+
     class EditorLayer : public clt::Layer
     {
-
     public:
         explicit EditorLayer();
 

@@ -5,6 +5,7 @@
 #ifndef CLUTTERENGINE_PROJECTSPANEL_H
 #define CLUTTERENGINE_PROJECTSPANEL_H
 #include "EditorUI/EditorPanel.h"
+#include "Project/EditorPreferences.h"
 
 namespace editor
 {
@@ -16,6 +17,7 @@ namespace editor
         int mSelectedIndex{-1};
         char mProjectPathBuffer[256]{""};
         char mProjectName[256]{""};
+        EditorPreferences mPreferences;
 
         void LeftPanel();
         void RightPanel();
@@ -25,10 +27,10 @@ namespace editor
         void RenderTemplateDetails();
 
         void CreateNewProject();
+        void OpenRecentProject();
 
     public:
-
-        ProjectPanel(EditorContext* context);
+        explicit ProjectPanel(EditorContext* context);
         const char* GetName() const override;
         DockPosition GetDockingPosition() const override;
 

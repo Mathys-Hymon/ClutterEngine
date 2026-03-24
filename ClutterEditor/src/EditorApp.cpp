@@ -48,8 +48,6 @@ namespace editor
 
             PushLayer(mEditorLayer);
             PushLayer(mImGuiLayer);
-
-            CLUTTER_INFO("Editor Hot-Reload finished !");
         }
 
         ~ClutterEditor() override {}
