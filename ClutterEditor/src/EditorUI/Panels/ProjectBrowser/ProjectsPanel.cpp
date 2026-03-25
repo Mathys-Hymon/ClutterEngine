@@ -22,16 +22,16 @@ static float BOTTOM_BAR_HEIGHT = 40.0f;
 editor::ProjectPanel::ProjectPanel(EditorContext* context) : EditorPanel(context)
 {
     if (EditorPreferences preferences; EditorSerializer::LoadPreferences(preferences, mContext->engineContext->engineRootPath))
-     {
-         for (auto& proj : preferences.recentProjects)
-         {
-             auto loaded = clt::ProjectSerializer::Load(proj);
+    {
+        for (auto& proj : preferences.recentProjects)
+        {
+            auto loaded = clt::ProjectSerializer::Load(proj);
 
-             if (!loaded) continue;
+            if (!loaded) continue;
 
-             mProjects.push_back(loaded);
-         }
-     }
+            mProjects.push_back(loaded);
+        }
+    }
 }
 
 const char* editor::ProjectPanel::GetName() const
