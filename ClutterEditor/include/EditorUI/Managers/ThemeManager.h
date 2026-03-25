@@ -19,7 +19,7 @@ class Texture;
 namespace editor
 {
     enum class TextType { classic, title, console};
-    enum class AssetType { Texture, Mesh, Font, Sound, Shader, Script, Unknown };
+    enum class AssetType { texture, mesh, font, sound, shader, script, unknown };
 
     class ThemeManager
     {

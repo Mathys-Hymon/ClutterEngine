@@ -15,27 +15,29 @@
 constexpr uint32_t FONT_ATLAS_WIDTH = 512;
 constexpr uint32_t FONT_ATLAS_HEIGHT = 512;
 
-editor::EditorAssetManager::EditorAssetManager()
+editor::EditorAssetManager::EditorAssetManager(const std::unordered_map < clt::pathType, std::string>& paths)
 {
+    mPaths = paths;
 }
 
-editor::EditorAssetManager::~EditorAssetManager()
-{
-}
+editor::EditorAssetManager::~EditorAssetManager() = default;
 
-clt::Texture* editor::EditorAssetManager::LoadTexture(const std::string& path, const std::string& name,
+clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathtype, const std::string& path, const std::string& name,
     const clt::TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
 {
-    if (mTextures.contains(path)) return GetTexture(path);
+    if (mTextures.contains(path)) return GetTexture(pathtype, path);
+
+    auto tempPath = mPaths[pathtype];
+    tempPath += path;
 
     int width, height, channels;
     stbi_set_flip_vertically_on_load(flipVertically);
 
-    unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);;
+    unsigned char* data = stbi_load(tempPath.c_str(), &width, &height, &channels, STBI_rgb_alpha);;
 
     if (!data)
     {
-        CLT_CORE_ERROR("[ASSET MANAGER] Failed to load texture " + path);
+        CLT_CORE_ERROR("[ASSET MANAGER] Failed to load texture " + tempPath);
         return nullptr;
     }
 
@@ -44,25 +46,28 @@ clt::Texture* editor::EditorAssetManager::LoadTexture(const std::string& path, c
 
     stbi_image_free(data);
 
-    mTextures[path] = newTexture;
+    mTextures[tempPath] = newTexture;
 
-    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded texture: {}", path);
+    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded texture: {}", tempPath);
 
     return newTexture;
 }
 
-clt::Texture* editor::EditorAssetManager::GetTexture(const std::string& name)
+clt::Texture* editor::EditorAssetManager::GetTexture(clt::pathType pathtype, const std::string& name)
 {
-    const auto it = mTextures.find(name);
+    auto tempPath = mPaths[pathtype];
+    tempPath += name;
+
+    const auto it = mTextures.find(tempPath);
     if (it == mTextures.end())
     {
-        CLUTTER_WARN("[ASSET MANAGER] Unable to find Texture: " + name);
+        CLUTTER_WARN("[ASSET MANAGER] Unable to find Texture: " + tempPath);
 
-        const auto dflt = mTextures.find("default");
+        const auto defaultTexture = mTextures.find("default");
 
-        if (dflt == mTextures.end()) return nullptr;
+        if (defaultTexture == mTextures.end()) return nullptr;
 
-        return dflt->second;
+        return defaultTexture->second;
     }
 
     return it->second;

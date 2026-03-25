@@ -6,6 +6,7 @@ editor::ContentBrowserPanel::ContentBrowserPanel(EditorContext* context) : Edito
 
 bool editor::ContentBrowserPanel::FolderHasChild(ContentFolder* folder, ContentFolder* targetChild)
 {
+    return true;
 }
 
 void editor::ContentBrowserPanel::ScanFolderRecursive(ContentFolder& folder)

@@ -256,7 +256,7 @@ void editor::ProjectPanel::RenderRecentProjects()
         const float windowWidth = ImGui::GetWindowWidth();
         ImGui::SetCursorPosX((windowWidth - 128.0f) * 0.5f);
 
-        const auto image = mContext->engineContext->assets->LoadTexture(proj->projectDirectory.string() + "/" + proj->config.LogoPath, projectName, clt::TextureFilter::LINEAR, false, false);
+        const auto image = mContext->engineContext->assets->LoadTexture(clt::pathType::none, proj->projectDirectory.string() + "/" + proj->config.LogoPath, projectName, clt::TextureFilter::LINEAR, false, false);
 
         ImGui::Image(reinterpret_cast<void*>(static_cast<intptr_t>(image ? image->GetID() : 0)), ImVec2(128, 128));
 

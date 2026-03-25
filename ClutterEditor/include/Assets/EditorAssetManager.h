@@ -9,13 +9,14 @@ namespace editor
     class EditorAssetManager : public clt::IAssetManager
     {
         std::unordered_map < std::string, clt::Texture*> mTextures;
-        public:
+        std::unordered_map < clt::pathType, std::string> mPaths;
 
-        EditorAssetManager();
+        public:
+        explicit EditorAssetManager(const std::unordered_map < clt::pathType, std::string>& paths);
         virtual ~EditorAssetManager();
 
-        clt::Texture* LoadTexture(const std::string& path, const std::string& name, clt::TextureFilter texFilter = clt::TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
-        clt::Texture* GetTexture(const std::string& name) override;
+        clt::Texture* LoadTexture(clt::pathType pathtype, const std::string& path, const std::string& name, clt::TextureFilter texFilter = clt::TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
+        clt::Texture* GetTexture(clt::pathType pathtype, const std::string& name) override;
 
         clt::Mesh* LoadMesh(const std::string& path, const std::string& name) override;
         clt::Mesh* GetMesh(const std::string& name) override;

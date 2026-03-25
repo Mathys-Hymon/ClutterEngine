@@ -4,6 +4,7 @@
 
 #include "Assets/EditorAssetManager.h"
 #include "clt/Core/Debug/Log.h"
+#include "clt/Core/Project/Project.h"
 #include "Layers/ImGuiLayer.h"
 #include "Layers/ProjectBrowserLayer.h"
 #include "Utils/FileUtils.h"
@@ -33,7 +34,14 @@ namespace editor
 
         clt::IAssetManager* CreateAssetManager() override
         {
-            return new EditorAssetManager;
+            const std::string enginePath = GetContext().engineRootPath.string() + "/EditorContent/";
+            const std::string gamePath = GetContext().activeProject ? GetContext().activeProject->projectDirectory.string() + "/" : "";
+
+            return new EditorAssetManager({
+                {clt::pathType::none, ""},
+                {clt::pathType::engine, enginePath},
+                {clt::pathType::game, gamePath}
+            });
         }
 
         void OnProjectLoaded() override
