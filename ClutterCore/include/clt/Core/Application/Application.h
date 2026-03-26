@@ -19,6 +19,8 @@ namespace clt
 
     class Application
     {
+        protected:
+
         std::unique_ptr<IWindow> mWindow;
         std::unique_ptr<IAssetManager> mAsset;
         LayerStack mLayerStack;

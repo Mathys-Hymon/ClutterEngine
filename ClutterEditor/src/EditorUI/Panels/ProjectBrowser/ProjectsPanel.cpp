@@ -287,11 +287,13 @@ void editor::ProjectPanel::RenderRecentProjects()
         ImGui::PopStyleColor();
         ImGui::PopStyleVar();
 
-        if (ImGui::IsItemHovered())
+        if (isHovered)
         {
             ImGui::BeginTooltip();
             ImGui::Text(("Full path: " + p.string()).c_str());
             ImGui::EndTooltip();
+
+            if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) OpenRecentProject();
         }
 
         ImGui::SameLine();

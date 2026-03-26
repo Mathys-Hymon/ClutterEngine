@@ -20,9 +20,12 @@ editor::EditorAssetManager::EditorAssetManager(const std::unordered_map < clt::p
     mPaths = paths;
 }
 
-editor::EditorAssetManager::~EditorAssetManager() = default;
+editor::EditorAssetManager::~EditorAssetManager()
+{
+    UnloadAssets();
+};
 
-clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathtype, const std::string& path, const std::string& name,
+clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathtype, const std::string& path, const std::string& /*name*/,
     const clt::TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
 {
     if (mTextures.contains(path)) return GetTexture(pathtype, path);
@@ -37,7 +40,7 @@ clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathty
 
     if (!data)
     {
-        CLT_CORE_ERROR("[ASSET MANAGER] Failed to load texture " + tempPath);
+        CLT_CORE_WARN("[ASSET MANAGER] Failed to load texture " + tempPath);
         return nullptr;
     }
 
@@ -48,7 +51,7 @@ clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathty
 
     mTextures[tempPath] = newTexture;
 
-    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded texture: {}", tempPath);
+    CLUTTER_TRACE("[ASSET MANAGER] Successfully loaded texture: {}", tempPath);
 
     return newTexture;
 }
@@ -73,12 +76,14 @@ clt::Texture* editor::EditorAssetManager::GetTexture(clt::pathType pathtype, con
     return it->second;
 }
 
-clt::Mesh* editor::EditorAssetManager::LoadMesh(const std::string& path, const std::string& name)
+clt::Mesh* editor::EditorAssetManager::LoadMesh(const std::string& /*path*/, const std::string& /*name*/)
 {
+    return nullptr;
 }
 
-clt::Mesh* editor::EditorAssetManager::GetMesh(const std::string& name)
+clt::Mesh* editor::EditorAssetManager::GetMesh(const std::string& /*name*/)
 {
+    return nullptr;
 }
 
 clt::Font* editor::EditorAssetManager::LoadFont(const std::string& path, const std::string& name)
@@ -87,7 +92,7 @@ clt::Font* editor::EditorAssetManager::LoadFont(const std::string& path, const s
 
     if (!inputStream.is_open())
     {
-        CLUTTER_ERROR("[ASSET MANAGER] Failed to open font file: {}", path);
+        CLUTTER_WARN("[ASSET MANAGER] Failed to open font file: {}", path);
         return nullptr;
     }
 
@@ -103,7 +108,7 @@ clt::Font* editor::EditorAssetManager::LoadFont(const std::string& path, const s
     stbtt_fontinfo info;
     if (!stbtt_InitFont(&info, dataBuffer, 0))
     {
-        CLUTTER_ERROR("[ASSET MANAGER] Failed to init font: {}", name);
+        CLUTTER_WARN("[ASSET MANAGER] Failed to init font: {}", name);
         delete [] dataBuffer;
         return nullptr;
     }
@@ -160,19 +165,19 @@ clt::Font* editor::EditorAssetManager::LoadFont(const std::string& path, const s
     delete[] dataBuffer;
     delete[] fontAtlasTextureData;
 
-    CLUTTER_INFO("[ASSET MANAGER] Successfully loaded font: {}", name);
+    CLUTTER_TRACE("[ASSET MANAGER] Successfully loaded font: {}", name);
 
     return newFont;
 }
 
-clt::Font* editor::EditorAssetManager::GetFont(const std::string& name)
+clt::Font* editor::EditorAssetManager::GetFont(const std::string& /*name*/)
 {
     return nullptr;
 }
 
 void editor::EditorAssetManager::UnloadAssets()
 {
-    for (auto tex : mTextures)
+    for (const auto tex : mTextures)
     {
         delete tex.second;
     }

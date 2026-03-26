@@ -25,6 +25,9 @@ namespace editor
         {
             utils::FileUtils::Initialize();
 
+            mAsset = std::unique_ptr<clt::IAssetManager>(CreateAssetManager());
+            mContext.assets = mAsset.get();
+
             if (args.Count <= 1)
             {
                 mProjectBrowserLayer = new ProjectBrowserLayer();
@@ -50,6 +53,10 @@ namespace editor
 
             if (mEditorLayer) PopLayer(mEditorLayer);
             if (mImGuiLayer) PopLayer(mImGuiLayer);
+            if (mAsset) mAsset.reset();
+
+            mAsset = std::unique_ptr<clt::IAssetManager>(CreateAssetManager());
+            mContext.assets = mAsset.get();
 
             mEditorLayer = new EditorLayer();
             mImGuiLayer = new ImGuiLayer();
