@@ -15,7 +15,7 @@
 constexpr uint32_t FONT_ATLAS_WIDTH = 512;
 constexpr uint32_t FONT_ATLAS_HEIGHT = 512;
 
-editor::EditorAssetManager::EditorAssetManager(const std::unordered_map < clt::pathType, std::string>& paths)
+editor::EditorAssetManager::EditorAssetManager(const std::unordered_map < clt::PathType, std::string>& paths)
 {
     mPaths = paths;
 }
@@ -25,7 +25,7 @@ editor::EditorAssetManager::~EditorAssetManager()
     UnloadAssets();
 };
 
-clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathtype, const std::string& path, const std::string& /*name*/,
+clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::PathType pathtype, const std::string& path, const std::string& /*name*/,
     const clt::TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
 {
     if (mTextures.contains(path)) return GetTexture(pathtype, path);
@@ -56,7 +56,7 @@ clt::Texture* editor::EditorAssetManager::LoadTexture(const clt::pathType pathty
     return newTexture;
 }
 
-clt::Texture* editor::EditorAssetManager::GetTexture(clt::pathType pathtype, const std::string& name)
+clt::Texture* editor::EditorAssetManager::GetTexture(clt::PathType pathtype, const std::string& name)
 {
     auto tempPath = mPaths[pathtype];
     tempPath += name;
@@ -177,7 +177,7 @@ clt::Font* editor::EditorAssetManager::GetFont(const std::string& /*name*/)
 
 void editor::EditorAssetManager::UnloadAssets()
 {
-    for (const auto tex : mTextures)
+    for (const auto& tex : mTextures)
     {
         delete tex.second;
     }

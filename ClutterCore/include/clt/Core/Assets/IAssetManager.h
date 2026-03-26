@@ -6,7 +6,7 @@
 
 namespace clt
 {
-    enum class pathType
+    enum class PathType
     {
         none,
         engine,
@@ -18,8 +18,8 @@ namespace clt
     public:
         virtual ~IAssetManager() = default;
 
-        virtual Texture* LoadTexture(pathType pathtype, const std::string& path, const std::string& name, TextureFilter texFilter, bool generateMipMaps, bool flipVertically) = 0;
-        virtual Texture* GetTexture(pathType pathtype, const std::string& name) = 0;
+        virtual Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name, TextureFilter texFilter, bool generateMipMaps, bool flipVertically) = 0;
+        virtual Texture* GetTexture(PathType pathtype, const std::string& name) = 0;
 
         virtual Mesh* LoadMesh(const std::string& path, const std::string& name) = 0;
         virtual Mesh* GetMesh(const std::string& name) = 0;

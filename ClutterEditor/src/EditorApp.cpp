@@ -41,9 +41,9 @@ namespace editor
             const std::string gamePath = GetContext().activeProject ? GetContext().activeProject->projectDirectory.string() + "/" : "";
 
             return new EditorAssetManager({
-                {clt::pathType::none, ""},
-                {clt::pathType::engine, enginePath},
-                {clt::pathType::game, gamePath}
+                {clt::PathType::none, ""},
+                {clt::PathType::engine, enginePath},
+                {clt::PathType::game, gamePath}
             });
         }
 

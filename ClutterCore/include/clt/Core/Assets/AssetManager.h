@@ -10,8 +10,8 @@ namespace clt
         AssetManager();
         ~AssetManager();
 
-        Texture* LoadTexture(pathType pathtype, const std::string& path, const std::string& name, TextureFilter pTexFilter = TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
-        Texture* GetTexture(pathType pathtype, const std::string& name) override;
+        Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name, TextureFilter pTexFilter = TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
+        Texture* GetTexture(PathType pathtype, const std::string& name) override;
 
         Mesh* LoadMesh(const std::string& path, const std::string& name) override;
         Mesh* GetMesh(const std::string& name) override;

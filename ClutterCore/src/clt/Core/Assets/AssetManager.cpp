@@ -9,12 +9,12 @@ clt::AssetManager::~AssetManager()
 {
 }
 
-clt::Texture* clt::AssetManager::LoadTexture(pathType pathtype, const std::string& path, const std::string& name, const TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
+clt::Texture* clt::AssetManager::LoadTexture(PathType pathtype, const std::string& path, const std::string& name, const TextureFilter texFilter, const bool generateMipMaps, const bool flipVertically)
 {
     return nullptr;
 }
 
-clt::Texture* clt::AssetManager::GetTexture(pathType pathtype, const std::string& name)
+clt::Texture* clt::AssetManager::GetTexture(PathType pathtype, const std::string& name)
 {
     return nullptr;
 }

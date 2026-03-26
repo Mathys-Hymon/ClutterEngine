@@ -9,14 +9,14 @@ namespace editor
     struct ContentItem
     {
         std::string Name;
-        std::string Path;
+        std::filesystem::path Path;
         AssetType Type;
     };
 
     struct ContentFolder
     {
         std::string Name;
-        std::string Path;
+        std::filesystem::path Path;
         ContentFolder* Parent;
         std::vector<ContentFolder> Children;
         std::vector<ContentItem> Items;
