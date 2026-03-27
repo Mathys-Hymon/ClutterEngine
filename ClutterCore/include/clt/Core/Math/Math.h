@@ -21,21 +21,6 @@ namespace clt
     using Matrix3 = glm::mat3;
     using Matrix4 = glm::mat4;
 
-    struct Matrix4Row
-    {
-        glm::mat4 Data{};
-
-        explicit Matrix4Row(const Matrix4& colMajorMatrix)
-        {
-            Data = glm::transpose(colMajorMatrix);
-        }
-
-        const float* GetPointer() const
-        {
-            return glm::value_ptr(Data);
-        }
-    };
-
     namespace math
     {
         constexpr float PI = 3.14159265358979323846f;
