@@ -26,12 +26,12 @@ Clutter Engine is under active development. Here is the path forward to achievin
 ### 📍 Milestone 1: Editor Foundations (Current)
 - [x] Core ECS architecture with `EnTT`.
 - [x] Custom Reflection & Serialization system (`nlohmann/json`).
-- [ ] ImGui Editor integration (`editor::`).
+- [x] ImGui Editor integration (`editor::`).
 - [ ] Auto-generated UI (Inspector) based on C++ reflection data.
 - [ ] Scene Hierarchy panel and basic entity manipulation.
 
 ### 📍 Milestone 2: Asset Pipeline & Basic Rendering
-- [ ] Abstract Renderer API (OpenGL initially, with Vulkan/3DS abstraction in mind).
+- [ ] Abstract Renderer API (OpenGL initially, with Vulkan/3DS abstraction later).
 - [ ] Basic Real-time Lighting (Directional & Point lights, Forward Rendering).
 - [ ] Smart `AssetManager` with Lazy-Loading and memory caching.
 - [ ] Offline Asset Cooking (e.g., converting `.ttf` to Bitmap Atlases via the Editor).
