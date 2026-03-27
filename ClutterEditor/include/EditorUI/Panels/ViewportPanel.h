@@ -7,14 +7,14 @@ namespace editor
 {
     class ViewportPanel : public EditorPanel
     {
-        uint32_t moveIconID;
-        uint32_t moveIconActiveID;
-        uint32_t rotateIconID;
-        uint32_t rotateIconActiveID;
-        uint32_t scaleIconID;
-        uint32_t scaleIconActiveID;
+        uint32_t moveIconID{0};
+        uint32_t moveIconActiveID{0};
+        uint32_t rotateIconID{0};
+        uint32_t rotateIconActiveID{0};
+        uint32_t scaleIconID{0};
+        uint32_t scaleIconActiveID{0};
     public:
-        ViewportPanel(EditorContext* context);
+        explicit ViewportPanel(EditorContext* context);
         const char* GetName() const override;
         DockPosition GetDockingPosition() const override;
         void Draw() override;

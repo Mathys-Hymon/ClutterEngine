@@ -19,7 +19,7 @@ void editor::ThemePanel::Draw()
     if (!mContext || !mContext->themes)
     {
         ImGui::Text("ERROR : Theme Manager not initialized in current Context.");
-        CLT_CORE_ERROR("ERROR : Theme Manager not initialized in current Context.");
+        CLT_CORE_ERROR("Theme Manager not initialized in current Context.");
         return;
     }
 

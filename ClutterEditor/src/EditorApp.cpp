@@ -5,6 +5,7 @@
 #include "Assets/EditorAssetManager.h"
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Project/Project.h"
+#include "Debug/LogHistory.h"
 #include "Layers/ImGuiLayer.h"
 #include "Layers/ProjectBrowserLayer.h"
 #include "Utils/FileUtils.h"
@@ -54,6 +55,8 @@ namespace editor
             if (mEditorLayer) PopLayer(mEditorLayer);
             if (mImGuiLayer) PopLayer(mImGuiLayer);
             if (mAsset) mAsset.reset();
+
+            log::LogHistory::ClearLogs();
 
             mAsset = std::unique_ptr<clt::IAssetManager>(CreateAssetManager());
             mContext.assets = mAsset.get();

@@ -10,16 +10,16 @@ editor::ContentBrowserPanel::ContentBrowserPanel(EditorContext* context) : Edito
         clt::PathType::engine,
         "Resources/Textures/folderIconOpened.png",
         "folder Opened Icon",
-        clt::TextureFilter::LINEAR, false, false)->GetID();
+        clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mCloseFolderIcon = context->engineContext->assets->LoadTexture(clt::PathType::engine,
         "Resources/Textures/folderIconClosed.png",
         "folder Closed Icon",
-        clt::TextureFilter::LINEAR, false, false)->GetID();
+        clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mFolderIcon = context->engineContext->assets->LoadTexture(clt::PathType::engine,
         "Resources/Textures/folder.png", "folder Icon",
-        clt::TextureFilter::LINEAR, false, false)->GetID();
+        clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mRootFolder.Name = "ContentFolder";
     mRootFolder.Path = context->engineContext->activeProject->projectDirectory / "Content";
@@ -344,9 +344,13 @@ void editor::ContentBrowserPanel::Draw()
 {
     static float mHierarchyWidth = 250.0f;
 
+    ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 12.0f);
+
     ImGui::BeginChild("Hierarchy", ImVec2(mHierarchyWidth, 0), true);
     DrawFolderTree(&mRootFolder);
     ImGui::EndChild();
+
+    ImGui::PopStyleVar();
 
     ImGui::SameLine();
 

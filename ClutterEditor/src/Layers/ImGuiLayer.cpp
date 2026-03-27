@@ -9,6 +9,7 @@
 #include "EditorUI/Panels/MenuBarPanel.h"
 #include "EditorUI/Panels/OutlinerPanel.h"
 #include "EditorUI/Panels/ThemePanel.h"
+#include "EditorUI/Panels/ViewportPanel.h"
 
 void editor::ImGuiLayer::OnAttach(const clt::engine::Context& context)
 {
@@ -47,6 +48,7 @@ void editor::ImGuiLayer::LoadDefaultPanels() const
         std::make_shared<ThemePanel>(mEditorCtx.get()),
         std::make_shared<ContentBrowserPanel>(mEditorCtx.get()),
         std::make_shared<ConsolePanel>(mEditorCtx.get()),
+        std::make_shared<ViewportPanel>(mEditorCtx.get()),
     });
 
 }
@@ -55,17 +57,15 @@ void editor::ImGuiLayer::LoadDefaultAssets() const
 {
     const std::string absoluteFontPath = mContext->engineRootPath.string() + "/EditorContent/Resources/Font/";
 
-    mEditorCtx->themes->SetFont(editor::TextType::classic, (absoluteFontPath + "Rubik.ttf").c_str(), 15.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::title, (absoluteFontPath + "Rubik.ttf").c_str(), 18.0f);
-    mEditorCtx->themes->SetFont(editor::TextType::console, (absoluteFontPath + "JetBrains.ttf").c_str(), 15.0f);
-    
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/fontFile.png", "", clt::TextureFilter::NEAREST, true, false);
+    mEditorCtx->themes->SetFont(TextType::classic, (absoluteFontPath + "Rubik.ttf").c_str(), 15.0f);
+    mEditorCtx->themes->SetFont(TextType::title, (absoluteFontPath + "Rubik.ttf").c_str(), 18.0f);
+    mEditorCtx->themes->SetFont(TextType::console, (absoluteFontPath + "JetBrains.ttf").c_str(), 15.0f);
 
     mEditorCtx->themes->SetAssetIcon(AssetType::font,
-        mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/fontFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/fontFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::mesh,
-        mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::script,
     mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/scriptFile.png", "", clt::TextureFilter::NEAREST, true, false));
@@ -79,9 +79,9 @@ void editor::ImGuiLayer::LoadDefaultAssets() const
     mEditorCtx->themes->SetAssetIcon(AssetType::texture,
     mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
-    mEditorCtx->themes->SetAssetIcon(AssetType::unknown,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
-
     mEditorCtx->themes->SetAssetIcon(AssetType::level,
     mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/levelFile.png", "", clt::TextureFilter::NEAREST, true, false));
+
+    mEditorCtx->themes->SetAssetIcon(AssetType::unknown,
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 }

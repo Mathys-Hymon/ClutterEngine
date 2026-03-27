@@ -21,11 +21,11 @@ namespace clt
         virtual Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name, TextureFilter texFilter, bool generateMipMaps, bool flipVertically) = 0;
         virtual Texture* GetTexture(PathType pathtype, const std::string& name) = 0;
 
-        virtual Mesh* LoadMesh(const std::string& path, const std::string& name) = 0;
-        virtual Mesh* GetMesh(const std::string& name) = 0;
+        virtual Mesh* LoadMesh(PathType, const std::string& path, const std::string& name) = 0;
+        virtual Mesh* GetMesh(PathType, const std::string& name) = 0;
 
-        virtual Font* LoadFont(const std::string& path, const std::string& name) = 0;
-        virtual Font* GetFont(const std::string& name) = 0;
+        virtual Font* LoadFont(PathType, const std::string& path, const std::string& name) = 0;
+        virtual Font* GetFont(PathType, const std::string& name) = 0;
 
         virtual void UnloadAssets() = 0;
     };

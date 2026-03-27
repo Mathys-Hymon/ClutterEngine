@@ -19,22 +19,22 @@ clt::Texture* clt::AssetManager::GetTexture(PathType pathtype, const std::string
     return nullptr;
 }
 
-clt::Mesh* clt::AssetManager::LoadMesh(const std::string& path, const std::string& name)
+clt::Mesh* clt::AssetManager::LoadMesh(PathType pathtype, const std::string& path, const std::string& name)
 {
     return nullptr;
 }
 
-clt::Mesh* clt::AssetManager::GetMesh(const std::string& name)
+clt::Mesh* clt::AssetManager::GetMesh(PathType pathtype, const std::string& name)
 {
     return nullptr;
 }
 
-clt::Font* clt::AssetManager::LoadFont(const std::string& path, const std::string& name)
+clt::Font* clt::AssetManager::LoadFont(PathType pathtype, const std::string& path, const std::string& name)
 {
     return nullptr;
 }
 
-clt::Font* clt::AssetManager::GetFont(const std::string& name)
+clt::Font* clt::AssetManager::GetFont(PathType pathtype, const std::string& name)
 {
     return nullptr;
 }

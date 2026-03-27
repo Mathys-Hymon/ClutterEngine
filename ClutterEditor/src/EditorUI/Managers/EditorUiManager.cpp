@@ -76,7 +76,7 @@ void editor::EditorUiManager::Draw()
 
         if (panel->Begin())
         {
-        panel->Draw();
+            panel->Draw();
         }
         panel->End();
     }
