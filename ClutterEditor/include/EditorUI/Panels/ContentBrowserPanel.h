@@ -18,7 +18,7 @@ namespace editor
         std::string Name;
         std::filesystem::path Path;
         ContentFolder* Parent;
-        std::vector<ContentFolder> Children;
+        std::vector<std::unique_ptr<ContentFolder>> Children;
         std::vector<ContentItem> Items;
     };
 
@@ -31,7 +31,7 @@ namespace editor
         ImTextureID mCloseFolderIcon;
         ImTextureID mFolderIcon;
 
-        bool FolderHasChild(ContentFolder* folder, ContentFolder* targetChild);
+        bool FolderHasChild(const ContentFolder* folder, ContentFolder* targetChild);
 
         void ScanFolderRecursive(ContentFolder& folder);
 
