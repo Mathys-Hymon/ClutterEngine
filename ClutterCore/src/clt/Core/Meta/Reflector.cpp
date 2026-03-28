@@ -37,6 +37,9 @@ namespace clt::meta
             .Data<&Sprite::tint>("tint")
             .Data<&Sprite::zIndex>("zIndex");
 
+        Reflector<TagComponent>("TagComponent")
+            .Data<&TagComponent::tagName>("tagName");
+
         // ------ STD -------
 
         Reflector<std::string>("string");

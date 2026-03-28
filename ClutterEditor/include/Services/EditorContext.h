@@ -3,6 +3,11 @@
 
 #include <clt/Core/EngineContext.h>
 
+namespace clt
+{
+    class Actor;
+}
+
 namespace editor
 {
     class PanelManager;
@@ -12,6 +17,7 @@ namespace editor
         const clt::engine::Context* engineContext = nullptr;
         PanelManager* panels = nullptr;
         ThemeManager* themes = nullptr;
+        clt::Actor* selectedActor = nullptr;
     };
 }
 

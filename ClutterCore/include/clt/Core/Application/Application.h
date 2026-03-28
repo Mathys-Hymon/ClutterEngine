@@ -3,12 +3,14 @@
 #include <iostream>
 #include <memory>
 
-#include "../Layers/LayerStack.h"
-#include "../IWindow.h"
+#include "clt/Core/EngineContext.h"
 #include "clt/Core/Event/ApplicationEvent.h"
+#include "clt/Core/Layers/LayerStack.h"
+#include "clt/Core/IWindow.h"
 
 namespace clt
 {
+    class LevelManager;
     class IAssetManager;
 
     struct ApplicationCommandLineArgs
@@ -23,6 +25,7 @@ namespace clt
 
         std::unique_ptr<IWindow> mWindow;
         std::unique_ptr<IAssetManager> mAsset;
+        std::unique_ptr<LevelManager> mLevel;
         LayerStack mLayerStack;
         bool mIsRunning{true};
         bool mNeedHotReload{false};

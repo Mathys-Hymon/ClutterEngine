@@ -11,7 +11,7 @@ std::shared_ptr<clt::Project> clt::ProjectSerializer::Load(const std::filesystem
 
     if(!ifs.is_open())
     {
-        CLT_CORE_ERROR( "[PROJECT LOADER] Cannot open project: {}", filePath.string());
+        CLT_CORE_ERROR( "Cannot open project: {}", filePath.string());
         return nullptr;
     }
 
@@ -22,7 +22,7 @@ std::shared_ptr<clt::Project> clt::ProjectSerializer::Load(const std::filesystem
         ifs >> data;
     }catch(std::exception& e)
     {
-        CLT_CORE_ERROR("[PROJECT LOADER] Failed to parse project: {}", e.what());
+        CLT_CORE_ERROR("Failed to parse project: {}", e.what());
         return nullptr;
     }
 
@@ -40,7 +40,7 @@ void clt::ProjectSerializer::Save(const std::filesystem::path& filePath, const s
 
     if(!ofs.is_open())
     {
-        CLT_CORE_ERROR( "[PROJECT SAVE] Cannot open project: {}", filePath.string());
+        CLT_CORE_ERROR( "Cannot open project: {}", filePath.string());
         return;
     }
 

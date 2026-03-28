@@ -4,6 +4,7 @@
 
 #include "Assets/EditorAssetManager.h"
 #include "clt/Core/Debug/Log.h"
+#include "clt/Core/Level/LevelManager.h"
 #include "clt/Core/Project/Project.h"
 #include "Debug/LogHistory.h"
 #include "Layers/ImGuiLayer.h"
@@ -60,6 +61,10 @@ namespace editor
 
             mAsset = std::unique_ptr<clt::IAssetManager>(CreateAssetManager());
             mContext.assets = mAsset.get();
+
+            const auto fullPath = mContext.activeProject->projectDirectory / mContext.activeProject->config.Game.EditorStartingLevel;
+
+            mLevel->OpenLevel(fullPath.string());
 
             mEditorLayer = new EditorLayer();
             mImGuiLayer = new ImGuiLayer();

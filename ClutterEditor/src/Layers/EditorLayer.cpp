@@ -5,6 +5,7 @@
 #include <clt/Core/EngineContext.h>
 #include <iostream>
 
+#include "clt/Core/IWindow.h"
 #include "clt/Core/ActorComponent/Actor.h"
 #include "clt/Core/ActorComponent/Components.h"
 #include "clt/Core/Debug/Log.h"

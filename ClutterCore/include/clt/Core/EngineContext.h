@@ -5,6 +5,7 @@
 namespace clt
 {
     class Event;
+    class LevelManager;
     class IAssetManager;
     class IWindow;
     struct Project;
@@ -15,8 +16,9 @@ namespace clt
         {
             IWindow* window;
             IAssetManager* assets;
+            LevelManager* level;
             std::shared_ptr<Project> activeProject;
-            std::function<void(clt::Event&)> eventCallback;
+            std::function<void(Event&)> eventCallback;
 
             std::filesystem::path engineRootPath;
         };

@@ -1,6 +1,7 @@
 #include <clt/Core/Application/Application.h>
 
 #include <iostream>
+#include <memory>
 #include <ranges>
 #include <clt/Core/EngineContext.h>
 
@@ -14,6 +15,7 @@
 #include "clt/Core/Assets/IAssetManager.h"
 #include "clt/Core/Meta/ProjectSerializer.h"
 #include "clt/Core/Meta/Reflection.h"
+#include "clt/Core/Level/LevelManager.h"
 
 namespace clt
 {
@@ -30,6 +32,10 @@ namespace clt
 
         mWindow->SetEventCallback([this](Event& e) { this->OnEvent(e); });
         mContext.eventCallback = [this](Event& e) { this->OnEvent(e); };
+
+        if (!mLevel) mLevel = std::make_unique<LevelManager>();
+
+        mContext.level = mLevel.get();
 
         meta::Initialize();
 
@@ -70,6 +76,7 @@ namespace clt
             Timer::StartChrono("ApplicationUpdate");
 
             if (mWindow) mWindow->OnUpdate();
+            if (mLevel) mLevel->Update(dt);
 
             for (Layer* layer : mLayerStack) layer->OnUpdate(dt);
 
@@ -123,7 +130,7 @@ namespace clt
 
     void Application::OnProjectLoaded()
     {
-
+        mLevel->OpenLevel(mContext.activeProject->config.Game.GameStartingLevel);
     }
 
     void Application::OpenProject(const std::filesystem::path& path)

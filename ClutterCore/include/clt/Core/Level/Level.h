@@ -12,10 +12,17 @@ namespace clt
 
     public:
         Level() = default;
-        ~Level() = default;
+        virtual ~Level() = default;
 
-        virtual void OnUpdate(const float dt);
+        void OnBeginPlay();
 
+        void UpdatePhysics(float dt);
+        void UpdateScripts(float dt);
+        void Render();
+
+        void OnEndPlay();
+
+        Actor CreateActor(const std::string& name );
         Actor CreateActor();
         entt::registry& Registry() { return mRegistry; }
 

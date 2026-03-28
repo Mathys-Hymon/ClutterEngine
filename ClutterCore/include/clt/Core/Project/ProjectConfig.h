@@ -22,8 +22,8 @@ namespace clt::project
     struct GameSettings
     {
         std::string ContentPath = "Content/";
-        std::string EditorStartingLevel = ContentPath + "Scenes/Default.cltMap";
-        std::string GameStartingLevel = ContentPath + "Scenes/Default.cltMap";
+        std::string EditorStartingLevel = ContentPath + "Map/default.cltLevel";
+        std::string GameStartingLevel = ContentPath + "Map/default.cltLevel";
     };
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GameSettings, ContentPath, EditorStartingLevel, GameStartingLevel);
 

@@ -1,10 +1,10 @@
 #include <clt/Core/Assets/AssetType/Texture.h>
-#include <../src/Plateform/OpenGL/Assets/TextureGL.h>
+#include <../src/Plateform/PC/OpenGL/Assets/TextureGL.h>
 #include "clt/Renderer/Renderer.h"
 
 namespace clt
 {
-    Texture* Texture::Create(TextureFilter pTexFilter, uint32_t width, uint32_t height, uint32_t channels, const unsigned char* data, bool generateMipMaps)
+    Texture* Texture::Create(const TextureFilter pTexFilter, const uint32_t width, const uint32_t height, const uint32_t channels, const unsigned char* data, const bool generateMipMaps)
     {
         switch (graphic::Renderer::GetRendererAPI())
         {

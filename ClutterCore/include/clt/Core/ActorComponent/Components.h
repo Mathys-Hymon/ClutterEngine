@@ -5,6 +5,13 @@
 
 namespace clt
 {
+    struct TagComponent
+    {
+        std::string tagName{"Default Actor"};
+    };
+
+    struct DisabledComponent {};
+
     struct Transform
     {
         Vector3 position{0.0f};
@@ -12,9 +19,7 @@ namespace clt
         Vector3 scale{1.0f};
     };
 
-
     // ----------- GRAPHIC ----------- //
-
 
     struct Sprite
     {

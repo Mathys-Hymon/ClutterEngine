@@ -1,8 +1,8 @@
 #include "WindowsWindow.h"
 
 #include <iostream>
-#include "../../ClutterCore/src/Plateform/OpenGL/OpenGLContext.h"
-#include "../../ClutterCore/src/Plateform/Vulkan/VulkanContext.h"
+#include "../../ClutterCore/src/Plateform/PC/OpenGL/OpenGLContext.h"
+#include "../../ClutterCore/src/Plateform/PC/Vulkan/VulkanContext.h"
 #include "clt/Core/Debug/Log.h"
 #include "clt/Core/Event/ApplicationEvent.h"
 #include "clt/Renderer/Renderer.h"

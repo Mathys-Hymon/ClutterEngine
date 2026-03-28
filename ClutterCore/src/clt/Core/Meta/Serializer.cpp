@@ -125,6 +125,7 @@ void clt::meta::Serializer::DeserializeAny(const nlohmann::json& json, entt::met
         else if (data.type() == entt::resolve<int>())  data.set(instance, value.get<int>()); // INT
         else if (data.type() == entt::resolve<uint32_t>()) data.set(instance, value.get<uint32_t>()); // UINT32_T
         else if (data.type() == entt::resolve<bool>()) data.set(instance, value.get<bool>()); // BOOL
+        else if (data.type() == entt::resolve<std::string>()) data.set(instance, value.get<std::string>()); // STRING
 
         else
         {
@@ -143,7 +144,11 @@ bool clt::meta::Serializer::Deserialize(const std::string& filePath) const
 
     std::ifstream file(filePath);
 
-    if (!file.is_open()) return false;
+    if (!file.is_open())
+    {
+        CLT_CORE_WARN("Unable to open level \"{}\"", filePath);
+        return false;
+    }
 
     nlohmann::json rootData;
 
@@ -157,7 +162,6 @@ bool clt::meta::Serializer::Deserialize(const std::string& filePath) const
 
         for ( const auto& [componentID, componentValue] : components["Components"].items())
         {
-
             if(const entt::meta_type& compType = entt::resolve(entt::hashed_string(componentID.data())))
             {
                 auto instance = compType.construct();
@@ -177,5 +181,6 @@ bool clt::meta::Serializer::Deserialize(const std::string& filePath) const
         }
     }
 
+    CLT_CORE_TRACE("Level loaded successfully: {}", filePath);
     return true;
 }
