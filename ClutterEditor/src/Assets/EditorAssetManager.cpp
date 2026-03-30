@@ -73,6 +73,11 @@ clt::Texture* editor::EditorAssetManager::GetTexture(const clt::PathType pathtyp
     return it->second;
 }
 
+const std::unordered_map<std::string, clt::Texture*>& editor::EditorAssetManager::GetAllTextures()
+{
+    return mTextures;
+}
+
 clt::Mesh* editor::EditorAssetManager::LoadMesh(clt::PathType pathtype, const std::string& /*path*/, const std::string& /*name*/)
 {
     return nullptr;

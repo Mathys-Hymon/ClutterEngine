@@ -39,7 +39,7 @@ namespace editor
 
         clt::IAssetManager* CreateAssetManager() override
         {
-            const std::string enginePath = GetContext().engineRootPath.string() + "/EditorContent/";
+            const std::string enginePath = GetContext().engineRootPath.string() + "/EditorContent/Resources/";
             const std::string gamePath = GetContext().activeProject ? GetContext().activeProject->projectDirectory.string() + "/" : "";
 
             return new EditorAssetManager({

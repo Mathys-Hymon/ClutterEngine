@@ -62,26 +62,26 @@ void editor::ImGuiLayer::LoadDefaultAssets() const
     mEditorCtx->themes->SetFont(TextType::console, (absoluteFontPath + "JetBrains.ttf").c_str(), 15.0f);
 
     mEditorCtx->themes->SetAssetIcon(AssetType::font,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/fontFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/fontFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::mesh,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::script,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/scriptFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/scriptFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::shader,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/shaderFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/shaderFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::sound,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/audioFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/audioFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::texture,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::level,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/levelFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/levelFile.png", "", clt::TextureFilter::NEAREST, true, false));
 
     mEditorCtx->themes->SetAssetIcon(AssetType::unknown,
-    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Resources/Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
+    mEditorCtx->engineContext->assets->LoadTexture(clt::PathType::engine, "Textures/meshFile.png", "", clt::TextureFilter::NEAREST, true, false));
 }

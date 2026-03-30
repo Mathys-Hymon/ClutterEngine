@@ -25,7 +25,7 @@ void clt::Level::OnEndPlay()
 clt::Actor clt::Level::CreateActor(const std::string& name)
 {
     auto tempActor = CreateActor();
-    //tempActor.AddComponent<TagComponent>().tagName = name;
+    tempActor.AddComponent<Name>().name = name;
 
     return tempActor;
 }

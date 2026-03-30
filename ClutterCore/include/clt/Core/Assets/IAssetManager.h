@@ -18,8 +18,9 @@ namespace clt
     public:
         virtual ~IAssetManager() = default;
 
-        virtual Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name, TextureFilter texFilter, bool generateMipMaps, bool flipVertically) = 0;
+        virtual Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name = "", TextureFilter texFilter = TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = false) = 0;
         virtual Texture* GetTexture(PathType pathtype, const std::string& name) = 0;
+        virtual const std::unordered_map<std::string, Texture*>& GetAllTextures() = 0;
 
         virtual Mesh* LoadMesh(PathType, const std::string& path, const std::string& name) = 0;
         virtual Mesh* GetMesh(PathType, const std::string& name) = 0;

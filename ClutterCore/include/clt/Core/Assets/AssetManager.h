@@ -13,6 +13,8 @@ namespace clt
         Texture* LoadTexture(PathType pathtype, const std::string& path, const std::string& name, TextureFilter pTexFilter = TextureFilter::LINEAR, bool generateMipMaps = true, bool flipVertically = true) override;
         Texture* GetTexture(PathType pathtype, const std::string& name) override;
 
+        const std::unordered_map<std::string, Texture*>& GetAllTextures() override;
+
         Mesh* LoadMesh(PathType pathtype, const std::string& path, const std::string& name) override;
         Mesh* GetMesh(PathType pathtype, const std::string& name) override;
 

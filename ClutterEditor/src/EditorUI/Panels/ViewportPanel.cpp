@@ -9,13 +9,13 @@ editor::ViewportPanel::ViewportPanel(EditorContext* context) : EditorPanel(conte
 
     moveIconActiveID = context->engineContext->assets->LoadTexture(
         clt::PathType::engine,
-        "Resources/Textures/moveGizmoIconActive.png",
+        "Textures/moveGizmoIconActive.png",
         "folder Opened Icon",
         clt::TextureFilter::LINEAR, true, false)->GetID();
 
     moveIconID = context->engineContext->assets->LoadTexture(
         clt::PathType::engine,
-        "Resources/Textures/moveGizmoIcon.png",
+        "Textures/moveGizmoIcon.png",
         "folder Opened Icon",
      clt::TextureFilter::LINEAR, true, false)->GetID();
 
@@ -23,13 +23,13 @@ editor::ViewportPanel::ViewportPanel(EditorContext* context) : EditorPanel(conte
 
     rotateIconID = context->engineContext->assets->LoadTexture(
         clt::PathType::engine,
-        "Resources/Textures/RotateGizmoIcon.png",
+        "Textures/RotateGizmoIcon.png",
         "folder Opened Icon",
     clt::TextureFilter::LINEAR, true, false)->GetID();
 
     rotateIconActiveID = context->engineContext->assets->LoadTexture(
     clt::PathType::engine,
-    "Resources/Textures/RotateGizmoIconActive.png",
+    "Textures/RotateGizmoIconActive.png",
     "folder Opened Icon",
     clt::TextureFilter::LINEAR, true, false)->GetID();
 
@@ -37,13 +37,13 @@ editor::ViewportPanel::ViewportPanel(EditorContext* context) : EditorPanel(conte
 
     scaleIconID = context->engineContext->assets->LoadTexture(
     clt::PathType::engine,
-    "Resources/Textures/ScaleGizmoIcon.png",
+    "Textures/ScaleGizmoIcon.png",
     "folder Opened Icon",
     clt::TextureFilter::LINEAR, true, false)->GetID();
 
     scaleIconActiveID = context->engineContext->assets->LoadTexture(
     clt::PathType::engine,
-    "Resources/Textures/ScaleGizmoIconActive.png",
+    "Textures/ScaleGizmoIconActive.png",
     "folder Opened Icon",
     clt::TextureFilter::LINEAR, true, false)->GetID();
 }

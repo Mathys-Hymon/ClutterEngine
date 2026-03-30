@@ -8,17 +8,17 @@ editor::ContentBrowserPanel::ContentBrowserPanel(EditorContext* context) : Edito
 {
     mOpenFolderIcon = context->engineContext->assets->LoadTexture(
         clt::PathType::engine,
-        "Resources/Textures/folderIconOpened.png",
+        "Textures/folderIconOpened.png",
         "folder Opened Icon",
         clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mCloseFolderIcon = context->engineContext->assets->LoadTexture(clt::PathType::engine,
-        "Resources/Textures/folderIconClosed.png",
+        "Textures/folderIconClosed.png",
         "folder Closed Icon",
         clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mFolderIcon = context->engineContext->assets->LoadTexture(clt::PathType::engine,
-        "Resources/Textures/folder.png", "folder Icon",
+        "Textures/folder.png", "folder Icon",
         clt::TextureFilter::LINEAR, true, false)->GetID();
 
     mRootFolder.Name = "ContentFolder";

@@ -75,16 +75,18 @@ nlohmann::json clt::meta::Serializer::SerializeAny(const entt::meta_any& meta) c
 
 bool clt::meta::Serializer::Serialize(const std::string& filePath) const
 {
-    CLT_CORE_ASSERT(mLevel, "Serializer has no Level attached");
+    if (!mLevel)
+    {
+        CLUTTER_WARN("Serializer has no Level attached");
+        return false;
+    }
 
     nlohmann::json rootData;
 
     rootData["LevelName"] = "test";
     rootData["EngineVersion"] = "0.0.1";
 
-    auto& registry = mLevel->Registry();
-
-    for (const auto entity : registry.storage<entt::entity>())
+    for (auto& registry = mLevel->Registry(); const auto entity : registry.storage<entt::entity>())
     {
         const std::string entityStr = std::to_string(static_cast<uint32_t>(entity));
 

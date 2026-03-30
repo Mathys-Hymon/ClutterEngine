@@ -31,21 +31,38 @@ namespace clt::meta
 
 
         Reflector<Sprite>("Sprite")
-            .Data<&Sprite::textureName>("textureName")
+            .Data<&Sprite::textureName>("texture")
             .Data<&Sprite::flipX>("flipX")
             .Data<&Sprite::flipY>("flipY")
             .Data<&Sprite::tint>("tint")
             .Data<&Sprite::zIndex>("zIndex");
 
-        Reflector<TagComponent>("TagComponent")
-            .Data<&TagComponent::tagName>("tagName");
+        Reflector<Name>("Name")
+            .Data<&Name::name>("name");
 
         // ------ STD -------
 
         Reflector<std::string>("string");
 
-        // ------ MATHS ------
+        Reflector<TexturePath>("texturePath")
+            .Data<&TexturePath::path>("path");
 
+        Reflector<MeshPath>("meshPath")
+            .Data<&MeshPath::path>("path");
+
+            // ------ MATHS ------
+
+        // --- CLAMPED VALUES ---
+
+        Reflector<ClampedInt>("ClampedInt")
+            .Data<&ClampedInt::value>("val")
+            .Data<&ClampedInt::min>("min")
+            .Data<&ClampedInt::max>("max");
+
+        Reflector<ClampedFloat>("ClampedFloat")
+            .Data<&ClampedFloat::value>("val")
+            .Data<&ClampedFloat::min>("min")
+            .Data<&ClampedFloat::max>("max");
 
         // --- VECTOR 3 ---
 
@@ -67,5 +84,6 @@ namespace clt::meta
             .Data<&Color::y>("g")
             .Data<&Color::z>("b")
             .Data<&Color::w>("a");
+
     }
 }

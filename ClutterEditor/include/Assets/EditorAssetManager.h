@@ -20,6 +20,7 @@ namespace editor
 
         clt::Texture* LoadTexture(clt::PathType pathtype, const std::string& path, const std::string& name, clt::TextureFilter texFilter, bool generateMipMaps, bool flipVertically) override;
         clt::Texture* GetTexture(clt::PathType pathtype, const std::string& path) override;
+        const std::unordered_map<std::string, clt::Texture*>& GetAllTextures() override;
 
         clt::Mesh* LoadMesh(clt::PathType, const std::string& path, const std::string& name) override;
         clt::Mesh* GetMesh(clt::PathType, const std::string& path) override;

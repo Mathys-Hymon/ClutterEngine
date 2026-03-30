@@ -19,6 +19,10 @@ clt::Texture* clt::AssetManager::GetTexture(PathType pathtype, const std::string
     return nullptr;
 }
 
+const std::unordered_map<std::string, clt::Texture*>& clt::AssetManager::GetAllTextures()
+{
+}
+
 clt::Mesh* clt::AssetManager::LoadMesh(PathType pathtype, const std::string& path, const std::string& name)
 {
     return nullptr;

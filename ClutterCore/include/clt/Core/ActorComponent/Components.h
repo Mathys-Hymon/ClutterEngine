@@ -5,9 +5,15 @@
 
 namespace clt
 {
-    struct TagComponent
+    struct TexturePath { std::string path; };
+    struct MeshPath { std::string path; };
+
+    struct ClampedInt { int value, min, max; };
+    struct ClampedFloat { float value, min, max; };
+
+    struct Name
     {
-        std::string tagName{"Default Actor"};
+        std::string name{"Default Actor"};
     };
 
     struct DisabledComponent {};
@@ -23,7 +29,7 @@ namespace clt
 
     struct Sprite
     {
-        std::string textureName;
+        TexturePath textureName;
 
         Color tint{0};
         uint32_t zIndex{0};

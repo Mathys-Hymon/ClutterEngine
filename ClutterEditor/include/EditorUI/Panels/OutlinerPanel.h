@@ -7,6 +7,8 @@ namespace editor
 {
     class OutlinerPanel : public EditorPanel
     {
+        std::string mFilterName;
+        char mFilterBuffer[256] = "";
     public:
         OutlinerPanel(EditorContext* context);
         const char* GetName() const override;
