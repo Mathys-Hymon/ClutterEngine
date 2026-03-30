@@ -15,11 +15,19 @@ namespace clt::meta
     {
         public:
 
-        explicit Reflector(const std::string_view name)
+        explicit Reflector(const std::string_view name, const bool isComponent = true)
         {
             SetName(name);
             auto hashedString = entt::hashed_string{name.data(), name.size()};
-            entt::meta_factory<T>{}.type(hashedString).template func<&AttachComponent>(entt::hashed_string{"AttachComponent"});
+
+            auto factory = entt::meta_factory<T>{}.type(hashedString);
+
+            if (isComponent)
+            {
+                factory.template func<&AttachComponent>(entt::hashed_string{"AttachComponent"})
+                       .template func<&AddDefaultComponent>(entt::hashed_string{"AddDefaultComponent"})
+                       .template func<&RemoveComponent>(entt::hashed_string{"RemoveComponent"});
+            }
         }
 
         template<auto MemberPtr>
@@ -34,6 +42,16 @@ namespace clt::meta
         static void AttachComponent(entt::registry* registry, entt::entity actor, T& component)
         {
             registry->emplace_or_replace<T>(actor, component);
+        }
+
+        static void AddDefaultComponent(entt::registry* registry, const entt::entity actor)
+        {
+            registry->emplace_or_replace<T>(actor);
+        }
+
+        static void RemoveComponent(entt::registry* registry, const entt::entity actor)
+        {
+            registry->remove<T>(actor);
         }
     };
 

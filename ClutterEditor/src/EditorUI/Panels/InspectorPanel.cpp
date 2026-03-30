@@ -67,7 +67,9 @@ void editor::InspectorPanel::Draw()
 
             if (compName.empty() || compName == "Name" || compName == "Transform") continue;
 
-            if (ImGui::CollapsingHeader(compName.c_str()))
+            bool keepComponent = true;
+
+            if (ImGui::CollapsingHeader(compName.c_str(), &keepComponent))
             {
                 const auto voidVar = storage.value(selectedActor->GetID());
 
@@ -288,10 +290,68 @@ void editor::InspectorPanel::Draw()
 
                         if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", text.c_str());
                     }
-
                     ImGui::PopID();
                 }
             }
+
+            if (!keepComponent)
+            {
+                auto removeComp = metaType.func(entt::hashed_string{"RemoveComponent"});
+                removeComp.invoke({}, &level->Registry(), selectedActor->GetID());
+            }
         }
+    }
+
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    if (ImGui::Button("Add Component", ImVec2(-1.0f, 30.0f))) ImGui::OpenPopup("AddComponentPopup");
+
+    if (ImGui::BeginPopup("AddComponentPopup"))
+    {
+        static std::string searchFilter;
+
+        char AddCompBuffer[256] = "";
+        strncpy(AddCompBuffer, searchFilter.c_str(), sizeof(AddCompBuffer));
+        buffer[sizeof(AddCompBuffer) - 1] = '\0';
+
+        if (ImGui::InputText( "##AddCompInput", AddCompBuffer, sizeof(AddCompBuffer))) searchFilter = std::string(AddCompBuffer);
+
+        ImGui::Separator();
+
+        std::string filterLower = searchFilter;
+        for (auto& c : filterLower) c = static_cast<char>(std::tolower(c));
+
+        if (ImGui::BeginChild("##AddComponentList", ImVec2(0, 250)))
+        {
+            for (auto [typeId, metaType] : entt::resolve())
+            {
+                auto addFunc = metaType.func(entt::hashed_string{"AddDefaultComponent"});
+
+                if (!addFunc) continue;
+
+                std::string compName = clt::meta::GetName(metaType.id());
+
+                if (compName.empty() || compName == "TagComponent" || compName == "Transform") continue;
+
+                if (auto* storage = level->Registry().storage(typeId); storage && storage->contains(selectedActor->GetID())) continue;
+
+                std::string compLower = compName;
+
+                for (auto& c : compLower) c = static_cast<char>(std::tolower(c));
+                if (!filterLower.empty() && compLower.find(filterLower) == std::string::npos) continue;
+
+                if (ImGui::Selectable(compName.c_str()))
+                {
+                    addFunc.invoke({}, &level->Registry(), selectedActor->GetID());
+
+                    searchFilter.clear();
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+        }
+        ImGui::EndChild();
+        ImGui::EndPopup();
     }
 }

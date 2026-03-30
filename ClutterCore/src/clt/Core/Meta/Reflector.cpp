@@ -18,7 +18,6 @@ namespace clt::meta
 
     void Initialize()
     {
-
             // ------ COMPONENTS ------
 
 
@@ -42,44 +41,44 @@ namespace clt::meta
 
         // ------ STD -------
 
-        Reflector<std::string>("string");
+        Reflector<std::string>("string", false);
 
-        Reflector<TexturePath>("texturePath")
+        Reflector<TexturePath>("texturePath", false)
             .Data<&TexturePath::path>("path");
 
-        Reflector<MeshPath>("meshPath")
+        Reflector<MeshPath>("meshPath", false)
             .Data<&MeshPath::path>("path");
 
             // ------ MATHS ------
 
         // --- CLAMPED VALUES ---
 
-        Reflector<ClampedInt>("ClampedInt")
+        Reflector<ClampedInt>("ClampedInt", false)
             .Data<&ClampedInt::value>("val")
             .Data<&ClampedInt::min>("min")
             .Data<&ClampedInt::max>("max");
 
-        Reflector<ClampedFloat>("ClampedFloat")
+        Reflector<ClampedFloat>("ClampedFloat", false)
             .Data<&ClampedFloat::value>("val")
             .Data<&ClampedFloat::min>("min")
             .Data<&ClampedFloat::max>("max");
 
         // --- VECTOR 3 ---
 
-        Reflector<Vector3>("Vector3")
+        Reflector<Vector3>("Vector3", false)
             .Data<&Vector3::x>("x")
             .Data<&Vector3::y>("y")
             .Data<&Vector3::z>("z");
 
         // --- VECTOR 2 ---
 
-        Reflector<Vector2>("Vector2")
+        Reflector<Vector2>("Vector2", false)
             .Data<&Vector2::x>("x")
             .Data<&Vector2::y>("y");
 
         // --- COLOR ---
 
-        Reflector<Color>("Color")
+        Reflector<Color>("Color", false)
             .Data<&Color::x>("r")
             .Data<&Color::y>("g")
             .Data<&Color::z>("b")
