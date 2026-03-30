@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CLUTTERENGINE_GRAPHICCONTEXT_H
+#define CLUTTERENGINE_GRAPHICCONTEXT_H
 
 namespace clt
 {
@@ -14,3 +15,5 @@ namespace clt
         };
     }
 }
+
+#endif

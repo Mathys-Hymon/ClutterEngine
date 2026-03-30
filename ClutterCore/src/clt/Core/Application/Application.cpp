@@ -12,7 +12,6 @@
 
 #include "clt/Core/Timer.h"
 #include "clt/Core/Assets/AssetManager.h"
-#include "clt/Core/Assets/IAssetManager.h"
 #include "clt/Core/Meta/ProjectSerializer.h"
 #include "clt/Core/Meta/Reflection.h"
 #include "clt/Core/Level/LevelManager.h"

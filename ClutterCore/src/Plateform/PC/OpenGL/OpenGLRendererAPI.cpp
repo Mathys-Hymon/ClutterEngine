@@ -1,5 +1,7 @@
 #include "OpenGLRendererAPI.h"
 
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 #include "glad/glad.h"
 
 void clt::graphic::OpenGLRendererAPI::Init()
@@ -25,3 +27,5 @@ void clt::graphic::OpenGLRendererAPI::Clear()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+#endif

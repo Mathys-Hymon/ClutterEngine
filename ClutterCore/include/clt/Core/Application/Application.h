@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CLUTTERENGINE_APPLICATION_H
+#define CLUTTERENGINE_APPLICATION_H
 
 #include <iostream>
 #include <memory>
@@ -65,3 +66,5 @@ namespace clt
     Application* CreateApplication(ApplicationCommandLineArgs args);
 
 }
+
+#endif

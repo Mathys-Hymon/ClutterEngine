@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CLUTTERENGINE_ENGINE_CONTEXT_H
+#define CLUTTERENGINE_ENGINE_CONTEXT_H
+
 #include <filesystem>
 #include <functional>
 
@@ -24,3 +26,5 @@ namespace clt
         };
     }
 }
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CLUTTERENGINE_LAYER_STACK_H
+#define CLUTTERENGINE_LAYER_STACK_H
 
 #include <vector>
 
@@ -29,3 +30,5 @@ namespace clt
         std::vector<Layer*>::const_iterator end() const { return mLayers.end(); }
     };
 }
+
+#endif

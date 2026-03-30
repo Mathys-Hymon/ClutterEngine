@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CLUTTERENGINE_ENTRY_POINT_H
+#define CLUTTERENGINE_ENTRY_POINT_H
+
 #include "Application/Application.h"
 
 #ifdef CLUTTER_PLATFORM_WINDOWS
@@ -23,4 +25,5 @@ int main(const int argc, char** argv)
     return 0;
 }
 
+#endif
 #endif

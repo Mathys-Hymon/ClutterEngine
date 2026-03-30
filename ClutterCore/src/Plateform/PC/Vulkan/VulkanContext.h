@@ -1,5 +1,9 @@
-#pragma once
+#ifndef CLUTTERENGINE_VULKAN_CONTEXT_H
+#define CLUTTERENGINE_VULKAN_CONTEXT_H
+
 #include <clt/Renderer/GraphicContext.h>
+
+#ifdef CLUTTER_PLATFORM_WINDOWS
 
 struct GLFWwindow;
 
@@ -19,3 +23,6 @@ namespace clt
         };
     }
 }
+
+#endif
+#endif

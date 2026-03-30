@@ -1,0 +1,10 @@
+#ifndef CLUTTERENGINE_PICAWINDOW_H
+#define CLUTTERENGINE_PICAWINDOW_H
+
+
+class PicaWindow
+{
+};
+
+
+#endif //CLUTTERENGINE_PICAWINDOW_H

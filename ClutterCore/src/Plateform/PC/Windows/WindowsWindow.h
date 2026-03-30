@@ -1,6 +1,9 @@
 #pragma once
 #include <clt/Core/IWindow.h>
 #include <clt/Renderer/GraphicContext.h>
+
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 #include <GLFW/glfw3.h>
 #include <memory>
 
@@ -50,3 +53,5 @@ namespace clt
         virtual void Shutdown();
     };
 }
+
+#endif

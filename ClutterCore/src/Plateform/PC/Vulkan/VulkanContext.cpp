@@ -1,5 +1,7 @@
 #include "VulkanContext.h"
 
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 #include <GLFW/glfw3.h>
 //#include <vulkan/vulkan.h>
 #include <iostream>
@@ -42,3 +44,5 @@ namespace clt
         }
     }
 }
+
+#endif

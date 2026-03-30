@@ -1,21 +1,25 @@
-#pragma once
+#ifndef CLUTTERENGINE_OPENGLCONTEXT_H
+#define CLUTTERENGINE_OPENGLCONTEXT_H
+
 #include <clt/Renderer/GraphicContext.h>
+
+#ifdef CLUTTER_PLATFORM_WINDOWS
 
 struct GLFWwindow;
 
-namespace clt
+namespace clt::graphic
 {
-    namespace graphic
+    class OpenGLContext final : public context
     {
-        class OpenGLContext final : public context
-        {
-            GLFWwindow* mWindowHandle;
+        GLFWwindow* mWindowHandle;
 
-        public:
-            explicit OpenGLContext(GLFWwindow* windowHandle);
+    public:
+        explicit OpenGLContext(GLFWwindow* windowHandle);
 
-            void Init() override;
-            void SwapBuffers() override;
-        };
-    }
+        void Init() override;
+        void SwapBuffers() override;
+    };
 }
+
+#endif
+#endif

@@ -2,93 +2,97 @@ project(ClutterCore)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# --- GLAD ---
-set(GLAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad)
-set(GLAD_SOURCES "${GLAD_DIR}/src/glad.c")
+option(CLUTTER_BUILD_3DS "Build for Nintendo 3DS" OFF)
 
-if(NOT EXISTS "${GLAD_SOURCES}")
-    message(FATAL_ERROR "ERROR : Cant find glad.c : ${GLAD_SOURCES}")
-endif()
-
-# --- JSON ---
+# --- JSON & STB (Universels) ---
 set(JSON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/json)
-
-# --- STB ---
 set(STB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/stb)
 
 # --- SOURCES ---
-file(GLOB_RECURSE CORE_SOURCES 
-    "src/*.cpp" 
-    "src/*.h"       # private headers (ex: WindowsWindow.h)
-    "include/*.h"   # public headers (ex: Application.h)
+file(GLOB_RECURSE CORE_SOURCES
+		"src/*.cpp"
+		"src/*.h"
+		"include/*.h"
 )
 
-# --- CREATING STATIC LIB (.lib) ---
+# --- CREATING STATIC LIB (.lib / .a) ---
+add_library(ClutterCore STATIC ${CORE_SOURCES})
 
-add_library(ClutterCore STATIC
-        ${CORE_SOURCES}
-        ${GLAD_SOURCES}
-)
+# ==========================================
+# 1. SWITCH ON PLATFORMS
+# ==========================================
 
-# --- DEFINITIONS ---
-target_compile_definitions(ClutterCore 
-	PUBLIC
-        	CLUTTER_PLATFORM_WINDOWS
-        	CLUTTER_DEBUG
+if(CLUTTER_BUILD_3DS)
+	message(STATUS "--- CONFIGURING FOR NINTENDO 3DS ---")
 
-	PRIVATE
-        	GLFW_INCLUDE_NONE
-        	#GLFW_INCLUDE_VULKAN
-)
+	target_compile_definitions(ClutterCore PUBLIC CLUTTER_PLATFORM_3DS CLUTTER_DEBUG)
+
+
+else()
+	message(STATUS "--- CONFIGURING FOR WINDOWS ---")
+
+	target_compile_definitions(ClutterCore
+			PUBLIC
+			CLUTTER_PLATFORM_WINDOWS
+			CLUTTER_DEBUG
+
+			PRIVATE
+			GLFW_INCLUDE_NONE
+	)
+
+	set(GLAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad)
+	set(GLAD_SOURCES "${GLAD_DIR}/src/glad.c")
+	target_sources(ClutterCore PRIVATE ${GLAD_SOURCES})
+	target_include_directories(ClutterCore SYSTEM PUBLIC ${GLAD_DIR}/include)
+
+	if(MSVC)
+		set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "/w")
+	else ()
+		set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "-w")
+	endif ()
+
+	target_link_libraries(ClutterCore PUBLIC glfw ${CMAKE_DL_LIBS})
+endif()
+
+# ==========================================
+# 2. GLOBAL CONFIGURATION
+# ==========================================
 
 if(MSVC)
 	target_compile_options(ClutterCore PUBLIC /W4)
-	set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "/w")
 else ()
-	target_compile_options(ClutterCore PUBLIC
-			-Wall -Wextra -Wpedantic -Wconversion)
-	set_source_files_properties(${GLAD_SOURCES} PROPERTIES COMPILE_FLAGS "-w")
+	target_compile_options(ClutterCore PUBLIC -Wall -Wextra -Wpedantic -Wconversion)
 endif ()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    target_compile_definitions(ClutterCore PUBLIC CLUTTER_DEBUG)
-endif()
-
-# --- INCLUDES ---
-target_include_directories(ClutterCore SYSTEM PUBLIC
-		${GLAD_DIR}/include
-		${JSON_DIR}/
-		${STB_DIR}/
-)
-
-target_include_directories(ClutterCore
-		PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-
-		PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/src
-)
-
-# --- LINKS ---
-target_link_libraries(ClutterCore
-        PUBLIC
-        #Vulkan::Vulkan
-        #vk-bootstrap
-        glfw
-        glm::glm
-        spdlog::spdlog
-		EnTT::EnTT
-        ${CMAKE_DL_LIBS}
-)
-
-if(CMAKE_BUILD_TYPE MATCHES "Debug")
-	target_compile_definitions(ClutterCore PUBLIC CLT_DEBUG)
+	target_compile_definitions(ClutterCore PUBLIC CLUTTER_DEBUG CLT_DEBUG)
 	message(STATUS "ClutterCore: DEBUG Mode")
 else()
 	target_compile_definitions(ClutterCore PUBLIC NDEBUG)
 	message(STATUS "ClutterCore: RELEASE Mode")
 endif()
 
+
+target_include_directories(ClutterCore SYSTEM PUBLIC
+		${JSON_DIR}/
+		${STB_DIR}/
+)
+
+target_include_directories(ClutterCore
+		PUBLIC
+		${CMAKE_CURRENT_SOURCE_DIR}/include
+
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_link_libraries(ClutterCore
+		PUBLIC
+		glm::glm
+		spdlog::spdlog
+		EnTT::EnTT
+)
+
 if(MINGW)
-    target_link_options(ClutterCore PRIVATE -static -static-libgcc -static-libstdc++)
+	target_link_options(ClutterCore PRIVATE -static -static-libgcc -static-libstdc++)
 endif()

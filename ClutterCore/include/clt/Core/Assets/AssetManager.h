@@ -2,6 +2,8 @@
 #define CLUTTERENGINE_ASSETMANAGER_H
 #include "IAssetManager.h"
 
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 namespace clt
 {
     class AssetManager : public IAssetManager
@@ -25,4 +27,5 @@ namespace clt
     };
 }
 
+#endif
 #endif //CLUTTERENGINE_ASSETMANAGER_H

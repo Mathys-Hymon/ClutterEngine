@@ -1,5 +1,7 @@
 #include "OpenGLContext.h"
 
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -35,3 +37,5 @@ namespace clt::graphic
         glfwSwapBuffers(mWindowHandle);
     }
 }
+
+#endif

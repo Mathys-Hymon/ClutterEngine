@@ -1,17 +1,21 @@
-#pragma once
+#ifndef CLUTTERENGINE_OPENGL_RENDERER_API_H
+#define CLUTTERENGINE_OPENGL_RENDERER_API_H
+
 #include <clt/Renderer/RendererAPI.h>
 
-namespace clt
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
+namespace clt::graphic
 {
-    namespace graphic
+    class OpenGLRendererAPI final : public RendererAPI
     {
-        class OpenGLRendererAPI final : public RendererAPI
-        {
-        public:
-            void Init() override;
-            void SetViewport(glm::uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
-            void SetClearColor(const Color& color) override;
-            void Clear() override;
-        };
-    }
+    public:
+        void Init() override;
+        void SetViewport(glm::uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
+        void SetClearColor(const Color& color) override;
+        void Clear() override;
+    };
 }
+
+#endif
+#endif

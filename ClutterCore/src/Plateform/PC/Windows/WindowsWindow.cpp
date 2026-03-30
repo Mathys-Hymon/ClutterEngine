@@ -1,5 +1,7 @@
 #include "WindowsWindow.h"
 
+#ifdef CLUTTER_PLATFORM_WINDOWS
+
 #include <iostream>
 #include "../../ClutterCore/src/Plateform/PC/OpenGL/OpenGLContext.h"
 #include "../../ClutterCore/src/Plateform/PC/Vulkan/VulkanContext.h"
@@ -154,3 +156,5 @@ clt::UVector2 clt::WindowsWindow::GetMonitorSize() const
 
     return UVector2{width, height};
 }
+
+#endif
