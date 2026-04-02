@@ -12,7 +12,7 @@ namespace clt
     class WindowsWindow : public IWindow
     {
         GLFWwindow* mWindowHandle{};
-        std::unique_ptr<graphic::context> mContext;
+        std::unique_ptr<graphic::Context> mContext;
 
         struct WindowData
         {

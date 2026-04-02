@@ -15,7 +15,12 @@ void clt::graphic::OpenGLRendererAPI::Init()
 
 void clt::graphic::OpenGLRendererAPI::SetViewport(const uint32_t x, const uint32_t y,const uint32_t width,const uint32_t height)
 {
-    glViewport(x, y, width, height);
+    glViewport(static_cast<GLint>(x), static_cast<GLint>(y), static_cast<GLsizei>(width), static_cast<GLsizei>(height));
+}
+
+void clt::graphic::OpenGLRendererAPI::DrawIndexed(const uint32_t indexCount)
+{
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indexCount), GL_UNSIGNED_INT, nullptr);
 }
 
 void clt::graphic::OpenGLRendererAPI::SetClearColor(const Color& color)

@@ -76,7 +76,7 @@ void clt::WindowsWindow::Init(const WindowProps& props)
         return;
     }
 
-    const graphic::RendererAPIType api = graphic::Renderer::GetRendererAPI();
+    const graphic::RendererAPIType api = graphic::RendererAPI::GetAPI();
 
     if (api == graphic::RendererAPIType::OpenGL)
     {

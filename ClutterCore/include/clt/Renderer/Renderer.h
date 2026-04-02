@@ -1,14 +1,24 @@
 #pragma once
+#include <memory>
+
 #include "RendererAPI.h"
 
 namespace clt::graphic
 {
+    class Renderer2D;
+    class Renderer3D;
+
     class Renderer
     {
-        static RendererAPIType s_RendererAPI;
+        std::unique_ptr<RendererAPI> mRendererAPI{nullptr};
+
+        std::unique_ptr<Renderer2D> mRenderer2D{nullptr};
+        std::unique_ptr<Renderer3D> mRenderer3D{nullptr};
 
     public:
-        inline static RendererAPIType GetRendererAPI() { return s_RendererAPI; }
-        inline static void SetRendererAPI(const RendererAPIType api) { s_RendererAPI = api; }
+        Renderer() = default;
+        ~Renderer() = default;
+
+        void Init();
     };
 }

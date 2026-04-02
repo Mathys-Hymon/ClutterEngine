@@ -11,7 +11,7 @@ namespace clt
 {
     namespace graphic
     {
-        class VulkanContext final : public context
+        class VulkanContext final : public Context
         {
             GLFWwindow* mWindowHandle;
 

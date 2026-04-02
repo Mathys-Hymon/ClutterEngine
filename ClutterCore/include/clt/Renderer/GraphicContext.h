@@ -1,19 +1,16 @@
 #ifndef CLUTTERENGINE_GRAPHICCONTEXT_H
 #define CLUTTERENGINE_GRAPHICCONTEXT_H
 
-namespace clt
+namespace clt::graphic
 {
-    namespace graphic
+    class Context
     {
-        class context
-        {
-        public:
-            virtual ~context() = default;
+    public:
+        virtual ~Context() = default;
 
-            virtual void Init() = 0;
-            virtual void SwapBuffers() = 0;
-        };
-    }
+        virtual void Init() = 0;
+        virtual void SwapBuffers() = 0;
+    };
 }
 
 #endif

@@ -39,6 +39,16 @@ namespace clt::meta
         Reflector<Name>("Name")
             .Data<&Name::name>("name");
 
+        // --- GRAPHIC ---
+
+        Reflector<Camera>("Camera")
+            .Data<&Camera::aspectRatio>("aspectRatio")
+            .Data<&Camera::farPlane>("farPlane")
+            .Data<&Camera::fov>("fov")
+            //.Data<&Camera::isDirty>("isDirty")
+            .Data<&Camera::nearPlane>("zNear")
+            .Data<&Camera::viewMode>("viewMode");
+
         // ------ STD -------
 
         Reflector<std::string>("string", false);

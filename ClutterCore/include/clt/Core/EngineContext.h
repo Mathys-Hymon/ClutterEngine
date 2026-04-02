@@ -12,6 +12,11 @@ namespace clt
     class IWindow;
     struct Project;
 
+    namespace graphic
+    {
+        class Renderer;
+    }
+
     namespace engine
     {
         struct Context
@@ -19,6 +24,7 @@ namespace clt
             IWindow* window;
             IAssetManager* assets;
             LevelManager* level;
+            graphic::Renderer* renderer;
             std::shared_ptr<Project> activeProject;
             std::function<void(Event&)> eventCallback;
 

@@ -5,7 +5,6 @@
 #include <ranges>
 #include <clt/Core/EngineContext.h>
 
-#include <clt/Core/EngineContext.h>
 #include <clt/Core/Debug/Log.h>
 #include <clt/Core/IWindow.h>
 #include <clt/Renderer/Renderer.h>
@@ -23,7 +22,7 @@ namespace clt
         core::Log::Init();
         Timer::Initialize();
 
-        graphic::Renderer::SetRendererAPI(graphic::RendererAPIType::OpenGL);
+        graphic::RendererAPI::SetAPI(graphic::RendererAPIType::OpenGL);
 
         if (!mWindow) mWindow = std::unique_ptr<IWindow>(IWindow::Create());
 

@@ -2,9 +2,16 @@
 #define CLUTTERENGINE_COMPONENTS_H
 
 #include <clt/Core/Math/Math.h>
+#include <clt/Renderer/Framebuffer/Framebuffer.h>
+
 
 namespace clt
 {
+    namespace graphic
+    {
+        class Framebuffer;
+    }
+
     struct TexturePath { std::string path; };
     struct MeshPath { std::string path; };
 
@@ -35,6 +42,23 @@ namespace clt
         uint32_t zIndex{0};
         bool flipX{false};
         bool flipY{false};
+    };
+
+    enum class CameraViewMode
+    {
+        Orthographic,
+        Perspective
+    };
+
+    struct Camera
+    {
+        std::shared_ptr<graphic::Framebuffer> framebuffer{nullptr};
+        CameraViewMode viewMode{CameraViewMode::Perspective};
+        float aspectRatio{1.77f};
+        float nearPlane{1.0f};
+        float farPlane{1.0f};
+        float fov{90.0f};
+        bool isDirty{true};
     };
 
     // ----------- HUD ----------- //

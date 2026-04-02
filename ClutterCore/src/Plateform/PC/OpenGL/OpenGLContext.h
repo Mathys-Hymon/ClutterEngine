@@ -9,7 +9,7 @@ struct GLFWwindow;
 
 namespace clt::graphic
 {
-    class OpenGLContext final : public context
+    class OpenGLContext final : public Context
     {
         GLFWwindow* mWindowHandle;
 
